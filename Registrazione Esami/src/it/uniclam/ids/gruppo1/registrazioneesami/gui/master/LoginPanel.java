@@ -1,4 +1,4 @@
-package it.uniclam.ids.gruppo1.registrazioneesami.gui;
+package it.uniclam.ids.gruppo1.registrazioneesami.gui.master;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -84,7 +84,7 @@ public class LoginPanel extends JPanel {
 		login.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clientGUI.changePanel(ClientMainGUI.REGISTRATION_PANEL);
+				clientGUI.changePanel(ClientMainGUI.EXAMINATOR_PANEL);
 				//TODO
 				
 			}

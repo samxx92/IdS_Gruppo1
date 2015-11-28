@@ -1,36 +1,24 @@
-package it.uniclam.ids.gruppo1.registrazioneesami.gui;
+package it.uniclam.ids.gruppo1.registrazioneesami.gui.master;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 import it.uniclam.ids.gruppo1.registrazioneesami.ClientMainGUI;
-import it.uniclam.ids.gruppo1.registrazioneesami.ServerMain;
-import it.uniclam.ids.gruppo1.registrazioneesami.gui.AdminPanel;;
 
-public class StoreExamAdminPanel extends JPanel{
-
-	private JButton esamiScaduti = new JButton("Esami Scaduti");
-	private JButton esamiConfermati = new JButton("Esami Confermati");
-	private JButton back = new JButton("Indietro");
+public class ExaminatorPanel extends JPanel{
+	private JButton verbalizzazioni = new JButton(ClientMainGUI.REGISTRATION_PANEL);
+	private JButton reservation = new JButton(ClientMainGUI.EXAM_RESERVATION_PANEL);
+	private JButton registered = new JButton(ClientMainGUI.DAILY_EXAM_PANEL);
+	private JButton back = new JButton("Logout");
 	
 
 	
-	public StoreExamAdminPanel(ClientMainGUI clientGUI){
+	public ExaminatorPanel(ClientMainGUI clientGUI){
 		//JPanel pane = new JPanel(new GridBagLayout());
 
 		//Container pane = getContentPane();
@@ -45,7 +33,7 @@ public class StoreExamAdminPanel extends JPanel{
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 5;   //2 columns wide
-		this.add(esamiScaduti, c);
+		this.add(verbalizzazioni, c);
 		
 
 		// Campo esami confermati
@@ -53,28 +41,44 @@ public class StoreExamAdminPanel extends JPanel{
 		c.gridx = 0;
 		c.gridy = 2;
 		c.gridwidth = 5;   //2 columns wide
-		this.add(esamiConfermati, c);
+		this.add(reservation, c);
+		
+		// Campo esami verbalizzati in data odierna
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 3;
+		c.gridwidth = 5;   //2 columns wide
+		this.add(registered, c);
 		
 		// Campo indietro
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
-		c.gridy = 3;
+		c.gridy = 4;
 		c.gridwidth = 2;   //2 columns wide
 		this.add(back, c);
 		
-		esamiScaduti.addActionListener(new ActionListener() {
+		verbalizzazioni.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clientGUI.changePanel(ClientMainGUI.ADMIN_EXPIRED_EXAM);
+				clientGUI.changePanel(ClientMainGUI.REGISTRATION_PANEL);
 			}
 		});
 		
-		esamiConfermati.addActionListener(new ActionListener() {
+		reservation.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clientGUI.changePanel(ClientMainGUI.ADMIN_CONFIRMED_EXAM);
+				clientGUI.changePanel(ClientMainGUI.EXAM_RESERVATION_PANEL);
+			}
+		});
+		
+		registered.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clientGUI.changePanel(ClientMainGUI.DAILY_EXAM_PANEL);
+				
 			}
 		});
 		
@@ -82,7 +86,7 @@ public class StoreExamAdminPanel extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clientGUI.changePanel(ClientMainGUI.ADMIN_PANEL);
+				clientGUI.changePanel(ClientMainGUI.LOGIN_PANEL);
 				
 			}
 		});

@@ -7,6 +7,18 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import it.uniclam.ids.gruppo1.registrazioneesami.gui.*;
+import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.AdminConfirmedExam;
+import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.AdminExpiredExam;
+import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.AdminPanel;
+import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.ConfirmationAdminPanel;
+import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.EnablePanel;
+import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.StoreExamAdminPanel;
+import it.uniclam.ids.gruppo1.registrazioneesami.gui.master.ConfirmPanel;
+import it.uniclam.ids.gruppo1.registrazioneesami.gui.master.DailyExamPanel;
+import it.uniclam.ids.gruppo1.registrazioneesami.gui.master.ExamReservationPanel;
+import it.uniclam.ids.gruppo1.registrazioneesami.gui.master.ExaminatorPanel;
+import it.uniclam.ids.gruppo1.registrazioneesami.gui.master.LoginPanel;
+import it.uniclam.ids.gruppo1.registrazioneesami.gui.master.RegistrationPanel;
 
 
 public class ClientMainGUI extends JFrame {
@@ -19,7 +31,10 @@ public class ClientMainGUI extends JFrame {
 	JPanel lastPanel = null;
 	
 	public static String LOGIN_PANEL = "Login";
-	public static String REGISTRATION_PANEL = "Esaminatore";
+	public static String EXAMINATOR_PANEL = "Esaminatore";
+	public static String REGISTRATION_PANEL = "Verbalizzazione";
+	public static String EXAM_RESERVATION_PANEL = "Prenotazioni Esami";
+	public static String DAILY_EXAM_PANEL = "Verbalizzazioni Giornaliere";
 	public static String ADMIN_PANEL = "Amministratore";
 	public static String ENABLE_PANEL = "Abilitazione Docenti";
 	public static String CONFIRMATION_ADMIN_PANEL = "Conferma Esami";
@@ -42,6 +57,9 @@ public class ClientMainGUI extends JFrame {
 	private ConfirmPanel confirmPanel;
 	private SettingsPanel settingsPanel;
 	private NavigationPanel navigationPanel;
+	private ExaminatorPanel examinatorPanel;
+	private ExamReservationPanel examReservationPanel;
+	private DailyExamPanel dailyExamPanel;
 	
 	
 	public ClientMainGUI(){
@@ -85,12 +103,21 @@ public class ClientMainGUI extends JFrame {
 		} else if (panelName.equals(ClientMainGUI.CONFIRM_PANEL)){
 			confirmPanel = new ConfirmPanel(this);
 			lastPanel = confirmPanel;
-		}  else if (panelName.equals(ClientMainGUI.ADMIN_EXPIRED_EXAM)){
+		} else if (panelName.equals(ClientMainGUI.ADMIN_EXPIRED_EXAM)){
 			adminExpiredExam = new AdminExpiredExam(this);
 			lastPanel = adminExpiredExam;
-		}  else if (panelName.equals(ClientMainGUI.ADMIN_CONFIRMED_EXAM)){
+		} else if (panelName.equals(ClientMainGUI.ADMIN_CONFIRMED_EXAM)){
 			adminConfirmedExam = new AdminConfirmedExam(this);
 			lastPanel = adminConfirmedExam;
+		} else if (panelName.equals(ClientMainGUI.EXAMINATOR_PANEL)){
+			examinatorPanel = new ExaminatorPanel(this);
+			lastPanel = examinatorPanel;
+		} else if (panelName.equals(ClientMainGUI.EXAM_RESERVATION_PANEL)){
+			examReservationPanel = new ExamReservationPanel(this);
+			lastPanel = examReservationPanel;
+		} else if (panelName.equals(ClientMainGUI.DAILY_EXAM_PANEL)){
+			dailyExamPanel = new DailyExamPanel(this);
+			lastPanel = dailyExamPanel;
 		}
 		
 		

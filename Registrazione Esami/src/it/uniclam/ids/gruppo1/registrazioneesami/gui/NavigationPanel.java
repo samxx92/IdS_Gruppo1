@@ -24,7 +24,7 @@ import it.uniclam.ids.gruppo1.registrazioneesami.ServerMain;
 
 public class NavigationPanel extends JPanel{
 		
-	private JButton login = new JButton(ClientMainGUI.REGISTRATION_PANEL);
+	private JButton login = new JButton("Docente");
 	private JButton administration = new JButton(ClientMainGUI.ADMIN_PANEL);
 	private JButton confirm = new JButton(ClientMainGUI.CONFIRM_PANEL);
 	private JButton settings = new JButton(ClientMainGUI.SETTINGS_PANEL);

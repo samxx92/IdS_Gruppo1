@@ -1,4 +1,4 @@
-package it.uniclam.ids.gruppo1.registrazioneesami.gui;
+package it.uniclam.ids.gruppo1.registrazioneesami.gui.admin;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

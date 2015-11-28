@@ -1,29 +1,36 @@
-package it.uniclam.ids.gruppo1.registrazioneesami.gui;
+package it.uniclam.ids.gruppo1.registrazioneesami.gui.master;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.text.ChangedCharSetException;
+import javax.swing.JTextField;
 
 import it.uniclam.ids.gruppo1.registrazioneesami.ClientMainGUI;
+import it.uniclam.ids.gruppo1.registrazioneesami.ServerMain;
+import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.AdminPanel;;
 
-public class AdminConfirmedExam extends JPanel{
-private JTextArea ta = new JTextArea(20, 50);
+public class ConfirmPanel extends JPanel{
+	private JTextArea ta = new JTextArea(20, 50);
 	
 
-	private JButton confirm = new JButton("Salva Definitivamente");
-	private JButton back = new JButton("Indietro");
+	private JButton confirm = new JButton("Conferma");
 	
 
 	
-	public AdminConfirmedExam(ClientMainGUI clientGUI){
+	public ConfirmPanel(ClientMainGUI clientGUI){
 		//JPanel pane = new JPanel(new GridBagLayout());
 
 		//Container pane = getContentPane();
@@ -32,35 +39,28 @@ private JTextArea ta = new JTextArea(20, 50);
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
 		
-		// Campo salva
+		// Campo conferma
 			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridx = 2;
+			c.gridx = 0;
 			c.gridy = 3;
-			c.gridwidth = 2;   //2 columns wide
+			c.gridwidth = 5;   //2 columns wide
 			this.add(confirm, c);
 			
 				
-			// Campo esami (label)
+		// Campo esami verbalizzati(label)
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 0;
 			c.gridy = 1;
 			c.gridwidth = 4;   //2 columns wide
-			this.add(new JLabel("Esami Confermati:"), c);
+			this.add(new JLabel("Esami Verbalizzati:"), c);
 						
-			// Campo esami
+		// Campo esami verbalizzati
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 0;
 			c.gridy = 2;
 			c.gridwidth = 8;   //2 columns wide
 			JScrollPane jp = new JScrollPane(ta);
 			this.add(jp, c);
-			
-			// Campo indietro
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridx = 0;
-			c.gridy = 3;
-			c.gridwidth = 2;   //2 columns wide
-			this.add(back, c);
 		
 		
 		
@@ -68,16 +68,7 @@ private JTextArea ta = new JTextArea(20, 50);
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clientGUI.changePanel(ClientMainGUI.ADMIN_CONFIRMED_EXAM);
-				
-			}
-		});
-		
-		back.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				clientGUI.changePanel(ClientMainGUI.STORE_EXAM_ADMIN_PANEL);
+				//TODO
 				
 			}
 		});

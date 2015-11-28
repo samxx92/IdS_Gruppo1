@@ -1,4 +1,4 @@
-package it.uniclam.ids.gruppo1.registrazioneesami.gui;
+package it.uniclam.ids.gruppo1.registrazioneesami.gui.admin;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -19,8 +19,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import it.uniclam.ids.gruppo1.registrazioneesami.ClientMainGUI;
-import it.uniclam.ids.gruppo1.registrazioneesami.ServerMain;
-import it.uniclam.ids.gruppo1.registrazioneesami.gui.AdminPanel;;
+import it.uniclam.ids.gruppo1.registrazioneesami.ServerMain;;
 
 public class ConfirmationAdminPanel extends JPanel{
 	

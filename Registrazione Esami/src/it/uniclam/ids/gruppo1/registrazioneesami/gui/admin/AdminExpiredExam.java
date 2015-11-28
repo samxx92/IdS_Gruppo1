@@ -1,4 +1,4 @@
-package it.uniclam.ids.gruppo1.registrazioneesami.gui;
+package it.uniclam.ids.gruppo1.registrazioneesami.gui.admin;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -39,14 +39,14 @@ private JTextArea ta = new JTextArea(20, 50);
 			this.add(delete, c);
 			
 				
-			// Campo esami (label)
+			// Campo esami scaduti (label)
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 0;
 			c.gridy = 1;
 			c.gridwidth = 4;   //2 columns wide
 			this.add(new JLabel("Esami Scaduti:"), c);
 						
-			// Campo esami
+			// Campo esami scaduti
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 0;
 			c.gridy = 2;

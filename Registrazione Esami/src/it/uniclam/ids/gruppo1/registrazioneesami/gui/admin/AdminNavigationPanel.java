@@ -1,4 +1,5 @@
-/*package it.uniclam.ids.gruppo1.registrazioneesami.gui;
+/*package it.uniclam.ids.gruppo1.registrazioneesami.gui.admin;
+package it.uniclam.ids.gruppo1.registrazioneesami.gui;
 
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
