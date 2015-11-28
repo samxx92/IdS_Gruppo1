@@ -27,6 +27,8 @@ public class ConfirmationAdminPanel extends JPanel{
 
 	private JButton salva = new JButton("Salva");	
 	private JTextArea ta = new JTextArea(20, 50);
+	
+	private JButton back = new JButton("Indietro");
 
 	
 	public ConfirmationAdminPanel(ClientMainGUI clientGUI){
@@ -40,9 +42,9 @@ public class ConfirmationAdminPanel extends JPanel{
 		
 		// Campo salva
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
+		c.gridx = 2;
 		c.gridy = 3;
-		c.gridwidth = 5;   //2 columns wide
+		c.gridwidth = 2;   //2 columns wide
 		this.add(salva, c);
 		
 		
@@ -61,11 +63,28 @@ public class ConfirmationAdminPanel extends JPanel{
 		JScrollPane jp = new JScrollPane(ta);
 		this.add(jp, c);
 		
+		// Campo indietro
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 3;
+		c.gridwidth = 2;   //2 columns wide
+		this.add(back, c);
+							
+		
 		salva.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//TODO
+				
+			}
+		});
+		
+		back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clientGUI.changePanel(ClientMainGUI.ADMIN_PANEL);
 				
 			}
 		});

@@ -18,6 +18,7 @@ private JTextArea ta = new JTextArea(20, 50);
 	
 
 	private JButton delete = new JButton("Cancella Definitivamente");
+	private JButton back = new JButton("Indietro");
 	
 
 	
@@ -32,9 +33,9 @@ private JTextArea ta = new JTextArea(20, 50);
 		
 		// Campo elimina
 			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridx = 0;
+			c.gridx = 2;
 			c.gridy = 3;
-			c.gridwidth = 5;   //2 columns wide
+			c.gridwidth = 2;   //2 columns wide
 			this.add(delete, c);
 			
 				
@@ -53,6 +54,13 @@ private JTextArea ta = new JTextArea(20, 50);
 			JScrollPane jp = new JScrollPane(ta);
 			this.add(jp, c);
 		
+			// Campo indietro
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridx = 0;
+			c.gridy = 3;
+			c.gridwidth = 2;   //2 columns wide
+			this.add(back, c);
+					
 		
 		
 		delete.addActionListener(new ActionListener() {
@@ -60,6 +68,15 @@ private JTextArea ta = new JTextArea(20, 50);
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//TODO
+				
+			}
+		});
+		
+		back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clientGUI.changePanel(ClientMainGUI.STORE_EXAM_ADMIN_PANEL);
 				
 			}
 		});

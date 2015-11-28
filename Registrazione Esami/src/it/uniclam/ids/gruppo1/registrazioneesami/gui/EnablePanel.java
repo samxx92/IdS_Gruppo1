@@ -39,7 +39,8 @@ public class EnablePanel extends JPanel{
 	
 
 	private JButton enable = new JButton("Abilita");
-	private JButton passwordRecovery = new JButton("Recupera Password");	
+	private JButton passwordRecovery = new JButton("Recupera Password");
+	private JButton back = new JButton("Indietro");
 	
 	private JTextArea ta = new JTextArea(12, 12);
 
@@ -79,9 +80,9 @@ public class EnablePanel extends JPanel{
 		
 		// Campo abilita
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 4;
-		c.gridwidth = 5;   //2 columns wide
+		c.gridx = 2;
+		c.gridy = 11;
+		c.gridwidth = 2;   //2 columns wide
 		this.add(enable, c);
 		
 		// Campo recupera password
@@ -95,7 +96,7 @@ public class EnablePanel extends JPanel{
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 8;
-		c.gridwidth = 4;   //2 columns wide
+		c.gridwidth = 5;   //2 columns wide
 		this.add(new JLabel("Docenti Abilitati:"), c);
 						
 		// Campo docenti abilitati
@@ -105,6 +106,14 @@ public class EnablePanel extends JPanel{
 		c.gridwidth = 8;   //2 columns wide
 		JScrollPane jp = new JScrollPane(ta);
 		this.add(jp, c);		
+		
+		// Campo indietro
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 11;
+		c.gridwidth = 2;   //2 columns wide
+		this.add(back, c);
+				
 		
 		
 		
@@ -127,5 +136,14 @@ public class EnablePanel extends JPanel{
 			
 		}
 	});
+		
+		back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clientGUI.changePanel(ClientMainGUI.ADMIN_PANEL);
+				
+			}
+		});
 	}
 }

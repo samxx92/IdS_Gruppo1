@@ -19,6 +19,7 @@ private JTextArea ta = new JTextArea(20, 50);
 	
 
 	private JButton confirm = new JButton("Salva Definitivamente");
+	private JButton back = new JButton("Indietro");
 	
 
 	
@@ -33,9 +34,9 @@ private JTextArea ta = new JTextArea(20, 50);
 		
 		// Campo salva
 			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridx = 0;
+			c.gridx = 2;
 			c.gridy = 3;
-			c.gridwidth = 5;   //2 columns wide
+			c.gridwidth = 2;   //2 columns wide
 			this.add(confirm, c);
 			
 				
@@ -53,6 +54,13 @@ private JTextArea ta = new JTextArea(20, 50);
 			c.gridwidth = 8;   //2 columns wide
 			JScrollPane jp = new JScrollPane(ta);
 			this.add(jp, c);
+			
+			// Campo indietro
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridx = 0;
+			c.gridy = 3;
+			c.gridwidth = 2;   //2 columns wide
+			this.add(back, c);
 		
 		
 		
@@ -61,6 +69,15 @@ private JTextArea ta = new JTextArea(20, 50);
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clientGUI.changePanel(ClientMainGUI.ADMIN_CONFIRMED_EXAM);
+				
+			}
+		});
+		
+		back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clientGUI.changePanel(ClientMainGUI.STORE_EXAM_ADMIN_PANEL);
 				
 			}
 		});

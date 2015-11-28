@@ -26,6 +26,7 @@ public class StoreExamAdminPanel extends JPanel{
 
 	private JButton esamiScaduti = new JButton("Esami Scaduti");
 	private JButton esamiConfermati = new JButton("Esami Confermati");
+	private JButton back = new JButton("Indietro");
 	
 
 	
@@ -54,6 +55,12 @@ public class StoreExamAdminPanel extends JPanel{
 		c.gridwidth = 5;   //2 columns wide
 		this.add(esamiConfermati, c);
 		
+		// Campo indietro
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 3;
+		c.gridwidth = 2;   //2 columns wide
+		this.add(back, c);
 		
 		esamiScaduti.addActionListener(new ActionListener() {
 			
@@ -68,6 +75,15 @@ public class StoreExamAdminPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clientGUI.changePanel(ClientMainGUI.ADMIN_CONFIRMED_EXAM);
+			}
+		});
+		
+		back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clientGUI.changePanel(ClientMainGUI.ADMIN_PANEL);
+				
 			}
 		});
 
