@@ -12,6 +12,10 @@ public class Docente {
 	private List<String> id_commissione;
 	private String password;
 	
+	public Docente() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Docente(String id_docente, String nome, String cognome, String telefono,
 			String mail, List<String> id_commissione, String password){
 		this.id_docente = id_docente;
@@ -24,7 +28,7 @@ public class Docente {
 	}
 	
 	
-	public String getId_docente() {
+		public String getId_docente() {
 		return id_docente;
 	}
 	
@@ -91,18 +95,5 @@ public class Docente {
 	public void deleteId_commissione(String id_commissione){
 		this.id_commissione.remove(id_commissione);
 	}
-	
-	
-	public static void main(String[] args){
-		List<String> id_commissione = new ArrayList<String>();
-		id_commissione.add("id1");
-		id_commissione.add("id2");
-		Docente a = new Docente("01", "n1", "c1", "num1", "mail1", id_commissione, "pw1");
-		System.out.print(a.getId_commissione());
-		a.deleteId_commissione("id1");
-		System.out.print(a.getId_commissione());
-	}
-	
-	
 	
 }

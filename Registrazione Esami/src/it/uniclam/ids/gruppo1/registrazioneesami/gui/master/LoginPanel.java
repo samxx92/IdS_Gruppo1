@@ -84,7 +84,38 @@ public class LoginPanel extends JPanel {
 		login.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clientGUI.changePanel(ClientMainGUI.EXAMINATOR_PANEL);
+				try{
+					Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
+					
+					BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+					PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+					
+					String req = 
+							ServerMain.QUERY_LOGIN + "\n" + 
+							"telefono:" + username.getText() + "\n" + 
+							"password:" + password.getText() + "\n"+ 
+							"\n";
+					
+					out.println(req);
+					//System.out.println("Inviato: " + req);
+					String line = in.readLine();
+					if (line.equalsIgnoreCase(ServerMain.OK)){
+						line = in.readLine();
+						System.out.println(line);
+						if (line.equalsIgnoreCase("true")) {
+							s.close();
+							clientGUI.changePanel(ClientMainGUI.EXAMINATOR_PANEL);
+						}
+						else{
+							JOptionPane.showMessageDialog(LoginPanel.this, "Utente non abilitato!", "Error", JOptionPane.ERROR_MESSAGE);
+							s.close();
+						}
+					}
+						
+				} catch (IOException ioe){
+					JOptionPane.showMessageDialog(LoginPanel.this, "Error in communication with server!", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				
 				//TODO
 				
 			}
