@@ -21,8 +21,9 @@ public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO{
 	}
 
 	@Override
-	public int searchDocenteAbilitato(String telefono, String password) throws DAOException {
-		int a=0;
+	public String searchDocenteAbilitato(String telefono, String password) throws DAOException {
+		String abilitato = "false";
+		int a = 0;
 		try{
 			Statement st = DAOSettings.getStatement();
 			
@@ -39,7 +40,10 @@ public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO{
 			} catch (SQLException sq){
 				throw new DAOException("In getAllAmici(): " + sq.getMessage());
 			}
-		return a;	
+		if (a==1){
+			abilitato = "true";
+		}
+		return abilitato;	
 		
 	}
 			

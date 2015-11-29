@@ -34,15 +34,10 @@ public class ServerMain {
 				String password = in.readLine().replace("password:", "").replace("\n", "");
 
 			try{		
-				int row = DocenteAbilitatoDAOImpl.getInstance().searchDocenteAbilitato(telefono, password);
+				String abilitato = DocenteAbilitatoDAOImpl.getInstance().searchDocenteAbilitato(telefono, password);
 				
-				System.out.println(row);
-				String abilitato = null;
-				if (row==0){
-					abilitato = "false";
-				}else if (row == 1){
-					abilitato = "true";
-				}
+				System.out.println(abilitato);
+				
 				
 				System.out.println(abilitato);				
 				
