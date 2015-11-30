@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -24,7 +25,7 @@ import it.uniclam.ids.gruppo1.registrazioneesami.gui.*;
 
 public class LoginPanel extends JPanel {
 	private JTextField username = new JTextField("",15);
-	private JTextField password = new JTextField("",15);
+	private JPasswordField password = new JPasswordField("",15);
 	
 
 	private JButton login = new JButton("Accedi");
@@ -72,12 +73,12 @@ public class LoginPanel extends JPanel {
 		c.gridwidth = 5;   //2 columns wide
 		this.add(login, c);
 		
-		// Campo richiedi abilitazione
+		/*// Campo richiedi abilitazione
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 6;
 		c.gridwidth = 5;   //2 columns wide
-		//this.add(abilitazione, c);
+		this.add(abilitazione, c);*/
 		
 		
 		
@@ -101,7 +102,6 @@ public class LoginPanel extends JPanel {
 					String line = in.readLine();
 					if (line.equalsIgnoreCase(ServerMain.OK)){
 						line = in.readLine();
-						System.out.println(line);
 						if (line.equalsIgnoreCase("true")) {
 							s.close();
 							clientGUI.changePanel(ClientMainGUI.EXAMINATOR_PANEL);

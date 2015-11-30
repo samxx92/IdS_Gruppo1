@@ -149,13 +149,46 @@ public class RegistrationPanel extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				try{
+					Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
+					
+					BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+					PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+					
+					String req = 
+							ServerMain.QUERY_VERBALIZZA + "\n" + 
+							"id_esame:" + id_Esame.getText() + "\n" + 
+							"id_studente:" + id_Studente.getText() + "\n"+ 
+							"valutazione:" + valutazione.getText() + "\n"+ 
+							"data_appello:" + data_Appello.getText() + "\n"+ 
+							"\n";
+					
+					out.println(req);
+					
+					
+					
+					//System.out.println("Inviato: " + req);
+					/*String line = in.readLine();
+					if (line.equalsIgnoreCase(ServerMain.OK)){
+						line = in.readLine();
+						if (line.equalsIgnoreCase("true")) {
+							s.close();
+							clientGUI.changePanel(ClientMainGUI.EXAMINATOR_PANEL);
+						}
+						else{
+							JOptionPane.showMessageDialog(RegistrationPanel.this, "Utente non abilitato!", "Error", JOptionPane.ERROR_MESSAGE);
+							s.close();
+						}
+					}*/
+					
+					
+						
+				} catch (IOException ioe){
+					JOptionPane.showMessageDialog(RegistrationPanel.this, "Error in communication with server!", "Error", JOptionPane.ERROR_MESSAGE);
+			}
 			}
 		});
-
-		
-		
-	}
 	
+	}
 	
 }

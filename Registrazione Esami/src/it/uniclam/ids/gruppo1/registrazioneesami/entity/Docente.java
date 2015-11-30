@@ -9,26 +9,21 @@ public class Docente {
 	private String cognome;
 	private String telefono;
 	private String mail;
-	private List<String> id_commissione;
-	private String password;
 	
 	public Docente() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Docente(String id_docente, String nome, String cognome, String telefono,
-			String mail, List<String> id_commissione, String password){
+	public Docente(String id_docente, String nome, String cognome, String telefono, String mail){
 		this.id_docente = id_docente;
 		this.nome = nome;
 		this.cognome = cognome;
 		this.telefono = telefono;
 		this.mail = mail;
-		this.id_commissione = id_commissione;
-		this.password = password;
 	}
 	
 	
-		public String getId_docente() {
+	public String getId_docente() {
 		return id_docente;
 	}
 	
@@ -68,32 +63,5 @@ public class Docente {
 		this.mail = mail;
 	}
 	
-	public String getPassword() {
-		return password;
-	}
-	
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	public List<String> getId_commissione() {
-		return id_commissione;
-	}
-	
-	public void setId_commissione(List<String> id_commissione) {
-		this.id_commissione = id_commissione;
-	}
-	
-	public String getId_commissione(int i) {
-		return id_commissione.get(i);
-	}
-	
-	public void setId_commissione(String id_commissione) {
-		this.id_commissione.add(id_commissione);
-	}
-	
-	public void deleteId_commissione(String id_commissione){
-		this.id_commissione.remove(id_commissione);
-	}
 	
 }
