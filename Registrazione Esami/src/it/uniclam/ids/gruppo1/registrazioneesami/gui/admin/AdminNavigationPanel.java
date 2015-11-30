@@ -28,7 +28,7 @@ public class AdminNavigationPanel extends JPanel{
 	private JButton enable = new JButton(AdminPanel.CONFIRMATION_ADMIN_PANEL);
 	private JButton registration = new JButton(AdminPanel.STORE_EXAM_ADMIN_PANEL);
 	private AdminPanel clientGUI = null;
-	
+
 	public AdminNavigationPanel(AdminPanel clientGUI){
 		setLayout(new FlowLayout());
 		add(cercaAmici);
@@ -39,22 +39,22 @@ public class AdminNavigationPanel extends JPanel{
 		this.clientGUI = clientGUI;
 
 
-		
+
 		enable.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clientGUI.changePanel(AdminPanel.CONFIRMATION_ADMIN_PANEL);
 			}
 		});
-		
+
 		registration.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clientGUI.changePanel(AdminPanel.STORE_EXAM_ADMIN_PANEL);
 			}
 		});
-		
-		
+
+
 }
 }
-*/
+ */

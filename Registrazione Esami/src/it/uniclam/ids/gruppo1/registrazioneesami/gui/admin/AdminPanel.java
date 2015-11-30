@@ -31,7 +31,7 @@ public class AdminPanel extends JPanel{
 	private JButton enable = new JButton(ClientMainGUI.ENABLE_PANEL);
 	private JButton registration = new JButton(ClientMainGUI.CONFIRMATION_ADMIN_PANEL);
 	private JButton store = new JButton(ClientMainGUI.STORE_EXAM_ADMIN_PANEL);
-	
+
 
 	public AdminPanel(ClientMainGUI clientGUI){
 		//JPanel pane = new JPanel(new GridBagLayout());
@@ -41,60 +41,60 @@ public class AdminPanel extends JPanel{
 		// dei vincoli dell'interfaccia
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
-		
-				
+
+
 		// Campo enable
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 4;
 		c.gridwidth = 5;   //2 columns wide
 		this.add(enable, c);
-		
+
 		// Campo registration
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 5;
 		c.gridwidth = 5;   //2 columns wide
 		this.add(registration, c);
-		
+
 		// Campo store
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 6;
 		c.gridwidth = 5;   //2 columns wide
 		this.add(store, c);
-		
-		
-		
+
+
+
 		enable.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clientGUI.changePanel(ClientMainGUI.ENABLE_PANEL);
-				
+
 			}
 		});
-		
+
 		registration.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clientGUI.changePanel(ClientMainGUI.CONFIRMATION_ADMIN_PANEL);
-				
+
 			}
 		});
-		
-			store.addActionListener(new ActionListener() {
-			
+
+		store.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clientGUI.changePanel(ClientMainGUI.STORE_EXAM_ADMIN_PANEL);
-				
+
 			}
 		});
 
 
-		
-		
+
+
 	}
 }

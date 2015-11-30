@@ -4,8 +4,8 @@ public class Studente {
 	private String matricola;
 	private String nome;
 	private String cognome;
-	
-	
+
+
 	public String getMatricola() {
 		return matricola;
 	}

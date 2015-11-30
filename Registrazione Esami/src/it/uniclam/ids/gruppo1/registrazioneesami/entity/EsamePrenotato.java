@@ -8,8 +8,8 @@ public class EsamePrenotato {
 	private String matricola;
 	private String data_prenotazione;
 	private String data_appello;
-	
-	
+
+
 	public String getId_esame() {
 		return id_esame;
 	}
@@ -34,7 +34,7 @@ public class EsamePrenotato {
 	public void setData_appello(String data_appello) {
 		this.data_appello = data_appello;
 	}
-	
+
 	public List<EsamePrenotato> getAllExam(){
 		List<EsamePrenotato> esami_prenotati = new ArrayList <EsamePrenotato>();
 		EsamePrenotato test1 = new EsamePrenotato();
@@ -43,9 +43,9 @@ public class EsamePrenotato {
 		test2.setId_esame("e2");
 		esami_prenotati.add(test1);
 		esami_prenotati.add(test2);
-		
+
 		return esami_prenotati;
 	}
-	
+
 
 }

@@ -26,9 +26,9 @@ public class StoreExamAdminPanel extends JPanel{
 	private JButton esamiScaduti = new JButton("Esami Scaduti");
 	private JButton esamiConfermati = new JButton("Esami Confermati");
 	private JButton back = new JButton("Indietro");
-	
 
-	
+
+
 	public StoreExamAdminPanel(ClientMainGUI clientGUI){
 		//JPanel pane = new JPanel(new GridBagLayout());
 
@@ -37,15 +37,15 @@ public class StoreExamAdminPanel extends JPanel{
 		// dei vincoli dell'interfaccia
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
-		
-			
+
+
 		// Campo esami scaduti
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 5;   //2 columns wide
 		this.add(esamiScaduti, c);
-		
+
 
 		// Campo esami confermati
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -53,41 +53,41 @@ public class StoreExamAdminPanel extends JPanel{
 		c.gridy = 2;
 		c.gridwidth = 5;   //2 columns wide
 		this.add(esamiConfermati, c);
-		
+
 		// Campo indietro
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 3;
 		c.gridwidth = 2;   //2 columns wide
 		this.add(back, c);
-		
+
 		esamiScaduti.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clientGUI.changePanel(ClientMainGUI.ADMIN_EXPIRED_EXAM);
 			}
 		});
-		
+
 		esamiConfermati.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clientGUI.changePanel(ClientMainGUI.ADMIN_CONFIRMED_EXAM);
 			}
 		});
-		
+
 		back.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clientGUI.changePanel(ClientMainGUI.ADMIN_PANEL);
-				
+
 			}
 		});
 
-		
-		
+
+
 	}
 
 }

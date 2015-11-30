@@ -7,8 +7,8 @@ public class EsameVerbalizzato {
 	private String id_studente;
 	private int valutazione;
 	private Boolean confermato;
-	
-	
+
+
 	public Date getData_verbalizzazione() {
 		return data_verbalizzazione;
 	}
@@ -33,7 +33,7 @@ public class EsameVerbalizzato {
 	public void setConfermato(Boolean confermato) {
 		this.confermato = confermato;
 	}
-	
-	
+
+
 
 }

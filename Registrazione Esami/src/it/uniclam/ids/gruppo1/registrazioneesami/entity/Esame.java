@@ -7,8 +7,8 @@ public class Esame {
 	private String id_esame;
 	private String nome;
 	private List<Date> data_appello;
-	
-	
+
+
 	public String getId_esame() {
 		return id_esame;
 	}

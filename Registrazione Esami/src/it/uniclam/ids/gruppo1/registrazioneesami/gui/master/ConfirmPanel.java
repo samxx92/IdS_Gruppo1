@@ -24,12 +24,12 @@ import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.AdminPanel;;
 
 public class ConfirmPanel extends JPanel{
 	private JTextArea ta = new JTextArea(20, 50);
-	
+
 
 	private JButton confirm = new JButton("Conferma");
-	
 
-	
+
+
 	public ConfirmPanel(ClientMainGUI clientGUI){
 		//JPanel pane = new JPanel(new GridBagLayout());
 
@@ -38,43 +38,43 @@ public class ConfirmPanel extends JPanel{
 		// dei vincoli dell'interfaccia
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
-		
+
 		// Campo conferma
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridx = 0;
-			c.gridy = 3;
-			c.gridwidth = 5;   //2 columns wide
-			this.add(confirm, c);
-			
-				
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 3;
+		c.gridwidth = 5;   //2 columns wide
+		this.add(confirm, c);
+
+
 		// Campo esami verbalizzati(label)
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridx = 0;
-			c.gridy = 1;
-			c.gridwidth = 4;   //2 columns wide
-			this.add(new JLabel("Esami Verbalizzati:"), c);
-						
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 4;   //2 columns wide
+		this.add(new JLabel("Esami Verbalizzati:"), c);
+
 		// Campo esami verbalizzati
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridx = 0;
-			c.gridy = 2;
-			c.gridwidth = 8;   //2 columns wide
-			JScrollPane jp = new JScrollPane(ta);
-			this.add(jp, c);
-		
-		
-		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 2;
+		c.gridwidth = 8;   //2 columns wide
+		JScrollPane jp = new JScrollPane(ta);
+		this.add(jp, c);
+
+
+
 		confirm.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//TODO
-				
+
 			}
 		});
 
-		
-		
+
+
 	}
 
 

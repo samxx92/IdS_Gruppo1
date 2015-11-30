@@ -22,14 +22,14 @@ import it.uniclam.ids.gruppo1.registrazioneesami.gui.master.RegistrationPanel;
 
 
 public class ClientMainGUI extends JFrame {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	JPanel lastPanel = null;
-	
+
 	public static String LOGIN_PANEL = "Login";
 	public static String EXAMINATOR_PANEL = "Esaminatore";
 	public static String REGISTRATION_PANEL = "Verbalizzazione";
@@ -43,8 +43,8 @@ public class ClientMainGUI extends JFrame {
 	public static String ADMIN_CONFIRMED_EXAM = "Esami Confermati";
 	public static String CONFIRM_PANEL = "Presidente";
 	public static String SETTINGS_PANEL = "Settings";
-	
-	
+
+
 	//private AdminNavigationPanel adminNavigationPanel;
 	private LoginPanel loginPanel;
 	private RegistrationPanel registrationPanel;
@@ -60,14 +60,14 @@ public class ClientMainGUI extends JFrame {
 	private ExaminatorPanel examinatorPanel;
 	private ExamReservationPanel examReservationPanel;
 	private DailyExamPanel dailyExamPanel;
-	
-	
+
+
 	public ClientMainGUI(){
 		super("Client GUI for CellEx");
-		
-		
+
+
 		loginPanel = new LoginPanel(this);
-		
+
 		changePanel(ClientMainGUI.LOGIN_PANEL);
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -119,47 +119,47 @@ public class ClientMainGUI extends JFrame {
 			dailyExamPanel = new DailyExamPanel(this);
 			lastPanel = dailyExamPanel;
 		}
-		
-		
-		
+
+
+
 
 		navigationPanel = new NavigationPanel(this);
-		
+
 		getContentPane().add(lastPanel, BorderLayout.CENTER);
 		getContentPane().add(navigationPanel, BorderLayout.SOUTH);
-		
+
 		getContentPane().revalidate();
-	
+
 	}
-	
-	
-	
-    public static void main(String[] args) {
-        /* Use an appropriate Look and Feel */
-        try {
-            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-        } catch (UnsupportedLookAndFeelException ex) {
-            ex.printStackTrace();
-        } catch (IllegalAccessException ex) {
-            ex.printStackTrace();
-        } catch (InstantiationException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-        /* Turn off metal's use of bold fonts */
-        UIManager.put("swing.boldMetal", Boolean.FALSE);
-         
-        //Schedule a job for the event dispatch thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-            	@SuppressWarnings("unused")
+
+
+
+	public static void main(String[] args) {
+		/* Use an appropriate Look and Feel */
+		try {
+			//UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+		} catch (UnsupportedLookAndFeelException ex) {
+			ex.printStackTrace();
+		} catch (IllegalAccessException ex) {
+			ex.printStackTrace();
+		} catch (InstantiationException ex) {
+			ex.printStackTrace();
+		} catch (ClassNotFoundException ex) {
+			ex.printStackTrace();
+		}
+		/* Turn off metal's use of bold fonts */
+		UIManager.put("swing.boldMetal", Boolean.FALSE);
+
+		//Schedule a job for the event dispatch thread:
+		//creating and showing this application's GUI.
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				@SuppressWarnings("unused")
 				ClientMainGUI frame = new ClientMainGUI();
-            }
-        });
-    }
-    
+			}
+		});
+	}
+
 
 }
