@@ -150,8 +150,22 @@ public class RegistrationPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try{
-					Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
 					
+					String voto = valutazione.getText();
+					
+					System.out.println(voto.compareTo("17"));
+					
+					if (voto.compareTo("18")<0){
+						JOptionPane.showMessageDialog(RegistrationPanel.this, 
+								"Non si può inserire un voto inferiore a 18/30", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					else if (voto.compareTo("31")>0){
+						JOptionPane.showMessageDialog(RegistrationPanel.this, 
+								"Non si può inserire un voto superiore a 30/30 e lode", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					else {		
+					Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
+						
 					BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
 					PrintWriter out = new PrintWriter(s.getOutputStream(), true);
 					
@@ -168,18 +182,23 @@ public class RegistrationPanel extends JPanel{
 					
 					
 					//System.out.println("Inviato: " + req);
-					/*String line = in.readLine();
+					String line = in.readLine();
 					if (line.equalsIgnoreCase(ServerMain.OK)){
 						line = in.readLine();
-						if (line.equalsIgnoreCase("true")) {
+						if (line.equals("true")) {
+							
+							
+							ta.append("Verificato \n");
+							
 							s.close();
-							clientGUI.changePanel(ClientMainGUI.EXAMINATOR_PANEL);
+							
 						}
+					}
 						else{
-							JOptionPane.showMessageDialog(RegistrationPanel.this, "Utente non abilitato!", "Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(RegistrationPanel.this, "Il Docente non fa parte della Commissione", "Error", JOptionPane.ERROR_MESSAGE);
 							s.close();
 						}
-					}*/
+					}
 					
 					
 						

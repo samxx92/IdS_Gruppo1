@@ -63,5 +63,25 @@ public class Docente {
 		this.mail = mail;
 	}
 	
+	public List<Docente> getAllDocenti(){
+		List<Docente> docenti = new ArrayList<Docente>();
+		
+		Docente d1 = new Docente ();
+		Docente d2 = new Docente ();
+		Docente d3 = new Docente ();
+		
+		d1.setId_docente("id1");
+		d2.setId_docente("id2");
+		d3.setId_docente("id3");
+		d1.setTelefono("1");
+		d2.setTelefono("2");
+		d3.setTelefono("3");
+		
+		docenti.add(d1);
+		docenti.add(d2);
+		docenti.add(d3);
+		
+		return docenti;
+	}
 	
 }
