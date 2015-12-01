@@ -13,7 +13,9 @@ import com.mysql.fabric.xmlrpc.base.Array;
 import it.uniclam.ids.gruppo1.registrazioneesami.dao.*;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.Commissione;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.Docente;
+import it.uniclam.ids.gruppo1.registrazioneesami.entity.Esame;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.EsamePrenotato;
+import it.uniclam.ids.gruppo1.registrazioneesami.legacy.*;
 
 public class ServerMain {
 	public static String OK = "Ok";
@@ -32,16 +34,15 @@ public class ServerMain {
 		String response = null;
 		String telefono = null;
 		String id_docente = null;
-
-		Commissione ctest = new Commissione();
-		List<Commissione> commissioni = ctest.getAllCommissioni();
-
-		Docente dtest = new Docente();
-		List<Docente> docenti = dtest.getAllDocenti();
-
-		EsamePrenotato eptest = new EsamePrenotato();
-		List <EsamePrenotato> esami_prenotati = eptest.getAllExam();
-
+		
+		
+//		DatabaseDidatticaMock db_didattica = new DatabaseDidatticaMock();
+//		List<Commissione> commissioni = db_didattica.getAllCommissioni();
+//		List<Docente> docenti = db_didattica.getAllDocenti();
+//		List <Esame> esami = db_didattica.getAllEsami();
+//      List <EsamePrenotato> esami_prenotati = db_didattica.getAllExam();
+		
+		
 		while(true){
 			response = "Error\n\n";
 			System.out.println("Server in ascolto sulla porta 5555");
@@ -77,17 +78,6 @@ public class ServerMain {
 
 			else if (command.equals(QUERY_VERBALIZZA)){
 
-				//				Commissione ctest = new Commissione();
-				//				List<Commissione> commissioni = ctest.getAllCommissioni();
-				//				
-				//				Docente dtest = new Docente();
-				//				List<Docente> docenti = dtest.getAllDocenti();
-
-
-				String commissione = "false";
-
-
-
 				System.out.println(telefono);
 
 				String id_esame = in.readLine().replace("id_esame:", "").replace("\n", "");
@@ -95,37 +85,14 @@ public class ServerMain {
 				String valutazione = in.readLine().replace("valutazione:", "").replace("\n", "");
 				String data_appello = in.readLine().replace("data_appello:", "").replace("\n", "");
 
-				for (int i=0;i<docenti.size();i++){
-					if (docenti.get(i).getTelefono().equals(telefono)){
-						id_docente = docenti.get(i).getId_docente();
-					}
-				}
-
-				System.out.println(id_docente);
-
-				String id_commissione = null;
-
-				List<String> docenti_commissione = new ArrayList<String>();
-
-				for (int k=0;k<commissioni.size();k++){
-					if (commissioni.get(k).getId_esame().equals(id_esame)){
-						id_commissione = commissioni.get(k).getId_commissione();
-						docenti_commissione = commissioni.get(k).getId_docenti();
-					}
-				}
-
-
-				for (int j=0;j<docenti_commissione.size();j++){
-					if (docenti_commissione.get(j).equals(id_docente)){
-						commissione = "true";
-					}
-				}
-
-				System.out.println(commissione);
+				String isincommissione = DatabaseDidatticaMock.isInCommissione(telefono, id_esame);			
+						
+//				System.out.println(id_docente);
+//				System.out.println(isincommissione);
 
 				response = "Ok\n";
 
-				response += commissione + "\n";
+				response += isincommissione + "\n";
 
 
 				out.println(response);				
@@ -133,55 +100,22 @@ public class ServerMain {
 
 			}
 			else if(command.equals(QUERY_VISUALIZZA_PRENOTAZIONI)){
-				List<String> commissioni_docente = new ArrayList<String>();
-				for (int i=0;i<docenti.size();i++){
-					if (docenti.get(i).getTelefono().equals(telefono)){
-						id_docente = docenti.get(i).getId_docente();
-					}
-				}
-
-				List <String> esami_docente = new ArrayList<String>();
-
-				boolean trovato = false;
-				for (int k=0;k<commissioni.size();k++){
-					int j = 0;
-					trovato = false;
-					while (!trovato && j<commissioni.get(k).getId_docenti().size() ){
-						if (commissioni.get(k).getId_docenti().get(j).equals(id_docente)){
-							commissioni_docente.add(commissioni.get(k).getId_commissione());
-							esami_docente.add(commissioni.get(k).getId_esame());
-							trovato = true;
-						}
-						else {
-							j++;
-						}
-					}
-
-				}
-
-				int m = 0;
-				while (m<commissioni_docente.size()){
-					System.out.println(commissioni_docente.get(m));
-					System.out.println(esami_docente.get(m));
-					m++;
-				}
 				response="OK\n";
+				List<String> esami_docente = DatabaseDidatticaMock.getPrenotazioniEsamiDocente(telefono);
+				System.out.println(DatabaseDidatticaMock.esami_prenotati.size());
 				for (int i = 0;i<esami_docente.size();i++){
-					for (int k = 0; k<esami_prenotati.size();k++){
-						if (esami_docente.get(i).equals(esami_prenotati.get(k).getId_esame())){
-							response +=" "+ esami_prenotati.get(k).getId_esame() + " " +
-									esami_prenotati.get(k).getMatricola() + " " +
-									esami_prenotati.get(k).getData_prenotazione() + " " +
-									esami_prenotati.get(k).getData_prenotazione()+"\n";
+					for (int k = 0; k<DatabaseDidatticaMock.esami_prenotati.size();k++){
+						if (esami_docente.get(i).equals(DatabaseDidatticaMock.esami_prenotati.get(k).getId_esame())){
+							response +=" "+ DatabaseDidatticaMock.esami_prenotati.get(k).getId_esame() + " " +
+									DatabaseDidatticaMock.esami_prenotati.get(k).getMatricola() + " " +
+									DatabaseDidatticaMock.esami_prenotati.get(k).getData_prenotazione() + " " +
+									DatabaseDidatticaMock.esami_prenotati.get(k).getData_prenotazione()+"\n";
 						}
 					}
 				}
 
 				response +="\n";
 				out.println(response);
-
-
-
 
 
 			}

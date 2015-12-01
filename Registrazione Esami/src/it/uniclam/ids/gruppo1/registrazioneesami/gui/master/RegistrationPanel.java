@@ -25,7 +25,7 @@ public class RegistrationPanel extends JPanel{
 	private JTextField id_Esame = new JTextField("", 15);
 	private JTextField id_Studente = new JTextField("", 15);
 	private JTextField data_Appello = new JTextField("", 15);
-	private JTextField valutazione = new JTextField("", 15);
+	private JTextField valutazione = new JTextField("", 2);
 
 	private JButton verbalizza = new JButton("Verbalizza");
 	private JButton clear = new JButton("Pulisci");
@@ -152,55 +152,59 @@ public class RegistrationPanel extends JPanel{
 				try{
 
 					String voto = valutazione.getText();
-
-					System.out.println(voto.compareTo("17"));
-
-					if (voto.compareTo("18")<0){
+					if (voto.equalsIgnoreCase("")){
 						JOptionPane.showMessageDialog(RegistrationPanel.this, 
-								"Non si può inserire un voto inferiore a 18/30", "Error", JOptionPane.ERROR_MESSAGE);
+								"Il voto non può essere nullo!", "Error", JOptionPane.ERROR_MESSAGE);
 					}
-					else if (voto.compareTo("31")>0){
-						JOptionPane.showMessageDialog(RegistrationPanel.this, 
-								"Non si può inserire un voto superiore a 30/30 e lode", "Error", JOptionPane.ERROR_MESSAGE);
-					}
-					else {		
-						Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
+					else{
+						int voto_int = Integer.parseInt(voto);
 
-						BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-						PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+						if (voto_int < 18){
+							JOptionPane.showMessageDialog(RegistrationPanel.this, 
+									"Non si può inserire un voto inferiore a 18/30", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+						else if (voto_int > 31){
+							JOptionPane.showMessageDialog(RegistrationPanel.this, 
+									"Non si può inserire un voto superiore a 30/30 e lode", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+						else {		
+							Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
 
-						String req = 
-								ServerMain.QUERY_VERBALIZZA + "\n" + 
-										"id_esame:" + id_Esame.getText() + "\n" + 
-										"id_studente:" + id_Studente.getText() + "\n"+ 
-										"valutazione:" + valutazione.getText() + "\n"+ 
-										"data_appello:" + data_Appello.getText() + "\n"+ 
-										"\n";
+							BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+							PrintWriter out = new PrintWriter(s.getOutputStream(), true);
 
-						out.println(req);
+							String req = 
+									ServerMain.QUERY_VERBALIZZA + "\n" + 
+											"id_esame:" + id_Esame.getText() + "\n" + 
+											"id_studente:" + id_Studente.getText() + "\n"+ 
+											"valutazione:" + valutazione.getText() + "\n"+ 
+											"data_appello:" + data_Appello.getText() + "\n"+ 
+											"\n";
 
-
-
-						//System.out.println("Inviato: " + req);
-						String line = in.readLine();
-						if (line.equalsIgnoreCase(ServerMain.OK)){
-							line = in.readLine();
-							if (line.equals("true")) {
+							out.println(req);
 
 
-								ta.append("Verificato \n");
 
-								s.close();
+							//System.out.println("Inviato: " + req);
+							String line = in.readLine();
+							if (line.equalsIgnoreCase(ServerMain.OK)){
+								line = in.readLine();
+								if (line.equals("true")) {
 
-							}
 
-							else{
-								JOptionPane.showMessageDialog(RegistrationPanel.this, "Il Docente non fa parte della Commissione", "Error", JOptionPane.ERROR_MESSAGE);
-								s.close();
+									ta.append("Verificato \n");
+
+									s.close();
+
+								}
+
+								else{
+									JOptionPane.showMessageDialog(RegistrationPanel.this, "Il Docente non fa parte della Commissione", "Error", JOptionPane.ERROR_MESSAGE);
+									s.close();
+								}
 							}
 						}
 					}
-
 
 
 				} catch (IOException ioe){

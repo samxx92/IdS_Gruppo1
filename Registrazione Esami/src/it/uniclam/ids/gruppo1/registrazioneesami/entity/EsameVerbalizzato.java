@@ -34,6 +34,4 @@ public class EsameVerbalizzato {
 		this.confermato = confermato;
 	}
 
-
-
 }
