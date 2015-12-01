@@ -91,18 +91,18 @@ public class DatabaseDidatticaMock {
 
 		return esami;
 	}
-	
-	
-	
+
+
+
 	public static List<EsamePrenotato> getAllEsamiPrenotati(){
 		List<EsamePrenotato> esami_prenotati = new ArrayList<EsamePrenotato>();
 		EsamePrenotato ep1 = new EsamePrenotato("e1","m1","2015-12-12","2016-01-10");
 		EsamePrenotato ep2 = new EsamePrenotato("e2","m1","2015-12-01","2016-02-10");
 		esami_prenotati.add(ep1);
 		esami_prenotati.add(ep2);
-		
+
 		return esami_prenotati;
-		
+
 	}
 
 
@@ -134,7 +134,7 @@ public class DatabaseDidatticaMock {
 		return commissione;
 
 	}
-	
+
 	public static List<String> getPrenotazioniEsamiDocente (String telefono){
 		List <String> esami_docente = new ArrayList<String>();
 		List <String> commissioni_docente = new ArrayList<String>();
@@ -155,7 +155,7 @@ public class DatabaseDidatticaMock {
 			}
 
 		}
-		
+
 		for (int k = 0;k<commissioni_docente.size();k++){
 			System.out.println(commissioni_docente.get(k));
 			System.out.println(esami_docente.get(k));

@@ -34,15 +34,15 @@ public class ServerMain {
 		String response = null;
 		String telefono = null;
 		String id_docente = null;
-		
-		
-//		DatabaseDidatticaMock db_didattica = new DatabaseDidatticaMock();
-//		List<Commissione> commissioni = db_didattica.getAllCommissioni();
-//		List<Docente> docenti = db_didattica.getAllDocenti();
-//		List <Esame> esami = db_didattica.getAllEsami();
-//      List <EsamePrenotato> esami_prenotati = db_didattica.getAllExam();
-		
-		
+
+
+		//		DatabaseDidatticaMock db_didattica = new DatabaseDidatticaMock();
+		//		List<Commissione> commissioni = db_didattica.getAllCommissioni();
+		//		List<Docente> docenti = db_didattica.getAllDocenti();
+		//		List <Esame> esami = db_didattica.getAllEsami();
+		//      List <EsamePrenotato> esami_prenotati = db_didattica.getAllExam();
+
+
 		while(true){
 			response = "Error\n\n";
 			System.out.println("Server in ascolto sulla porta 5555");
@@ -86,9 +86,9 @@ public class ServerMain {
 				String data_appello = in.readLine().replace("data_appello:", "").replace("\n", "");
 
 				String isincommissione = DatabaseDidatticaMock.isInCommissione(telefono, id_esame);			
-						
-//				System.out.println(id_docente);
-//				System.out.println(isincommissione);
+
+				//				System.out.println(id_docente);
+				//				System.out.println(isincommissione);
 
 				response = "Ok\n";
 
@@ -108,7 +108,7 @@ public class ServerMain {
 						if (esami_docente.get(i).equals(DatabaseDidatticaMock.esami_prenotati.get(k).getId_esame())){
 							response +=" "+ DatabaseDidatticaMock.esami_prenotati.get(k).getId_esame() + " " +
 									DatabaseDidatticaMock.esami_prenotati.get(k).getMatricola() + " " +
-									DatabaseDidatticaMock.esami_prenotati.get(k).getData_prenotazione() + " " +
+									DatabaseDidatticaMock.esami_prenotati.get(k).getData_appello() + " " +
 									DatabaseDidatticaMock.esami_prenotati.get(k).getData_prenotazione()+"\n";
 						}
 					}
