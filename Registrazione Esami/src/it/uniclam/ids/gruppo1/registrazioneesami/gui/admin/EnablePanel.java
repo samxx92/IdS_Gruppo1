@@ -24,6 +24,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -44,7 +45,6 @@ public class EnablePanel extends JPanel{
 	private JButton back = new JButton("Indietro");
 
 	private JTextArea ta = new JTextArea(12, 12);
-
 	public EnablePanel(ClientMainGUI clientGUI){
 		//JPanel pane = new JPanel(new GridBagLayout());
 
@@ -202,10 +202,37 @@ public class EnablePanel extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				try{
+					Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
 
+					BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+					PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+
+					String req = ServerMain.QUERY_RECUPERA_PASSWORD + "\n" + 
+							telefono.getText() + "\n" + "\n";
+
+					out.println(req);
+
+					//System.out.println("Inviato: " + req);
+					String line = in.readLine();
+					if (line.equalsIgnoreCase(ServerMain.OK)){
+						line = in.readLine();
+						if (line.isEmpty()){
+							JOptionPane.showMessageDialog(EnablePanel.this, "Il Docente non è abilitato!", "Error", JOptionPane.ERROR_MESSAGE);;
+							s.close();
+						}
+						else{
+							//password.setText(line);
+							JOptionPane.showMessageDialog(EnablePanel.this, "La password è: " + line, "Password", JOptionPane.INFORMATION_MESSAGE);;
+							s.close();								
+						}
+					}
+				} catch (IOException ioe){
+					JOptionPane.showMessageDialog(EnablePanel.this, "Error in communication with server!", "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
+
 
 		back.addActionListener(new ActionListener() {
 

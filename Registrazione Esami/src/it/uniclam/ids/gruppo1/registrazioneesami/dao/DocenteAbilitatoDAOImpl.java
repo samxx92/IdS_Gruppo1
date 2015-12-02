@@ -46,7 +46,7 @@ public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO{
 		return abilitato;	
 
 	}
-	
+
 	@Override
 	public List<String> getAllDocentiAbilitati() throws DAOException{
 		List<String> docenti_abilitati = new ArrayList<String>();
@@ -67,7 +67,7 @@ public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO{
 		}
 		return docenti_abilitati;
 	}
-	
+
 	@Override
 	public void addDocenteAbilitato (String telefono, String password) throws DAOException{
 		try{
@@ -76,7 +76,7 @@ public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO{
 			String sql = "insert into docentiabilitati values ('" + telefono + "','" +password +"');" ;
 
 			st.executeUpdate(sql);
-			
+
 			DAOSettings.closeStatement(st);
 
 		} catch (SQLException sq){
@@ -84,4 +84,32 @@ public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO{
 		}
 	}
 
+	public String recoveryPassword (String telefono) throws DAOException{
+		String password = null;
+		try{
+			Statement st= DAOSettings.getStatement();
+
+			String sql = "select password from docentiabilitati where telefono='" + telefono + "';";
+			
+			System.out.println(sql);
+			
+			ResultSet rs = st.executeQuery(sql);
+			
+			while(rs.next()){
+				password = rs.getString("password");
+			}
+			
+			System.out.println(password);
+
+			DAOSettings.closeStatement(st);
+
+		} catch (SQLException sq){
+			throw new DAOException("In recoveryPassword(): " + sq.getMessage());
+		}
+
+		return password;
+
+	}
+
 }
+

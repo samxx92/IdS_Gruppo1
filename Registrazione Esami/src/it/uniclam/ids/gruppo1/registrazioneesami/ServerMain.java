@@ -31,6 +31,10 @@ public class ServerMain {
 	public static String QUERY_VISUALIZZA_DOCENTI_ABILITATI = "req_query_visualizza_docenti_abilitati";
 
 	public static String QUERY_ABILITA_DOCENTE = "req_query_abilita_docente";
+	
+	public static String QUERY_RECUPERA_PASSWORD = "req_query_recupera_password";
+	
+	public static String QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE = "req_query_visualizza_verbalizzazioni_giornaliere";
 
 	public static String 	HOST = "localhost";
 	public static int 		PORT = 5555;
@@ -174,6 +178,27 @@ public class ServerMain {
 				response +="\n";
 				out.println(response);
 
+			}
+			else if (command.equals(QUERY_RECUPERA_PASSWORD)){
+				response="OK\n";
+				String password;
+				String telefono_abilitazione = in.readLine().replace("\n", "");
+				password = DocenteAbilitatoDAOImpl.getInstance().recoveryPassword(telefono_abilitazione);
+				response +=password+"\n";
+				response +="\n";
+				out.println(response);
+			}
+			else if (command.equals(QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE)){
+				response="OK\n";
+				List<EsameVerbalizzato> ev = new ArrayList<EsameVerbalizzato>();
+				ev = EsameVerbalizzatoDAOImpl.getInstance().getAllVerbalizzazioniGiornaliere();
+				for (int i = 0; i < ev.size(); i++){
+					response += ev.get(i).getId_esame() + " " + ev.get(i).getId_docente() + " " +
+				ev.get(i).getId_studente() + " " + ev.get(i).getValutazione() + " " + ev.get(i).getData_appello() + "\n";
+				}
+				
+				response +="\n";
+				out.println(response);
 			}
 
 

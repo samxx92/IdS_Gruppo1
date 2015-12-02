@@ -6,5 +6,6 @@ public interface DocenteAbilitatoDAO {
 	public String searchDocenteAbilitato (String telefono, String password) throws DAOException;
 	public List<String> getAllDocentiAbilitati() throws DAOException;
 	void addDocenteAbilitato(String telefono, String password) throws DAOException;
+	public String recoveryPassword (String telefono) throws DAOException;
 
 }
