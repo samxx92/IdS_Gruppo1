@@ -51,6 +51,11 @@ public class DailyExamPanel extends JPanel{
 		this.add(jp, c);
 
 
+		
+		
+		
+		
+		
 		back.addActionListener(new ActionListener() {
 
 			@Override
