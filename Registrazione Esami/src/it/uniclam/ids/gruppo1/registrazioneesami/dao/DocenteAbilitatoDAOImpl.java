@@ -67,5 +67,21 @@ public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO{
 		}
 		return docenti_abilitati;
 	}
+	
+	@Override
+	public void addDocenteAbilitato (String telefono, String password) throws DAOException{
+		try{
+			Statement st = DAOSettings.getStatement();
+
+			String sql = "insert into docentiabilitati values ('" + telefono + "','" +password +"');" ;
+
+			st.executeUpdate(sql);
+			
+			DAOSettings.closeStatement(st);
+
+		} catch (SQLException sq){
+			throw new DAOException("In addDocenteAbilitato(): " + sq.getMessage());
+		}
+	}
 
 }

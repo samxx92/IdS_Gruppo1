@@ -52,11 +52,13 @@ public class DatabaseDidatticaMock {
 		Docente d1 = new Docente ("id1",null,null,"1",null);
 		Docente d2 = new Docente ("id2",null,null,"2",null);
 		Docente d3 = new Docente ("id3",null,null,"3",null);
+		Docente d4 = new Docente ("id4",null,null,"4",null);
 
 
 		docenti.add(d1);
 		docenti.add(d2);
 		docenti.add(d3);
+		docenti.add(d4);
 
 		return docenti;
 	}
@@ -159,8 +161,8 @@ public class DatabaseDidatticaMock {
 		}
 		return esami_docente;
 	}
-	
-	
+
+
 	public static boolean isEsamePrenotato (EsameVerbalizzato e, String telefono){
 		String verifica1 = e.getId_esame() + " " + e.getId_studente() + " " + e.getData_appello();
 		List<String> esami_docente = DatabaseDidatticaMock.getPrenotazioniEsamiDocente(telefono);
@@ -180,7 +182,7 @@ public class DatabaseDidatticaMock {
 		}
 		return trovato;
 	}
-	
+
 	public static List<Docente> getAllInfoDocente (List<String> docenti_abilitati){
 		List<Docente> info_docenti_abilitati = new ArrayList<Docente>();
 		for (int i = 0; i < docenti_abilitati.size(); i++){
@@ -193,19 +195,21 @@ public class DatabaseDidatticaMock {
 		}
 		return info_docenti_abilitati;
 	}
-	
+
 	public static boolean isTelefonoInDocentiAndNotInDocentiAbilitati (String telefono_abilitazione) throws DAOException{
+		boolean in_docenti_abilitati = false;
 		boolean trovato = false;
-		for (int i = 0;i<docenti.size();i++){
-			if (docenti.get(i).getTelefono().equalsIgnoreCase("telefono_abilitazione")){
-				trovato = true;
+		List<String> docenti_abilitati = DocenteAbilitatoDAOImpl.getInstance().getAllDocentiAbilitati();
+		for (int i = 0; i<docenti_abilitati.size();i++){
+			if (docenti_abilitati.get(i).equalsIgnoreCase(telefono_abilitazione)){
+				in_docenti_abilitati = true;
 			}
 		}
-		if (trovato){
-			List<String> docenti_abilitati = DocenteAbilitatoDAOImpl.getInstance().getAllDocentiAbilitati();
-			for (int i = 0; i<docenti_abilitati.size();i++){
-				if (docenti_abilitati.get(i).equalsIgnoreCase(telefono_abilitazione)){
-					trovato = false;
+
+		if (!in_docenti_abilitati){
+			for (int i = 0;i<docenti.size();i++){
+				if (docenti.get(i).getTelefono().equalsIgnoreCase(telefono_abilitazione)){
+					trovato = true;
 				}
 			}
 		}

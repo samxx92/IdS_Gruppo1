@@ -128,7 +128,6 @@ public class EnablePanel extends JPanel{
 			String line = in.readLine();
 			if (line.equalsIgnoreCase(ServerMain.OK)){
 				line = in.readLine();
-				System.out.println(line);
 				if (line.isEmpty()){
 					ta.append("Non ci sono Docenti Abilitati");
 					s.close();
@@ -178,39 +177,20 @@ public class EnablePanel extends JPanel{
 						String line = in.readLine();
 						if (line.equalsIgnoreCase(ServerMain.OK)){
 							line = in.readLine();
-							if (line.equals("true")) {
-								ta.append("Verificato \n");
-
-								line = in.readLine();
-								if(line.equals("true")){
-									ta.append("L'esame è stato trovato nelle prenotazioni\n");
-									line = in.readLine();
-									if(line.equals("true")){
-										ta.append("L'esame è stato verbalizzato!");
-									}
-									else{
-										JOptionPane.showMessageDialog(RegistrationPanel.this, "L'esame è già presente nel database!", "Error", JOptionPane.ERROR_MESSAGE);
-									}
-								}
-								else{
-									JOptionPane.showMessageDialog(RegistrationPanel.this, "L'esame non è stato trovato!", "Error", JOptionPane.ERROR_MESSAGE);
-								}
-
-								s.close();
-
+							if (line.equalsIgnoreCase("gia_abilitato")){
+								JOptionPane.showMessageDialog(EnablePanel.this, "Il Docente è già abilitato o non fa parte dell'Ateneo!", "Error", JOptionPane.ERROR_MESSAGE);
 							}
-
 							else{
-								JOptionPane.showMessageDialog(RegistrationPanel.this, "Il Docente non fa parte della Commissione", "Error", JOptionPane.ERROR_MESSAGE);
-								s.close();
+								ta.append(line+"\n");
 							}
 
 						}
+						s.close();
 					}
 
 
 				} catch (IOException ioe){
-					JOptionPane.showMessageDialog(RegistrationPanel.this, "Error in communication with server!", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(EnablePanel.this, "Error in communication with server!", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}

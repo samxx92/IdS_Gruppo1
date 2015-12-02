@@ -13,6 +13,7 @@ import com.mysql.fabric.xmlrpc.base.Array;
 import it.uniclam.ids.gruppo1.registrazioneesami.dao.*;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.Commissione;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.Docente;
+import it.uniclam.ids.gruppo1.registrazioneesami.entity.DocenteAbilitato;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.Esame;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.EsamePrenotato;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.EsameVerbalizzato;
@@ -30,7 +31,7 @@ public class ServerMain {
 	public static String QUERY_VISUALIZZA_DOCENTI_ABILITATI = "req_query_visualizza_docenti_abilitati";
 
 	public static String QUERY_ABILITA_DOCENTE = "req_query_abilita_docente";
-	
+
 	public static String 	HOST = "localhost";
 	public static int 		PORT = 5555;
 
@@ -134,7 +135,6 @@ public class ServerMain {
 			else if(command.equals(QUERY_VISUALIZZA_DOCENTI_ABILITATI)){
 				response="OK\n";
 				List<String> docenti_abilitati = DocenteAbilitatoDAOImpl.getInstance().getAllDocentiAbilitati();
-				System.out.println(docenti_abilitati.size());
 				List<Docente> info_docenti_abilitati = DatabaseDidatticaMock.getAllInfoDocente(docenti_abilitati);
 				if (info_docenti_abilitati.size()>0){
 					for (int k = 0; k<info_docenti_abilitati.size();k++){
@@ -150,8 +150,30 @@ public class ServerMain {
 				String telefono_abilitazione = in.readLine().replace("telefono:", "").replace("\n", "");
 				String password = in.readLine().replace("password:", "").replace("\n", "");
 				boolean trovato = false;
-				
-				
+				trovato = DatabaseDidatticaMock.isTelefonoInDocentiAndNotInDocentiAbilitati(telefono_abilitazione);
+				if (trovato){
+					DocenteAbilitatoDAOImpl.getInstance().addDocenteAbilitato(telefono_abilitazione, password);
+					Docente da = new Docente();
+					for (int i = 0;i< DatabaseDidatticaMock.docenti.size();i++){
+						if (DatabaseDidatticaMock.docenti.get(i).getTelefono().equalsIgnoreCase(telefono_abilitazione)){
+							da = DatabaseDidatticaMock.docenti.get(i);
+						}
+					}
+
+
+					response +=da.getId_docente() + " " + 
+							da.getTelefono()+ "\n";
+
+
+				}
+				else{
+					response += "gia_abilitato\n";
+				}
+
+
+				response +="\n";
+				out.println(response);
+
 			}
 
 
