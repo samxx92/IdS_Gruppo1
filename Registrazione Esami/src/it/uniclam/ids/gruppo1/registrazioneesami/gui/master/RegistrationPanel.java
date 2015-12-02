@@ -21,7 +21,11 @@ import javax.swing.JTextField;
 import it.uniclam.ids.gruppo1.registrazioneesami.ClientMainGUI;
 import it.uniclam.ids.gruppo1.registrazioneesami.ServerMain;
 
-public class RegistrationPanel extends JPanel{
+public class RegistrationPanel extends JPanel {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField id_Esame = new JTextField("", 15);
 	private JTextField id_Studente = new JTextField("", 15);
 	private JTextField data_Appello = new JTextField("", 15);
@@ -33,16 +37,14 @@ public class RegistrationPanel extends JPanel{
 
 	private JTextArea ta = new JTextArea(12, 12);
 
+	public RegistrationPanel(ClientMainGUI clientGUI) {
+		// JPanel pane = new JPanel(new GridBagLayout());
 
-	public RegistrationPanel(ClientMainGUI clientGUI){
-		//JPanel pane = new JPanel(new GridBagLayout());
-
-		//Container pane = getContentPane();
-		// Definisci un oggetto gridbagconstraints per la specifica 
+		// Container pane = getContentPane();
+		// Definisci un oggetto gridbagconstraints per la specifica
 		// dei vincoli dell'interfaccia
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
-
 
 		// Campo id_esame
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -66,7 +68,6 @@ public class RegistrationPanel extends JPanel{
 		c.gridy = 1;
 		this.add(id_Studente, c);
 
-
 		// Campo data_appello
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
@@ -89,33 +90,32 @@ public class RegistrationPanel extends JPanel{
 		c.gridy = 3;
 		this.add(valutazione, c);
 
-
 		// Campo verbalizza
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 4;
-		c.gridwidth = 5;   //2 columns wide
+		c.gridwidth = 5; // 2 columns wide
 		this.add(verbalizza, c);
 
 		// Campo back
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 8;
-		c.gridwidth = 2;   //2 columns wide
+		c.gridwidth = 2; // 2 columns wide
 		this.add(back, c);
 
 		// Campo risposta (label)
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 5;
-		c.gridwidth = 4;   //2 columns wide
+		c.gridwidth = 4; // 2 columns wide
 		this.add(new JLabel("Risposta:"), c);
 
 		// Campo risposta
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 6;
-		c.gridwidth = 8;   //2 columns wide
+		c.gridwidth = 8; // 2 columns wide
 		JScrollPane jp = new JScrollPane(ta);
 		this.add(jp, c);
 
@@ -123,11 +123,10 @@ public class RegistrationPanel extends JPanel{
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 4;
 		c.gridy = 4;
-		c.gridwidth = 2;   //2 columns wide
+		c.gridwidth = 2; // 2 columns wide
 		this.add(clear, c);
 
-
-		clear.addActionListener(new ActionListener(){
+		clear.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ta.setText("");
@@ -143,81 +142,79 @@ public class RegistrationPanel extends JPanel{
 			}
 		});
 
-
 		verbalizza.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try{
+				try {
 
 					String voto = valutazione.getText();
-					if (voto.equalsIgnoreCase("")){
-						JOptionPane.showMessageDialog(RegistrationPanel.this, 
-								"Il voto non può essere nullo!", "Error", JOptionPane.ERROR_MESSAGE);
-					}
-					else{
+					if (voto.equalsIgnoreCase("") || id_Esame.getText().equalsIgnoreCase("") ||
+							id_Studente.getText().equalsIgnoreCase("") || data_Appello.getText().equalsIgnoreCase("")) {
+						JOptionPane.showMessageDialog(RegistrationPanel.this, "I campi non possono essere nulli!", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
 						int voto_int = Integer.parseInt(voto);
 
-						if (voto_int < 18){
-							JOptionPane.showMessageDialog(RegistrationPanel.this, 
-									"Non si può inserire un voto inferiore a 18/30", "Error", JOptionPane.ERROR_MESSAGE);
-						}
-						else if (voto_int > 31){
-							JOptionPane.showMessageDialog(RegistrationPanel.this, 
-									"Non si può inserire un voto superiore a 30/30 e lode", "Error", JOptionPane.ERROR_MESSAGE);
-						}
-						else {		
+						if (voto_int < 18) {
+							JOptionPane.showMessageDialog(RegistrationPanel.this,
+									"Non si può inserire un voto inferiore a 18/30", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						} else if (voto_int > 31) {
+							JOptionPane.showMessageDialog(RegistrationPanel.this,
+									"Non si può inserire un voto superiore a 30/30 e lode", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						} else {
 							Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
 
 							BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
 							PrintWriter out = new PrintWriter(s.getOutputStream(), true);
 
-							String req = 
-									ServerMain.QUERY_VERBALIZZA + "\n" + 
-											"id_esame:" + id_Esame.getText() + "\n" + 
-											"id_studente:" + id_Studente.getText() + "\n"+ 
-											"valutazione:" + valutazione.getText() + "\n"+ 
-											"data_appello:" + data_Appello.getText() + "\n"+ 
-											"\n";
+							String req = ServerMain.QUERY_VERBALIZZA + "\n" + "id_esame:" + id_Esame.getText() + "\n"
+									+ "id_studente:" + id_Studente.getText() + "\n" + "valutazione:"
+									+ valutazione.getText() + "\n" + "data_appello:" + data_Appello.getText() + "\n"
+									+ "\n";
 
 							out.println(req);
 
 							String line = in.readLine();
-							if (line.equalsIgnoreCase(ServerMain.OK)){
+							if (line.equalsIgnoreCase(ServerMain.OK)) {
 								line = in.readLine();
 								if (line.equals("true")) {
-									ta.append("Verificato \n");
-
+									
 									line = in.readLine();
-									if(line.equals("true")){
+									if (line.equals("true")) {
 										ta.append("L'esame è stato trovato nelle prenotazioni\n");
 										line = in.readLine();
-										if(line.equals("true")){
+										if (line.equals("true")) {
 											ta.append("L'esame è stato verbalizzato!");
+										} else {
+											JOptionPane.showMessageDialog(RegistrationPanel.this,
+													"L'esame è già presente nel database!", "Error",
+													JOptionPane.ERROR_MESSAGE);
 										}
-										else{
-											JOptionPane.showMessageDialog(RegistrationPanel.this, "L'esame è già presente nel database!", "Error", JOptionPane.ERROR_MESSAGE);
-										}
-									}
-									else{
-										JOptionPane.showMessageDialog(RegistrationPanel.this, "L'esame non è stato trovato!", "Error", JOptionPane.ERROR_MESSAGE);
+									} else {
+										JOptionPane.showMessageDialog(RegistrationPanel.this,
+												"L'esame non è stato trovato!", "Error", JOptionPane.ERROR_MESSAGE);
 									}
 
 									s.close();
 
 								}
 
-								else{
-									JOptionPane.showMessageDialog(RegistrationPanel.this, "Il Docente non fa parte della Commissione", "Error", JOptionPane.ERROR_MESSAGE);
+								else {
+									JOptionPane.showMessageDialog(RegistrationPanel.this,
+											"I dati della verbalizzazione non sono corretti!", "Error",
+											JOptionPane.ERROR_MESSAGE);
 									s.close();
 								}
 							}
 						}
 					}
 
-
-				} catch (IOException ioe){
-					JOptionPane.showMessageDialog(RegistrationPanel.this, "Error in communication with server!", "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (IOException ioe) {
+					JOptionPane.showMessageDialog(RegistrationPanel.this, "Error in communication with server!",
+							"Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

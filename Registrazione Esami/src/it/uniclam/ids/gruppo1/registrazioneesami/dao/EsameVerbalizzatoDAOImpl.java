@@ -13,12 +13,13 @@ import it.uniclam.ids.gruppo1.registrazioneesami.entity.EsameVerbalizzato;
 
 public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 
-	private EsameVerbalizzatoDAOImpl(){}
+	private EsameVerbalizzatoDAOImpl() {
+	}
 
 	private static EsameVerbalizzatoDAO dao = null;
 
-	public static EsameVerbalizzatoDAO getInstance(){
-		if (dao == null){
+	public static EsameVerbalizzatoDAO getInstance() {
+		if (dao == null) {
 			dao = new EsameVerbalizzatoDAOImpl();
 		}
 		return dao;
@@ -30,66 +31,65 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 		int currentDay = localCalendar.get(Calendar.DATE);
 		int currentMonth = localCalendar.get(Calendar.MONTH) + 1;
 		int currentYear = localCalendar.get(Calendar.YEAR);
-		String data = currentYear +"-"+currentMonth+"-"+currentDay;
+		String data = currentYear + "-" + currentMonth + "-" + currentDay;
 		Date date = java.sql.Date.valueOf(data);
-		String id_verbalizzazione = e.getId_esame()+e.getId_studente();
+		String id_verbalizzazione = e.getId_esame() + e.getId_studente();
 		boolean verbalizzato = false;
-		try{
+		try {
 			Statement st = DAOSettings.getStatement();
 
-			String sqlsearch = "select * from esamiverbalizzati where id_verbalizzazione ='" + e.getId_esame() + e.getId_studente() + "';";
+			String sqlsearch = "select * from esamiverbalizzati where id_verbalizzazione ='" + e.getId_esame()
+					+ e.getId_studente() + "';";
 
 			ResultSet rs = st.executeQuery(sqlsearch);
 			int row = 0;
-			while (rs.next()){
+			while (rs.next()) {
 				row++;
 			}
-			if (row == 0){
+			if (row == 0) {
 				String sql = "insert into EsamiVerbalizzati (id_esame,id_docente,id_studente,voto,data_appello,data_verbalizzazione, id_verbalizzazione) values ('";
-				sql += e.getId_esame() + "','"+ e.getId_docente() + "','" +
-						e.getId_studente() + "','" + e.getValutazione() + "','" + e.getData_appello() + "','" 
-						+ date + "','" + id_verbalizzazione  + "');" ;
+				sql += e.getId_esame() + "','" + e.getId_docente() + "','" + e.getId_studente() + "','"
+						+ e.getValutazione() + "','" + e.getData_appello() + "','" + date + "','" + id_verbalizzazione
+						+ "');";
 
 				st.executeUpdate(sql);
 				verbalizzato = true;
-			}	
-			else {
+			} else {
 				verbalizzato = false;
 			}
 			DAOSettings.closeStatement(st);
 
-		} catch (SQLException sq){
+		} catch (SQLException sq) {
 			throw new DAOException("In verbalizzaEsame(): " + sq.getMessage());
 		}
 		return verbalizzato;
 
 	}
 
-	public List<EsameVerbalizzato> getAllVerbalizzazioniGiornaliere() throws DAOException{
+	@Override
+	public List<EsameVerbalizzato> getAllVerbalizzazioniGiornaliere() throws DAOException {
 		Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
 		int currentDay = localCalendar.get(Calendar.DATE);
 		int currentMonth = localCalendar.get(Calendar.MONTH) + 1;
 		int currentYear = localCalendar.get(Calendar.YEAR);
-		String data = currentYear +"-"+currentMonth+"-"+currentDay;
+		String data = currentYear + "-" + currentMonth + "-" + currentDay;
 		Date date = java.sql.Date.valueOf(data);
 		List<EsameVerbalizzato> ev = new ArrayList<EsameVerbalizzato>();
-		try{
+		try {
 			Statement st = DAOSettings.getStatement();
 
 			String sqlsearch = "select * from esamiverbalizzati where data_verbalizzazione ='" + date + "';";
 
 			ResultSet rs = st.executeQuery(sqlsearch);
-			int row = 0;
-			while (rs.next()){
-				EsameVerbalizzato temp = new EsameVerbalizzato(rs.getString("id_esame"),
-						rs.getString("id_docente"),rs.getString("id_studente"),
-						rs.getString("data_appello"),rs.getString("voto"));
+			while (rs.next()) {
+				EsameVerbalizzato temp = new EsameVerbalizzato(rs.getString("id_esame"), rs.getString("id_docente"),
+						rs.getString("id_studente"), rs.getString("data_appello"), rs.getString("voto"));
 				ev.add(temp);
 			}
 
 			DAOSettings.closeStatement(st);
 
-		} catch (SQLException sq){
+		} catch (SQLException sq) {
 			throw new DAOException("In getAllVerbalizzazioniGiornaliere(): " + sq.getMessage());
 		}
 		return ev;

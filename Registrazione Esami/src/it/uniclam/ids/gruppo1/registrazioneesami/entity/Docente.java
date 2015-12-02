@@ -1,8 +1,5 @@
 package it.uniclam.ids.gruppo1.registrazioneesami.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Docente {
 	private String id_docente;
 	private String nome;
@@ -10,16 +7,16 @@ public class Docente {
 	private String telefono;
 	private String mail;
 
-	public Docente() {}
+	public Docente() {
+	}
 
-	public Docente(String id_docente, String nome, String cognome, String telefono, String mail){
+	public Docente(String id_docente, String nome, String cognome, String telefono, String mail) {
 		this.id_docente = id_docente;
 		this.nome = nome;
 		this.cognome = cognome;
 		this.telefono = telefono;
 		this.mail = mail;
 	}
-
 
 	public String getId_docente() {
 		return id_docente;

@@ -1,20 +1,20 @@
 package it.uniclam.ids.gruppo1.registrazioneesami.dao;
 
-import it.uniclam.ids.gruppo1.registrazioneesami.entity.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO{
+public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO {
 
-	private DocenteAbilitatoDAOImpl(){}
+	private DocenteAbilitatoDAOImpl() {
+	}
 
 	private static DocenteAbilitatoDAO dao = null;
 
-	public static DocenteAbilitatoDAO getInstance(){
-		if (dao == null){
+	public static DocenteAbilitatoDAO getInstance() {
+		if (dao == null) {
 			dao = new DocenteAbilitatoDAOImpl();
 		}
 		return dao;
@@ -24,86 +24,87 @@ public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO{
 	public String searchDocenteAbilitato(String telefono, String password) throws DAOException {
 		String abilitato = "false";
 		int a = 0;
-		try{
+		try {
 			Statement st = DAOSettings.getStatement();
 
 			String sql = "select * from DocentiAbilitati where telefono='";
-			sql += telefono + "' and password ='" + password +"'";
+			sql += telefono + "' and password ='" + password + "'";
 
 			ResultSet rs = st.executeQuery(sql);
-			while(rs.next()){
+			while (rs.next()) {
 				a++;
 			}
 
 			DAOSettings.closeStatement(st);
 
-		} catch (SQLException sq){
+		} catch (SQLException sq) {
 			throw new DAOException("In searchDocenteAbilitato(): " + sq.getMessage());
 		}
-		if (a==1){
+		if (a == 1) {
 			abilitato = "true";
 		}
-		return abilitato;	
+		return abilitato;
 
 	}
 
 	@Override
-	public List<String> getAllDocentiAbilitati() throws DAOException{
+	public List<String> getAllDocentiAbilitati() throws DAOException {
 		List<String> docenti_abilitati = new ArrayList<String>();
-		try{
+		try {
 			Statement st = DAOSettings.getStatement();
 
 			String sql = "select * from DocentiAbilitati";
 
 			ResultSet rs = st.executeQuery(sql);
-			while(rs.next()){
+			while (rs.next()) {
 				docenti_abilitati.add(rs.getString("telefono"));
 			}
 
 			DAOSettings.closeStatement(st);
 
-		} catch (SQLException sq){
+		} catch (SQLException sq) {
 			throw new DAOException("In searchDocenteAbilitato(): " + sq.getMessage());
 		}
 		return docenti_abilitati;
 	}
 
 	@Override
-	public void addDocenteAbilitato (String telefono, String password) throws DAOException{
-		try{
+	public void addDocenteAbilitato(String telefono, String password) throws DAOException {
+		try {
 			Statement st = DAOSettings.getStatement();
 
-			String sql = "insert into docentiabilitati values ('" + telefono + "','" +password +"');" ;
+			String sql = "insert into docentiabilitati values ('" + telefono + "','" + password + "');";
 
 			st.executeUpdate(sql);
 
 			DAOSettings.closeStatement(st);
 
-		} catch (SQLException sq){
+		} catch (SQLException sq) {
 			throw new DAOException("In addDocenteAbilitato(): " + sq.getMessage());
 		}
 	}
 
-	public String recoveryPassword (String telefono) throws DAOException{
+	@Override
+	public String recoveryPassword(String telefono) throws DAOException {
 		String password = null;
-		try{
-			Statement st= DAOSettings.getStatement();
+		try {
+			Statement st = DAOSettings.getStatement();
 
 			String sql = "select password from docentiabilitati where telefono='" + telefono + "';";
-			
+
 			System.out.println(sql);
-			
+
 			ResultSet rs = st.executeQuery(sql);
-			
-			while(rs.next()){
+
+			while (rs.next()) {
 				password = rs.getString("password");
 			}
-			
+
 			System.out.println(password);
 
 			DAOSettings.closeStatement(st);
 
-		} catch (SQLException sq){
+		} catch (SQLException sq) {
 			throw new DAOException("In recoveryPassword(): " + sq.getMessage());
 		}
 
@@ -112,4 +113,3 @@ public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO{
 	}
 
 }
-

@@ -16,25 +16,26 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 import it.uniclam.ids.gruppo1.registrazioneesami.ClientMainGUI;
 import it.uniclam.ids.gruppo1.registrazioneesami.ServerMain;;
 
-public class ConfirmationAdminPanel extends JPanel{
+public class ConfirmationAdminPanel extends JPanel {
 
-
-	private JButton salva = new JButton("Salva");	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	private JButton salva = new JButton("Salva");
 	private JTextArea ta = new JTextArea(20, 50);
 
 	private JButton back = new JButton("Indietro");
 
+	public ConfirmationAdminPanel(ClientMainGUI clientGUI) {
+		// JPanel pane = new JPanel(new GridBagLayout());
 
-	public ConfirmationAdminPanel(ClientMainGUI clientGUI){
-		//JPanel pane = new JPanel(new GridBagLayout());
-
-		//Container pane = getContentPane();
-		// Definisci un oggetto gridbagconstraints per la specifica 
+		// Container pane = getContentPane();
+		// Definisci un oggetto gridbagconstraints per la specifica
 		// dei vincoli dell'interfaccia
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
@@ -43,22 +44,21 @@ public class ConfirmationAdminPanel extends JPanel{
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 3;
-		c.gridwidth = 2;   //2 columns wide
+		c.gridwidth = 2; // 2 columns wide
 		this.add(salva, c);
-
 
 		// Campo esami (label)
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 1;
-		c.gridwidth = 4;   //2 columns wide
+		c.gridwidth = 4; // 2 columns wide
 		this.add(new JLabel("Esami Verbalizzati in data odierna:"), c);
 
 		// Campo esami
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 2;
-		c.gridwidth = 8;   //2 columns wide
+		c.gridwidth = 8; // 2 columns wide
 		JScrollPane jp = new JScrollPane(ta);
 		this.add(jp, c);
 
@@ -66,11 +66,10 @@ public class ConfirmationAdminPanel extends JPanel{
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 3;
-		c.gridwidth = 2;   //2 columns wide
+		c.gridwidth = 2; // 2 columns wide
 		this.add(back, c);
 
-		
-		try{
+		try {
 			Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -79,39 +78,37 @@ public class ConfirmationAdminPanel extends JPanel{
 			String req = ServerMain.QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE + "\n" + "\n";
 
 			out.println(req);
-			//System.out.println("Inviato: " + req);
+			// System.out.println("Inviato: " + req);
 			String line = in.readLine();
-			if (line.equalsIgnoreCase(ServerMain.OK)){
+			if (line.equalsIgnoreCase(ServerMain.OK)) {
 				line = in.readLine();
-				if (line.isEmpty()){
-					JOptionPane.showMessageDialog(ConfirmationAdminPanel.this, "Non sono stati verbalizzati esami in giornata!", "Info", JOptionPane.INFORMATION_MESSAGE);
+				if (line.isEmpty()) {
+					JOptionPane.showMessageDialog(ConfirmationAdminPanel.this,
+							"Non sono stati verbalizzati esami in giornata!", "Info", JOptionPane.INFORMATION_MESSAGE);
 					s.close();
-				}
-				else{
-					while(!line.isEmpty()) {	
+				} else {
+					while (!line.isEmpty()) {
 
-						ta.append(line+"\n");
+						ta.append(line + "\n");
 						line = in.readLine();
 					}
 					s.close();
 				}
 			}
-		} catch (IOException ioe){
-			JOptionPane.showMessageDialog(ConfirmationAdminPanel.this, "Error in communication with server!", "Error", JOptionPane.ERROR_MESSAGE);
+		} catch (IOException ioe) {
+			JOptionPane.showMessageDialog(ConfirmationAdminPanel.this, "Error in communication with server!", "Error",
+					JOptionPane.ERROR_MESSAGE);
 		}
-		
-		
 
 		salva.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				// TODO
 
 			}
 		});
 
-		
 		back.addActionListener(new ActionListener() {
 
 			@Override
@@ -120,8 +117,6 @@ public class ConfirmationAdminPanel extends JPanel{
 
 			}
 		});
-
-
 
 	}
 

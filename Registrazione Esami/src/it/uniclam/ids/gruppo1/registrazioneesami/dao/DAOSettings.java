@@ -11,24 +11,21 @@ public class DAOSettings {
 	public final static String PWD = "root";
 	public final static String SCHEMA = "cellex";
 
-	static{
+	static {
 		try {
 			Class.forName(DRIVERNAME);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-
-	public static Statement getStatement() throws SQLException{
-		return DriverManager.getConnection("jdbc:mysql://" + HOST  + "/" + SCHEMA, USERNAME, PWD).createStatement();
+	public static Statement getStatement() throws SQLException {
+		return DriverManager.getConnection("jdbc:mysql://" + HOST + "/" + SCHEMA, USERNAME, PWD).createStatement();
 	}
 
-	public static void closeStatement(Statement st) throws SQLException{
+	public static void closeStatement(Statement st) throws SQLException {
 		st.getConnection().close();
 		st.close();
 	}
-
 
 }
