@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.uniclam.ids.gruppo1.registrazioneesami.dao.DAOException;
+import it.uniclam.ids.gruppo1.registrazioneesami.dao.DocenteAbilitatoDAOImpl;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.*;
 
 public class DatabaseDidatticaMock {
@@ -173,6 +175,37 @@ public class DatabaseDidatticaMock {
 					if (verifica1.equalsIgnoreCase(verifica2)){
 						trovato = true;
 					}
+				}
+			}
+		}
+		return trovato;
+	}
+	
+	public static List<Docente> getAllInfoDocente (List<String> docenti_abilitati){
+		List<Docente> info_docenti_abilitati = new ArrayList<Docente>();
+		for (int i = 0; i < docenti_abilitati.size(); i++){
+			for (int k = 0; k<docenti.size();k++){
+				if (docenti_abilitati.get(i).equalsIgnoreCase(docenti.get(k).getTelefono())){
+					Docente e = docenti.get(k);
+					info_docenti_abilitati.add(e);
+				}
+			}
+		}
+		return info_docenti_abilitati;
+	}
+	
+	public static boolean isTelefonoInDocentiAndNotInDocentiAbilitati (String telefono_abilitazione) throws DAOException{
+		boolean trovato = false;
+		for (int i = 0;i<docenti.size();i++){
+			if (docenti.get(i).getTelefono().equalsIgnoreCase("telefono_abilitazione")){
+				trovato = true;
+			}
+		}
+		if (trovato){
+			List<String> docenti_abilitati = DocenteAbilitatoDAOImpl.getInstance().getAllDocentiAbilitati();
+			for (int i = 0; i<docenti_abilitati.size();i++){
+				if (docenti_abilitati.get(i).equalsIgnoreCase(telefono_abilitazione)){
+					trovato = false;
 				}
 			}
 		}

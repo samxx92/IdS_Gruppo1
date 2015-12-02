@@ -46,5 +46,26 @@ public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO{
 		return abilitato;	
 
 	}
+	
+	@Override
+	public List<String> getAllDocentiAbilitati() throws DAOException{
+		List<String> docenti_abilitati = new ArrayList<String>();
+		try{
+			Statement st = DAOSettings.getStatement();
+
+			String sql = "select * from DocentiAbilitati";
+
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				docenti_abilitati.add(rs.getString("telefono"));
+			}
+
+			DAOSettings.closeStatement(st);
+
+		} catch (SQLException sq){
+			throw new DAOException("In searchDocenteAbilitato(): " + sq.getMessage());
+		}
+		return docenti_abilitati;
+	}
 
 }

@@ -30,7 +30,8 @@ import javax.swing.JTextField;
 import it.uniclam.ids.gruppo1.registrazioneesami.ClientMainGUI;
 import it.uniclam.ids.gruppo1.registrazioneesami.ServerMain;
 import it.uniclam.ids.gruppo1.registrazioneesami.gui.*;
-
+import it.uniclam.ids.gruppo1.registrazioneesami.gui.master.ExamReservationPanel;
+import it.uniclam.ids.gruppo1.registrazioneesami.gui.master.RegistrationPanel;
 import it.uniclam.ids.gruppo1.registrazioneesami.ClientMainGUI;
 
 public class EnablePanel extends JPanel{
@@ -114,6 +115,39 @@ public class EnablePanel extends JPanel{
 		c.gridwidth = 2;   //2 columns wide
 		this.add(back, c);
 
+		try{
+			Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
+
+			BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+			PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+
+			String req = ServerMain.QUERY_VISUALIZZA_DOCENTI_ABILITATI + "\n" + "\n";
+
+			out.println(req);
+			//System.out.println("Inviato: " + req);
+			String line = in.readLine();
+			if (line.equalsIgnoreCase(ServerMain.OK)){
+				line = in.readLine();
+				System.out.println(line);
+				if (line.isEmpty()){
+					ta.append("Non ci sono Docenti Abilitati");
+					s.close();
+				}
+				else{
+					while(!line.isEmpty()) {	
+
+						ta.append(line+"\n");
+						line = in.readLine();
+					}
+					s.close();
+				}
+			}
+
+
+
+		} catch (IOException ioe){
+			JOptionPane.showMessageDialog(EnablePanel.this, "Error in communication with server!", "Error", JOptionPane.ERROR_MESSAGE);
+		}
 
 
 
@@ -121,7 +155,63 @@ public class EnablePanel extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				try{
+
+					if (telefono.getText().equalsIgnoreCase("") || password.getText().equalsIgnoreCase("")){
+						JOptionPane.showMessageDialog(EnablePanel.this, 
+								"Nessun campo può essere nullo!", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					else{
+						Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
+
+						BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+						PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+
+						String req = 
+								ServerMain.QUERY_ABILITA_DOCENTE + "\n" + 
+										"telefono:" + telefono.getText() + "\n" + 
+										"password:" + password.getText() + "\n"+ 
+										"\n";
+
+						out.println(req);
+
+						String line = in.readLine();
+						if (line.equalsIgnoreCase(ServerMain.OK)){
+							line = in.readLine();
+							if (line.equals("true")) {
+								ta.append("Verificato \n");
+
+								line = in.readLine();
+								if(line.equals("true")){
+									ta.append("L'esame è stato trovato nelle prenotazioni\n");
+									line = in.readLine();
+									if(line.equals("true")){
+										ta.append("L'esame è stato verbalizzato!");
+									}
+									else{
+										JOptionPane.showMessageDialog(RegistrationPanel.this, "L'esame è già presente nel database!", "Error", JOptionPane.ERROR_MESSAGE);
+									}
+								}
+								else{
+									JOptionPane.showMessageDialog(RegistrationPanel.this, "L'esame non è stato trovato!", "Error", JOptionPane.ERROR_MESSAGE);
+								}
+
+								s.close();
+
+							}
+
+							else{
+								JOptionPane.showMessageDialog(RegistrationPanel.this, "Il Docente non fa parte della Commissione", "Error", JOptionPane.ERROR_MESSAGE);
+								s.close();
+							}
+
+						}
+					}
+
+
+				} catch (IOException ioe){
+					JOptionPane.showMessageDialog(RegistrationPanel.this, "Error in communication with server!", "Error", JOptionPane.ERROR_MESSAGE);
+				}
 
 			}
 		});

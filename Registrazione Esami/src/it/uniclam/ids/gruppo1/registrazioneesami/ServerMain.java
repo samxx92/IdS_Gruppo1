@@ -27,6 +27,10 @@ public class ServerMain {
 
 	public static String QUERY_VISUALIZZA_PRENOTAZIONI = "req_query_visualizza_prenotazioni";
 
+	public static String QUERY_VISUALIZZA_DOCENTI_ABILITATI = "req_query_visualizza_docenti_abilitati";
+
+	public static String QUERY_ABILITA_DOCENTE = "req_query_abilita_docente";
+	
 	public static String 	HOST = "localhost";
 	public static int 		PORT = 5555;
 
@@ -103,7 +107,7 @@ public class ServerMain {
 						}
 					}
 					response += response_temp + "\n";
-					
+
 				}
 				out.println(response);
 			}
@@ -127,6 +131,32 @@ public class ServerMain {
 
 
 			}
+			else if(command.equals(QUERY_VISUALIZZA_DOCENTI_ABILITATI)){
+				response="OK\n";
+				List<String> docenti_abilitati = DocenteAbilitatoDAOImpl.getInstance().getAllDocentiAbilitati();
+				System.out.println(docenti_abilitati.size());
+				List<Docente> info_docenti_abilitati = DatabaseDidatticaMock.getAllInfoDocente(docenti_abilitati);
+				if (info_docenti_abilitati.size()>0){
+					for (int k = 0; k<info_docenti_abilitati.size();k++){
+						response +=info_docenti_abilitati.get(k).getId_docente() + " " + 
+								info_docenti_abilitati.get(k).getTelefono()+ "\n";
+					}
+				}
+				response +="\n";
+				out.println(response);
+			}
+			else if(command.equals(QUERY_ABILITA_DOCENTE)){
+				response="OK\n";
+				String telefono_abilitazione = in.readLine().replace("telefono:", "").replace("\n", "");
+				String password = in.readLine().replace("password:", "").replace("\n", "");
+				boolean trovato = false;
+				
+				
+			}
+
+
+
+
 		}
 	}
 }
