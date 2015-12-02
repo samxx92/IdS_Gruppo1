@@ -7,5 +7,5 @@ import it.uniclam.ids.gruppo1.registrazioneesami.entity.EsameVerbalizzato;
 public interface EsameVerbalizzatoDAO {
 	public boolean verbalizzaEsame(EsameVerbalizzato e) throws DAOException;
 
-	public List<EsameVerbalizzato> getAllVerbalizzazioniGiornaliere() throws DAOException;
+	public List<EsameVerbalizzato> getAllVerbalizzazioniGiornaliere(String id_docente) throws DAOException;
 }

@@ -67,7 +67,7 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 	}
 
 	@Override
-	public List<EsameVerbalizzato> getAllVerbalizzazioniGiornaliere() throws DAOException {
+	public List<EsameVerbalizzato> getAllVerbalizzazioniGiornaliere(String id_docente) throws DAOException {
 		Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
 		int currentDay = localCalendar.get(Calendar.DATE);
 		int currentMonth = localCalendar.get(Calendar.MONTH) + 1;
@@ -78,7 +78,10 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 		try {
 			Statement st = DAOSettings.getStatement();
 
-			String sqlsearch = "select * from esamiverbalizzati where data_verbalizzazione ='" + date + "';";
+			String sqlsearch = "select * from esamiverbalizzati where data_verbalizzazione ='" + date + "'";
+			if (!id_docente.equalsIgnoreCase("")){
+				sqlsearch += " and id_docente ='" + id_docente + "'";
+			}
 
 			ResultSet rs = st.executeQuery(sqlsearch);
 			while (rs.next()) {

@@ -32,6 +32,8 @@ public class ServerMain {
 
 	public static String QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE = "req_query_visualizza_verbalizzazioni_giornaliere";
 
+	public static String QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE_DOCENTE = "req_query_visualizza_verbalizazioni_giornaliere_docente";
+	
 	public static String HOST = "localhost";
 	public static int PORT = 5555;
 
@@ -174,11 +176,24 @@ public class ServerMain {
 				out.println(response);
 			} else if (command.equals(QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE)) {
 				response = "OK\n";
+				String empty ="";
 				List<EsameVerbalizzato> ev = new ArrayList<EsameVerbalizzato>();
-				ev = EsameVerbalizzatoDAOImpl.getInstance().getAllVerbalizzazioniGiornaliere();
+				ev = EsameVerbalizzatoDAOImpl.getInstance().getAllVerbalizzazioniGiornaliere(empty);
 				for (int i = 0; i < ev.size(); i++) {
 					response += ev.get(i).getId_esame() + " " + ev.get(i).getId_docente() + " "
 							+ ev.get(i).getId_studente() + " " + ev.get(i).getValutazione() + " "
+							+ ev.get(i).getData_appello() + "\n";
+				}
+
+				response += "\n";
+				out.println(response);
+			}
+			else if (command.equals(QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE_DOCENTE)) {
+				response = "OK\n";
+				List<EsameVerbalizzato> ev = new ArrayList<EsameVerbalizzato>();
+				ev = EsameVerbalizzatoDAOImpl.getInstance().getAllVerbalizzazioniGiornaliere(id_docente);
+				for (int i = 0; i < ev.size(); i++) {
+					response += ev.get(i).getId_esame() + " " + ev.get(i).getId_studente() + " " + ev.get(i).getValutazione() + " "
 							+ ev.get(i).getData_appello() + "\n";
 				}
 

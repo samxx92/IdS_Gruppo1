@@ -121,7 +121,10 @@ public class ClientMainGUI extends JFrame {
 
 		getContentPane().add(lastPanel, BorderLayout.CENTER);
 		
-		if (!panelName.equals(ClientMainGUI.EXAMINATOR_PANEL)){
+		if (!panelName.equals(ClientMainGUI.EXAMINATOR_PANEL) &&
+				!panelName.equals(ClientMainGUI.EXAM_RESERVATION_PANEL) &&
+				!panelName.equals(ClientMainGUI.REGISTRATION_PANEL) && 
+				!panelName.equals(ClientMainGUI.DAILY_EXAM_PANEL)){
 			navigationPanel = new NavigationPanel(this);
 			getContentPane().add(navigationPanel, BorderLayout.SOUTH);
 		}

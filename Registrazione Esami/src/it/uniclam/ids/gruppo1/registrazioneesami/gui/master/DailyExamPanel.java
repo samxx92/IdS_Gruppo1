@@ -4,14 +4,21 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import it.uniclam.ids.gruppo1.registrazioneesami.ClientMainGUI;
+import it.uniclam.ids.gruppo1.registrazioneesami.ServerMain;
 
 public class DailyExamPanel extends JPanel {
 	/**
@@ -53,6 +60,39 @@ public class DailyExamPanel extends JPanel {
 		c.gridwidth = 8; // 2 columns wide
 		JScrollPane jp = new JScrollPane(ta);
 		this.add(jp, c);
+		
+		try {
+			Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
+
+			BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+			PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+
+			String req = ServerMain.QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE_DOCENTE + "\n" + "\n";
+
+			out.println(req);
+			// System.out.println("Inviato: " + req);
+			String line = in.readLine();
+			if (line.equalsIgnoreCase(ServerMain.OK)) {
+				line = in.readLine();
+				if (line.isEmpty()) {
+					JOptionPane.showMessageDialog(DailyExamPanel.this,
+							"Non sono stati verbalizzati esami in giornata!", "Info", JOptionPane.INFORMATION_MESSAGE);
+					s.close();
+				} else {
+					while (!line.isEmpty()) {
+
+						ta.append(line + "\n");
+						line = in.readLine();
+					}
+					s.close();
+				}
+			}
+		} catch (IOException ioe) {
+			JOptionPane.showMessageDialog(DailyExamPanel.this, "Error in communication with server!", "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		
+		
 
 		back.addActionListener(new ActionListener() {
 
