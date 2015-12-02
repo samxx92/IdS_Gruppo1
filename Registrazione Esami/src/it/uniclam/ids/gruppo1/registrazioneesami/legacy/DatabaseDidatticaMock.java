@@ -155,12 +155,28 @@ public class DatabaseDidatticaMock {
 			}
 
 		}
-
-		//		for (int k = 0;k<commissioni_docente.size();k++){
-		//			System.out.println(commissioni_docente.get(k));
-		//			System.out.println(esami_docente.get(k));
-		//		}
 		return esami_docente;
+	}
+	
+	
+	public static boolean isEsamePrenotato (EsameVerbalizzato e, String telefono){
+		String verifica1 = e.getId_esame() + " " + e.getId_studente() + " " + e.getData_appello();
+		List<String> esami_docente = DatabaseDidatticaMock.getPrenotazioniEsamiDocente(telefono);
+		String verifica2 = null;
+		boolean trovato = false;
+		for (int i = 0;i<esami_docente.size();i++){
+			for (int k = 0; k<esami_prenotati.size();k++){
+				if (esami_docente.get(i).equals(esami_prenotati.get(k).getId_esame())){
+					verifica2 =esami_prenotati.get(k).getId_esame() + " " +
+							esami_prenotati.get(k).getId_studente() + " " +
+							esami_prenotati.get(k).getData_appello();
+					if (verifica1.equalsIgnoreCase(verifica2)){
+						trovato = true;
+					}
+				}
+			}
+		}
+		return trovato;
 	}
 
 

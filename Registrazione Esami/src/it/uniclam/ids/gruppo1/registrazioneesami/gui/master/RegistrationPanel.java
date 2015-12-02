@@ -144,7 +144,6 @@ public class RegistrationPanel extends JPanel{
 		});
 
 
-
 		verbalizza.addActionListener(new ActionListener() {
 
 			@Override
@@ -183,9 +182,6 @@ public class RegistrationPanel extends JPanel{
 
 							out.println(req);
 
-
-
-							//System.out.println("Inviato: " + req);
 							String line = in.readLine();
 							if (line.equalsIgnoreCase(ServerMain.OK)){
 								line = in.readLine();
@@ -194,7 +190,14 @@ public class RegistrationPanel extends JPanel{
 
 									line = in.readLine();
 									if(line.equals("true")){
-										ta.append("L'esame è stato trovato nelle prenotazioni\n ed è stato verbalizzato!");
+										ta.append("L'esame è stato trovato nelle prenotazioni\n");
+										line = in.readLine();
+										if(line.equals("true")){
+											ta.append("L'esame è stato verbalizzato!");
+										}
+										else{
+											JOptionPane.showMessageDialog(RegistrationPanel.this, "L'esame è già presente nel database!", "Error", JOptionPane.ERROR_MESSAGE);
+										}
 									}
 									else{
 										JOptionPane.showMessageDialog(RegistrationPanel.this, "L'esame non è stato trovato!", "Error", JOptionPane.ERROR_MESSAGE);
