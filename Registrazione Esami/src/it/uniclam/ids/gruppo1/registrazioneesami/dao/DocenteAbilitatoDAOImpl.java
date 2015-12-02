@@ -38,7 +38,7 @@ public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO{
 			DAOSettings.closeStatement(st);
 
 		} catch (SQLException sq){
-			throw new DAOException("In getAllAmici(): " + sq.getMessage());
+			throw new DAOException("In searchDocenteAbilitato(): " + sq.getMessage());
 		}
 		if (a==1){
 			abilitato = "true";

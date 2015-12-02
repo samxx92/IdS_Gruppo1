@@ -190,9 +190,15 @@ public class RegistrationPanel extends JPanel{
 							if (line.equalsIgnoreCase(ServerMain.OK)){
 								line = in.readLine();
 								if (line.equals("true")) {
-
-
 									ta.append("Verificato \n");
+
+									line = in.readLine();
+									if(line.equals("true")){
+										ta.append("L'esame è stato trovato nelle prenotazioni\n ed è stato verbalizzato!");
+									}
+									else{
+										JOptionPane.showMessageDialog(RegistrationPanel.this, "L'esame non è stato trovato!", "Error", JOptionPane.ERROR_MESSAGE);
+									}
 
 									s.close();
 

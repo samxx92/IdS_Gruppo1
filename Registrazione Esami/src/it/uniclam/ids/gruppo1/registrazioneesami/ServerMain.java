@@ -15,6 +15,7 @@ import it.uniclam.ids.gruppo1.registrazioneesami.entity.Commissione;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.Docente;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.Esame;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.EsamePrenotato;
+import it.uniclam.ids.gruppo1.registrazioneesami.entity.EsameVerbalizzato;
 import it.uniclam.ids.gruppo1.registrazioneesami.legacy.*;
 
 public class ServerMain {
@@ -55,6 +56,7 @@ public class ServerMain {
 			if (command.equals(QUERY_LOGIN)){
 				telefono = in.readLine().replace("telefono:", "").replace("\n", "");
 				String password = in.readLine().replace("password:", "").replace("\n", "");
+				id_docente = DatabaseDidatticaMock.getId_docentefromtelefono(telefono);
 
 				try{		
 					String abilitato = DocenteAbilitatoDAOImpl.getInstance().searchDocenteAbilitato(telefono, password);
@@ -78,7 +80,7 @@ public class ServerMain {
 
 			else if (command.equals(QUERY_VERBALIZZA)){
 
-				System.out.println(telefono);
+				//System.out.println(telefono);
 
 				String id_esame = in.readLine().replace("id_esame:", "").replace("\n", "");
 				String id_studente = in.readLine().replace("id_studente:", "").replace("\n", "");
@@ -95,19 +97,48 @@ public class ServerMain {
 				response += isincommissione + "\n";
 
 
-				out.println(response);				
+				if (isincommissione.equalsIgnoreCase("true")){	
+
+					EsameVerbalizzato e = new EsameVerbalizzato(id_esame, id_docente, id_studente, data_appello, valutazione);
+					String verifica1 = id_esame + " " + id_studente + " " + data_appello;
+					List<String> esami_docente = DatabaseDidatticaMock.getPrenotazioniEsamiDocente(telefono);
+					String verifica2 = null;
+					boolean trovato = false;
+					for (int i = 0;i<esami_docente.size();i++){
+						for (int k = 0; k<DatabaseDidatticaMock.esami_prenotati.size();k++){
+							if (esami_docente.get(i).equals(DatabaseDidatticaMock.esami_prenotati.get(k).getId_esame())){
+								verifica2 =DatabaseDidatticaMock.esami_prenotati.get(k).getId_esame() + " " +
+										DatabaseDidatticaMock.esami_prenotati.get(k).getId_studente() + " " +
+										DatabaseDidatticaMock.esami_prenotati.get(k).getData_appello();
+								if (verifica1.equalsIgnoreCase(verifica2)){
+									trovato = true;
+								}
+							}
+						}
+					}
+					String response_temp = "false";
+					if (trovato){
+						EsameVerbalizzatoDAOImpl.getInstance().verbalizzaEsame(e);
+						response_temp ="true\n";
+						
+					}
+					response += response_temp + "\n";
+					
+					out.println(response);
+
+				}
 
 
 			}
 			else if(command.equals(QUERY_VISUALIZZA_PRENOTAZIONI)){
 				response="OK\n";
 				List<String> esami_docente = DatabaseDidatticaMock.getPrenotazioniEsamiDocente(telefono);
-				System.out.println(DatabaseDidatticaMock.esami_prenotati.size());
+
 				for (int i = 0;i<esami_docente.size();i++){
 					for (int k = 0; k<DatabaseDidatticaMock.esami_prenotati.size();k++){
 						if (esami_docente.get(i).equals(DatabaseDidatticaMock.esami_prenotati.get(k).getId_esame())){
 							response +=" "+ DatabaseDidatticaMock.esami_prenotati.get(k).getId_esame() + " " +
-									DatabaseDidatticaMock.esami_prenotati.get(k).getMatricola() + " " +
+									DatabaseDidatticaMock.esami_prenotati.get(k).getId_studente() + " " +
 									DatabaseDidatticaMock.esami_prenotati.get(k).getData_appello() + " " +
 									DatabaseDidatticaMock.esami_prenotati.get(k).getData_prenotazione()+"\n";
 						}

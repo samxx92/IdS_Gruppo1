@@ -5,26 +5,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EsamePrenotato extends Esame{
-	private String matricola;
+	private String id_studente;
 	private Date data_appello;
 	private Date data_prenotazione;
 
 	public EsamePrenotato(){}
-	
-	public EsamePrenotato(String id_esame, String matricola, String data_prenotazione, String data_appello){
+
+	public EsamePrenotato(String id_esame, String id_studente, String data_prenotazione, String data_appello){
 		super(id_esame , null ,null);
-		this.matricola = matricola;
+		this.id_studente = id_studente;
 		this.data_prenotazione = java.sql.Date.valueOf(data_prenotazione);
 		this.data_appello = java.sql.Date.valueOf(data_appello);
 
 	}
 
-	public String getMatricola() {
-		return matricola;
+
+	public String getId_studente() {
+		return id_studente;
 	}
 
-	public void setMatricola(String matricola) {
-		this.matricola = matricola;
+	public void setId_studente(String id_studente) {
+		this.id_studente = id_studente;
 	}
 
 	public Date getData_appello() {
@@ -42,7 +43,7 @@ public class EsamePrenotato extends Esame{
 	public void setData_prenotazione(Date data_prenotazione) {
 		this.data_prenotazione = data_prenotazione;
 	}
-	
+
 
 
 }

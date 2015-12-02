@@ -156,10 +156,10 @@ public class DatabaseDidatticaMock {
 
 		}
 
-		for (int k = 0;k<commissioni_docente.size();k++){
-			System.out.println(commissioni_docente.get(k));
-			System.out.println(esami_docente.get(k));
-		}
+		//		for (int k = 0;k<commissioni_docente.size();k++){
+		//			System.out.println(commissioni_docente.get(k));
+		//			System.out.println(esami_docente.get(k));
+		//		}
 		return esami_docente;
 	}
 
