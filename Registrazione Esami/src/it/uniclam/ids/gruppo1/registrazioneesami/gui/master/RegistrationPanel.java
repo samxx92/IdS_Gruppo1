@@ -181,7 +181,7 @@ public class RegistrationPanel extends JPanel {
 							if (line.equalsIgnoreCase(ServerMain.OK)) {
 								line = in.readLine();
 								if (line.equals("true")) {
-									
+
 									line = in.readLine();
 									if (line.equals("true")) {
 										ta.append("L'esame è stato trovato nelle prenotazioni\n");
@@ -190,8 +190,8 @@ public class RegistrationPanel extends JPanel {
 											ta.append("L'esame è stato verbalizzato!");
 										} else {
 											JOptionPane.showMessageDialog(RegistrationPanel.this,
-													"L'esame è già presente nel database!", "Error",
-													JOptionPane.ERROR_MESSAGE);
+													"L'esame è già presente nel database!", "Info",
+													JOptionPane.INFORMATION_MESSAGE);
 										}
 									} else {
 										JOptionPane.showMessageDialog(RegistrationPanel.this,

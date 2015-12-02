@@ -92,15 +92,11 @@ public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO {
 
 			String sql = "select password from docentiabilitati where telefono='" + telefono + "';";
 
-			System.out.println(sql);
-
 			ResultSet rs = st.executeQuery(sql);
 
 			while (rs.next()) {
 				password = rs.getString("password");
 			}
-
-			System.out.println(password);
 
 			DAOSettings.closeStatement(st);
 

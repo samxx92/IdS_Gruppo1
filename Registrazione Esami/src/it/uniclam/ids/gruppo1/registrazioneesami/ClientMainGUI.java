@@ -119,13 +119,13 @@ public class ClientMainGUI extends JFrame {
 			lastPanel = dailyExamPanel;
 		}
 
-		navigationPanel = new NavigationPanel(this);
-
 		getContentPane().add(lastPanel, BorderLayout.CENTER);
-		getContentPane().add(navigationPanel, BorderLayout.SOUTH);
-
+		
+		if (!panelName.equals(ClientMainGUI.EXAMINATOR_PANEL)){
+			navigationPanel = new NavigationPanel(this);
+			getContentPane().add(navigationPanel, BorderLayout.SOUTH);
+		}
 		getContentPane().revalidate();
-
 	}
 
 	public static void main(String[] args) {

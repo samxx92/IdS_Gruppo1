@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import it.uniclam.ids.gruppo1.registrazioneesami.ClientMainGUI;
@@ -86,7 +87,12 @@ public class ExaminatorPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clientGUI.changePanel(ClientMainGUI.LOGIN_PANEL);
+				int l = 1;
+				l=JOptionPane.showConfirmDialog(ExaminatorPanel.this, "Sei sicuro di voler uscire?", "Info", 
+						JOptionPane.YES_NO_OPTION);
+				if (l==0){
+					clientGUI.changePanel(ClientMainGUI.LOGIN_PANEL);
+				}
 
 			}
 		});

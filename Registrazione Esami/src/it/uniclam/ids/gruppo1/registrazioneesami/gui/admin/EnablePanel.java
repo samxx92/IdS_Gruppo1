@@ -139,6 +139,9 @@ public class EnablePanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(ta.getText().equalsIgnoreCase("Non ci sono Docenti Abilitati")){
+					ta.setText("");
+				}
 				try {
 
 					if (telefono.getText().equalsIgnoreCase("") || password.getText().equalsIgnoreCase("")) {
@@ -196,7 +199,7 @@ public class EnablePanel extends JPanel {
 					String line = in.readLine();
 					if (line.equalsIgnoreCase(ServerMain.OK)) {
 						line = in.readLine();
-						if (line.isEmpty()) {
+						if (line.equalsIgnoreCase("null")) {
 							JOptionPane.showMessageDialog(EnablePanel.this, "Il Docente non è abilitato!", "Error",
 									JOptionPane.ERROR_MESSAGE);
 							;
