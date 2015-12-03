@@ -25,7 +25,13 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 		return dao;
 	}
 
-	@Override
+	/**
+	 * Il metodo serve a ... 
+	 * 
+	 * @param e
+	 * @return 
+	 * @throws DAOException Questa eccezione è generata quando ... 
+	 */
 	public boolean verbalizzaEsame(EsameVerbalizzato e) throws DAOException {
 		Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
 		int currentDay = localCalendar.get(Calendar.DATE);

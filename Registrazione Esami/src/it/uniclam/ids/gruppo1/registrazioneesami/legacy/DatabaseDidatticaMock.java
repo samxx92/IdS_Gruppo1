@@ -18,9 +18,22 @@ public class DatabaseDidatticaMock {
 	public static List<Docente> docenti = getAllDocenti();
 	public static List<Esame> esami = getAllEsami();
 	public static List<EsamePrenotato> esami_prenotati = getAllEsamiPrenotati();
+	
+	
+	static{
+		
+	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static List<Commissione> getAllCommissioni() {
-
+		
+		// riempire lista
+		return commissioni;
+		
+		
 		List<Commissione> commissioni = new ArrayList<Commissione>();
 		List<String> id_docenti = new ArrayList<String>();
 		id_docenti.add("id1");
@@ -108,6 +121,11 @@ public class DatabaseDidatticaMock {
 
 	}
 
+	/**
+	 * Questo metodo ricever... 
+	 * @param telefono Parametro per la ricerca
+	 * @return	
+	 */
 	public static String getId_docentefromtelefono(String telefono) {
 		String id_docente = null;
 		for (int i = 0; i < docenti.size(); i++) {
