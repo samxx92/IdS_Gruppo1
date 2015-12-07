@@ -35,6 +35,8 @@ public class ServerMain {
 
 	public static String QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE_DOCENTE = "req_query_visualizza_verbalizazioni_giornaliere_docente";
 	
+	public static String QUERY_SALVA_ESAMI_IN_S3 = "req_query_salva_esami_in_s3";
+	
 	public static String HOST = "localhost";
 	public static int PORT = 5555;
 
@@ -94,7 +96,7 @@ public class ServerMain {
 				if (isincommissione.equalsIgnoreCase("true")) {
 
 					EsameVerbalizzato e = new EsameVerbalizzato(id_esame, id_docente, id_studente, data_appello,
-							valutazione);
+							valutazione,null);
 					boolean trovato = DatabaseDidatticaMock.isEsamePrenotato(e, telefono);
 					String response_temp = "false";
 					boolean verbalizzato = false;
@@ -111,14 +113,14 @@ public class ServerMain {
 				out.println(response);
 			} else if (command.equals(QUERY_VISUALIZZA_PRENOTAZIONI)) {
 				List<String> esami_docente = DatabaseDidatticaMock.getPrenotazioniEsamiDocente(telefono);
-				List<EsamePrenotato>esami_prenotati = DatabaseDidatticaMock.getAllEsamiPrenotati();
+				List<EsamePrenotato>esami_prenotati = DatabaseDidatticaMock.getEsami_prenotati();
 				response = "";
 				for (int i = 0; i < esami_docente.size(); i++) {
 					for (int k = 0; k <esami_prenotati.size(); k++) {
 						if (esami_docente.get(i).equals(esami_prenotati.get(k).getId_esame())) {
-							response +=esami_prenotati.get(k).getId_esame() + " "
-									+ esami_prenotati.get(k).getId_studente() + " "
-									+ esami_prenotati.get(k).getData_appello() + " "
+							response +=esami_prenotati.get(k).getId_esame() + ";"
+									+ esami_prenotati.get(k).getId_studente() + ";"
+									+ esami_prenotati.get(k).getData_appello() + ";"
 									+ esami_prenotati.get(k).getData_prenotazione() + "\n";
 						}
 					}
@@ -144,7 +146,7 @@ public class ServerMain {
 				String telefono_abilitazione = in.readLine().replace("telefono:", "").replace("\n", "");
 				String password = in.readLine().replace("password:", "").replace("\n", "");
 				boolean trovato = false;
-				List<Docente> docenti = DatabaseDidatticaMock.getAllDocenti();
+				List<Docente> docenti = DatabaseDidatticaMock.getDocenti();
 				trovato = DatabaseDidatticaMock.isTelefonoInDocentiAndNotInDocentiAbilitati(telefono_abilitazione);
 				if (trovato) {
 					DocenteAbilitatoDAOImpl.getInstance().addDocenteAbilitato(telefono_abilitazione, password);
@@ -179,9 +181,9 @@ public class ServerMain {
 				List<EsameVerbalizzato> ev = new ArrayList<EsameVerbalizzato>();
 				ev = EsameVerbalizzatoDAOImpl.getInstance().getAllVerbalizzazioniGiornaliere(empty);
 				for (int i = 0; i < ev.size(); i++) {
-					response += ev.get(i).getId_esame() + " " + ev.get(i).getId_docente() + " "
-							+ ev.get(i).getId_studente() + " " + ev.get(i).getValutazione() + " "
-							+ ev.get(i).getData_appello() + "\n";
+					response += ev.get(i).getId_esame() + ";" + ev.get(i).getId_docente() + ";"
+							+ ev.get(i).getId_studente() + ";" + ev.get(i).getValutazione() + ";"
+							+ ev.get(i).getData_appello() + ";" + ev.get(i).getData_verbalizzazione() +"\n";
 				}
 
 				response += "\n";
@@ -192,11 +194,23 @@ public class ServerMain {
 				List<EsameVerbalizzato> ev = new ArrayList<EsameVerbalizzato>();
 				ev = EsameVerbalizzatoDAOImpl.getInstance().getAllVerbalizzazioniGiornaliere(id_docente);
 				for (int i = 0; i < ev.size(); i++) {
-					response += ev.get(i).getId_esame() + " " + ev.get(i).getId_studente() + " " + ev.get(i).getValutazione() + " "
-							+ ev.get(i).getData_appello() + "\n";
+					response += ev.get(i).getId_esame() + ";" + ev.get(i).getId_studente() + ";" 
+				+ ev.get(i).getValutazione() + ";"+ ev.get(i).getData_appello() + "\n";
 				}
 
 				response += "\n";
+				out.println(response);
+			}
+			
+			else if(command.equals(QUERY_SALVA_ESAMI_IN_S3)){
+				response = "OK\n";
+				List<String> esami_verbalizzati_s3 = new ArrayList<String>();
+				String lines = in.readLine();
+				while(!lines.isEmpty()){
+					esami_verbalizzati_s3.add(lines);
+					lines=in.readLine();
+				}
+				DatabaseDidatticaMock.createListEsami_verbalizzati_s3(esami_verbalizzati_s3);
 				out.println(response);
 			}
 

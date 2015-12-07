@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -18,7 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import it.uniclam.ids.gruppo1.registrazioneesami.ClientMainGUI;
-import it.uniclam.ids.gruppo1.registrazioneesami.ServerMain;;
+import it.uniclam.ids.gruppo1.registrazioneesami.ServerMain;
 
 public class ConfirmationAdminPanel extends JPanel {
 
@@ -26,7 +28,7 @@ public class ConfirmationAdminPanel extends JPanel {
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	private JButton salva = new JButton("Salva");
+	private JButton salva = new JButton("Salva in S3");
 	private JTextArea ta = new JTextArea(20, 50);
 
 	private JButton back = new JButton("Indietro");
@@ -68,6 +70,8 @@ public class ConfirmationAdminPanel extends JPanel {
 		c.gridy = 3;
 		c.gridwidth = 2; // 2 columns wide
 		this.add(back, c);
+		
+		List<String> esami_verbalizzati = new ArrayList<String>();
 
 		try {
 			Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
@@ -85,9 +89,16 @@ public class ConfirmationAdminPanel extends JPanel {
 						"Non sono stati verbalizzati esami in giornata!", "Info", JOptionPane.INFORMATION_MESSAGE);
 				s.close();
 			} else {
+				ta.append("Esame\tDocente\tMatricola\tVoto\tData Appello\tData Verbalizzazione\n");
 				while (!line.isEmpty()) {
-
-					ta.append(line + "\n");
+					esami_verbalizzati.add(line);
+					String[] temp = line.split(";"); 
+					int i = 0;
+					while(i<temp.length){
+						ta.append(temp[i] + "\t");
+						i++;
+					}
+					ta.append("\n");
 					line = in.readLine();
 				}
 				s.close();
@@ -102,10 +113,45 @@ public class ConfirmationAdminPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				if (ta.getText().equalsIgnoreCase("")){
+					JOptionPane.showMessageDialog(ConfirmationAdminPanel.this, "Non ci sono elementi da salvare!", "Info",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+				else{
+					try {
+						Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
+
+						BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+						PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+
+						String req = ServerMain.QUERY_SALVA_ESAMI_IN_S3 + "\n";
+						for (int i = 0;i<esami_verbalizzati.size(); i++){
+							req+=esami_verbalizzati.get(i);
+							req+="\n";
+						}
+
+						out.println(req);
+						//System.out.println("Inviato: " + req);
+						String line = in.readLine();
+						if (line.equalsIgnoreCase(ServerMain.OK)){
+							ta.setText("");
+							JOptionPane.showMessageDialog(ConfirmationAdminPanel.this, "Gli esami sono stati salvati correttamente in S3", "Success",
+									JOptionPane.INFORMATION_MESSAGE);
+						}
+
+						s.close();
+
+
+					} catch (IOException ioe) {
+						JOptionPane.showMessageDialog(ConfirmationAdminPanel.this, "Error in communication with server!", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+
 
 			}
 		});
+		
 
 		back.addActionListener(new ActionListener() {
 

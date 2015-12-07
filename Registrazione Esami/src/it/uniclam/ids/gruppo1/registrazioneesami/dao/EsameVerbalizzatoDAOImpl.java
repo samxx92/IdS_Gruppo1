@@ -92,7 +92,7 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 			ResultSet rs = st.executeQuery(sqlsearch);
 			while (rs.next()) {
 				EsameVerbalizzato temp = new EsameVerbalizzato(rs.getString("id_esame"), rs.getString("id_docente"),
-						rs.getString("id_studente"), rs.getString("data_appello"), rs.getString("voto"));
+						rs.getString("id_studente"), rs.getString("data_appello"), rs.getString("voto"), rs.getString("data_verbalizzazione"));
 				ev.add(temp);
 			}
 

@@ -14,12 +14,13 @@ public class EsameVerbalizzato extends Esame {
 	}
 
 	public EsameVerbalizzato(String id_esame, String id_docente, String id_studente, String data_appello,
-			String valutazione) {
+			String valutazione, String data_verbalizzazione) {
 		super(id_esame, null, null);
-		this.setId_docente(id_docente);
+		this.id_docente = id_docente;
 		this.id_studente = id_studente;
 		this.data_appello = java.sql.Date.valueOf(data_appello);
 		this.valutazione = Integer.parseInt(valutazione);
+		this.data_verbalizzazione = java.sql.Date.valueOf(data_verbalizzazione);
 	}
 
 	public Date getData_verbalizzazione() {
@@ -68,6 +69,14 @@ public class EsameVerbalizzato extends Esame {
 
 	public void setId_docente(String id_docente) {
 		this.id_docente = id_docente;
+	}
+	
+	public String getId_esame() {
+		return super.getId_esame();
+	}
+
+	public void setId_esame(String id_esame) {
+		super.setId_esame(id_esame);
 	}
 
 }

@@ -78,9 +78,15 @@ public class DailyExamPanel extends JPanel {
 				
 				s.close();
 			} else {
+				ta.append("Esame\tMatricola\tVoto\tData Appello\n");
 				while (!line.isEmpty()) {
-
-					ta.append(line + "\n");
+					String[] temp = line.split(";"); 
+					int i = 0;
+					while(i<temp.length){
+						ta.append(temp[i] + "\t");
+						i++;
+					}
+					ta.append("\n");
 					line = in.readLine();
 				}
 				s.close();

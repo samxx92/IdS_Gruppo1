@@ -71,7 +71,7 @@ public class ClientMainGUI extends JFrame {
 
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		pack();
-		this.setSize(800, 512);
+		this.setSize(900, 600);
 		setVisible(true);
 
 	}

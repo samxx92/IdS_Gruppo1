@@ -18,8 +18,9 @@ public class DatabaseDidatticaMock {
 	private static List<Docente> docenti;
 	private static List<Esame> esami;
 	private static List<EsamePrenotato> esami_prenotati;
-	
-	
+	private static List<EsameVerbalizzato> esami_verbalizzati_s3;
+
+
 	static{
 		commissioni = new ArrayList<Commissione>();
 		List<String> id_docenti = new ArrayList<String>();
@@ -42,7 +43,7 @@ public class DatabaseDidatticaMock {
 		commissioni.add(test1);
 		commissioni.add(test2);
 		commissioni.add(test3);
-		
+
 		docenti = new ArrayList<Docente>();
 
 		Docente d1 = new Docente("id1", null, null, "1", null);
@@ -54,7 +55,7 @@ public class DatabaseDidatticaMock {
 		docenti.add(d2);
 		docenti.add(d3);
 		docenti.add(d4);
-		
+
 		esami = new ArrayList<Esame>();
 
 		List<Date> data_appelli_e1 = new ArrayList<Date>();
@@ -83,41 +84,58 @@ public class DatabaseDidatticaMock {
 		esami.add(etest1);
 		esami.add(etest2);
 		esami.add(etest3);
-		
+
 		esami_prenotati = new ArrayList<EsamePrenotato>();
 		EsamePrenotato ep1 = new EsamePrenotato("e1", "m1", "2015-12-12", "2016-01-10");
 		EsamePrenotato ep2 = new EsamePrenotato("e2", "m1", "2015-12-01", "2016-02-10");
 		esami_prenotati.add(ep1);
 		esami_prenotati.add(ep2);
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public static List<Commissione> getAllCommissioni() {
 		
-		return commissioni;
-
+		
+		esami_verbalizzati_s3 = new ArrayList<EsameVerbalizzato>();
 	}
 
-	public static List<Docente> getAllDocenti() {
+	public static List<Commissione> getCommissioni() {
+		return commissioni;
+	}
 
+	public static List<Docente> getDocenti() {
 		return docenti;
 	}
 
-	public static List<Esame> getAllEsami() {
-		
+	public static List<Esame> getEsami() {
 		return esami;
 	}
 
-	public static List<EsamePrenotato> getAllEsamiPrenotati() {
-		
+	public static List<EsamePrenotato> getEsami_prenotati() {
 		return esami_prenotati;
-
 	}
 
-	
+	public static List<EsameVerbalizzato> getEsami_verbalizzati_s3() {
+		return esami_verbalizzati_s3;
+	}
+
+	public static void createListEsami_verbalizzati_s3(List<String> esami_verbalizzati_s3){
+		EsameVerbalizzato ev = new EsameVerbalizzato();
+		String [] temp=null;
+		Date data_appello = null;
+		Date data_verbalizzazione = null;
+		for (int i = 0; i<esami_verbalizzati_s3.size(); i++){
+			temp = esami_verbalizzati_s3.get(i).split(";");
+			ev.setId_esame(temp[0]);
+			ev.setId_docente(temp[1]);
+			ev.setId_studente(temp[2]);
+			ev.setValutazione(Integer.parseInt(temp[3]));
+			data_appello = java.sql.Date.valueOf(temp[4]);
+			ev.setData_appello(data_appello);
+			data_verbalizzazione = java.sql.Date.valueOf(temp[5]);
+			ev.setData_verbalizzazione(data_verbalizzazione);
+			DatabaseDidatticaMock.esami_verbalizzati_s3.add(ev);
+			ev=null;
+		}
+	}
+
+
 	/**
 	 * Questo metodo ricever... 
 	 * @param telefono Parametro per la ricerca
@@ -133,15 +151,17 @@ public class DatabaseDidatticaMock {
 		return id_docente;
 	}
 
+
+
 	public static String isInCommissione(String telefono, String id_esame) {
 		String id_docente = getId_docentefromtelefono(telefono);
 		List<String> docenti_commissione = new ArrayList<String>();
 		String commissione = "false";
-		for (int k = 0; k < DatabaseDidatticaMock.commissioni.size(); k++) {
+		for (int k = 0; k < commissioni.size(); k++) {
 			if (commissioni.get(k).getId_esame().equals(id_esame)) {
 				// id_commissione =
 				// DatabaseDidatticaMock.commissioni.get(k).getId_commissione();
-				docenti_commissione = DatabaseDidatticaMock.commissioni.get(k).getId_docenti();
+				docenti_commissione = commissioni.get(k).getId_docenti();
 			}
 		}
 		for (int j = 0; j < docenti_commissione.size(); j++) {
@@ -158,7 +178,7 @@ public class DatabaseDidatticaMock {
 		List<String> commissioni_docente = new ArrayList<String>();
 		String id_docente = getId_docentefromtelefono(telefono);
 		boolean trovato = false;
-		for (int k = 0; k < DatabaseDidatticaMock.commissioni.size(); k++) {
+		for (int k = 0; k < commissioni.size(); k++) {
 			int j = 0;
 			trovato = false;
 			while (!trovato && j < commissioni.get(k).getId_docenti().size()) {
@@ -177,7 +197,7 @@ public class DatabaseDidatticaMock {
 
 	public static boolean isEsamePrenotato(EsameVerbalizzato e, String telefono) {
 		String verifica1 = e.getId_esame() + " " + e.getId_studente() + " " + e.getData_appello();
-		List<String> esami_docente = DatabaseDidatticaMock.getPrenotazioniEsamiDocente(telefono);
+		List<String> esami_docente = getPrenotazioniEsamiDocente(telefono);
 		String verifica2 = null;
 		boolean trovato = false;
 		for (int i = 0; i < esami_docente.size(); i++) {

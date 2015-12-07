@@ -30,7 +30,7 @@ public class ExamReservationPanel extends JPanel {
 	private JButton back = new JButton("Indietro");
 
 	private JTextArea ta = new JTextArea(20, 50);
-
+	
 	public ExamReservationPanel(ClientMainGUI clientGUI) {
 		// JPanel pane = new JPanel(new GridBagLayout());
 
@@ -87,13 +87,19 @@ public class ExamReservationPanel extends JPanel {
 
 				JOptionPane.showMessageDialog(ExamReservationPanel.this, "Non ci sono prenotazioni!", "Info",
 						JOptionPane.INFORMATION_MESSAGE);
-				
+
 
 				s.close();
 			} else {
+				ta.append("Esame\tMatricola\tData Appello\tData Prenotazione\n");
 				while (!line.isEmpty()) {
-
-					ta.append(line + "\n");
+					String[] temp = line.split(";"); 
+					int i = 0;
+					while(i<temp.length){
+						ta.append(temp[i] + "\t");
+						i++;
+					}
+					ta.append("\n");
 					line = in.readLine();
 				}
 				s.close();
