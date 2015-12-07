@@ -14,27 +14,14 @@ import it.uniclam.ids.gruppo1.registrazioneesami.entity.EsameVerbalizzato;
 
 public class DatabaseDidatticaMock {
 
-	public static List<Commissione> commissioni = getAllCommissioni();
-	public static List<Docente> docenti = getAllDocenti();
-	public static List<Esame> esami = getAllEsami();
-	public static List<EsamePrenotato> esami_prenotati = getAllEsamiPrenotati();
+	private static List<Commissione> commissioni;
+	private static List<Docente> docenti;
+	private static List<Esame> esami;
+	private static List<EsamePrenotato> esami_prenotati;
 	
 	
 	static{
-		
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public static List<Commissione> getAllCommissioni() {
-		
-		// riempire lista
-		return commissioni;
-		
-		
-		List<Commissione> commissioni = new ArrayList<Commissione>();
+		commissioni = new ArrayList<Commissione>();
 		List<String> id_docenti = new ArrayList<String>();
 		id_docenti.add("id1");
 		id_docenti.add("id2");
@@ -55,14 +42,8 @@ public class DatabaseDidatticaMock {
 		commissioni.add(test1);
 		commissioni.add(test2);
 		commissioni.add(test3);
-
-		return commissioni;
-
-	}
-
-	public static List<Docente> getAllDocenti() {
-
-		List<Docente> docenti = new ArrayList<Docente>();
+		
+		docenti = new ArrayList<Docente>();
 
 		Docente d1 = new Docente("id1", null, null, "1", null);
 		Docente d2 = new Docente("id2", null, null, "2", null);
@@ -73,12 +54,8 @@ public class DatabaseDidatticaMock {
 		docenti.add(d2);
 		docenti.add(d3);
 		docenti.add(d4);
-
-		return docenti;
-	}
-
-	public static List<Esame> getAllEsami() {
-		List<Esame> esami = new ArrayList<Esame>();
+		
+		esami = new ArrayList<Esame>();
 
 		List<Date> data_appelli_e1 = new ArrayList<Date>();
 		List<Date> data_appelli_e2 = new ArrayList<Date>();
@@ -99,28 +76,48 @@ public class DatabaseDidatticaMock {
 		data_appelli_e3.add(e3_1);
 		data_appelli_e3.add(e3_2);
 
-		Esame test1 = new Esame("e1", null, data_appelli_e1);
-		Esame test2 = new Esame("e2", null, data_appelli_e2);
-		Esame test3 = new Esame("e3", null, data_appelli_e3);
+		Esame etest1 = new Esame("e1", null, data_appelli_e1);
+		Esame etest2 = new Esame("e2", null, data_appelli_e2);
+		Esame etest3 = new Esame("e3", null, data_appelli_e3);
 
-		esami.add(test1);
-		esami.add(test2);
-		esami.add(test3);
-
-		return esami;
-	}
-
-	public static List<EsamePrenotato> getAllEsamiPrenotati() {
-		List<EsamePrenotato> esami_prenotati = new ArrayList<EsamePrenotato>();
+		esami.add(etest1);
+		esami.add(etest2);
+		esami.add(etest3);
+		
+		esami_prenotati = new ArrayList<EsamePrenotato>();
 		EsamePrenotato ep1 = new EsamePrenotato("e1", "m1", "2015-12-12", "2016-01-10");
 		EsamePrenotato ep2 = new EsamePrenotato("e2", "m1", "2015-12-01", "2016-02-10");
 		esami_prenotati.add(ep1);
 		esami_prenotati.add(ep2);
+	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public static List<Commissione> getAllCommissioni() {
+		
+		return commissioni;
+
+	}
+
+	public static List<Docente> getAllDocenti() {
+
+		return docenti;
+	}
+
+	public static List<Esame> getAllEsami() {
+		
+		return esami;
+	}
+
+	public static List<EsamePrenotato> getAllEsamiPrenotati() {
+		
 		return esami_prenotati;
 
 	}
 
+	
 	/**
 	 * Questo metodo ricever... 
 	 * @param telefono Parametro per la ricerca

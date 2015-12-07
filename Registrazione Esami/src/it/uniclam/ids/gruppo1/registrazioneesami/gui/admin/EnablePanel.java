@@ -115,20 +115,18 @@ public class EnablePanel extends JPanel {
 			out.println(req);
 			// System.out.println("Inviato: " + req);
 			String line = in.readLine();
-			if (line.equalsIgnoreCase(ServerMain.OK)) {
-				line = in.readLine();
-				if (line.isEmpty()) {
-					ta.append("Non ci sono Docenti Abilitati");
-					s.close();
-				} else {
-					while (!line.isEmpty()) {
+			if (line.isEmpty()) {
+				ta.append("Non ci sono Docenti Abilitati");
+				s.close();
+			} else {
+				while (!line.isEmpty()) {
 
-						ta.append(line + "\n");
-						line = in.readLine();
-					}
-					s.close();
+					ta.append(line + "\n");
+					line = in.readLine();
 				}
+				s.close();
 			}
+
 
 		} catch (IOException ioe) {
 			JOptionPane.showMessageDialog(EnablePanel.this, "Error in communication with server!", "Error",
@@ -159,17 +157,15 @@ public class EnablePanel extends JPanel {
 						out.println(req);
 
 						String line = in.readLine();
-						if (line.equalsIgnoreCase(ServerMain.OK)) {
-							line = in.readLine();
-							if (line.equalsIgnoreCase("gia_abilitato")) {
-								JOptionPane.showMessageDialog(EnablePanel.this,
-										"Il Docente è già abilitato o non fa parte dell'Ateneo!", "Error",
-										JOptionPane.ERROR_MESSAGE);
-							} else {
-								ta.append(line + "\n");
-							}
-
+						if (line.equalsIgnoreCase("gia_abilitato")) {
+							JOptionPane.showMessageDialog(EnablePanel.this,
+									"Il Docente è già abilitato o non fa parte dell'Ateneo!", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						} else {
+							ta.append(line + "\n");
 						}
+
+
 						s.close();
 					}
 
@@ -197,21 +193,19 @@ public class EnablePanel extends JPanel {
 
 					// System.out.println("Inviato: " + req);
 					String line = in.readLine();
-					if (line.equalsIgnoreCase(ServerMain.OK)) {
-						line = in.readLine();
-						if (line.equalsIgnoreCase("null")) {
-							JOptionPane.showMessageDialog(EnablePanel.this, "Il Docente non è abilitato!", "Error",
-									JOptionPane.ERROR_MESSAGE);
-							;
-							s.close();
-						} else {
-							// password.setText(line);
-							JOptionPane.showMessageDialog(EnablePanel.this, "La password è: " + line, "Password",
-									JOptionPane.INFORMATION_MESSAGE);
-							;
-							s.close();
-						}
+					if (line.equalsIgnoreCase("null")) {
+						JOptionPane.showMessageDialog(EnablePanel.this, "Il Docente non è abilitato!", "Error",
+								JOptionPane.ERROR_MESSAGE);
+						;
+						s.close();
+					} else {
+						// password.setText(line);
+						JOptionPane.showMessageDialog(EnablePanel.this, "La password è: " + line, "Password",
+								JOptionPane.INFORMATION_MESSAGE);
+						;
+						s.close();
 					}
+
 				} catch (IOException ioe) {
 					JOptionPane.showMessageDialog(EnablePanel.this, "Error in communication with server!", "Error",
 							JOptionPane.ERROR_MESSAGE);

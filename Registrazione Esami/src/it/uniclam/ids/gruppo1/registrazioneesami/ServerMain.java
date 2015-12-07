@@ -12,6 +12,7 @@ import it.uniclam.ids.gruppo1.registrazioneesami.dao.DAOException;
 import it.uniclam.ids.gruppo1.registrazioneesami.dao.DocenteAbilitatoDAOImpl;
 import it.uniclam.ids.gruppo1.registrazioneesami.dao.EsameVerbalizzatoDAOImpl;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.Docente;
+import it.uniclam.ids.gruppo1.registrazioneesami.entity.EsamePrenotato;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.EsameVerbalizzato;
 import it.uniclam.ids.gruppo1.registrazioneesami.legacy.DatabaseDidatticaMock;
 
@@ -67,9 +68,7 @@ public class ServerMain {
 				try {
 					String abilitato = DocenteAbilitatoDAOImpl.getInstance().searchDocenteAbilitato(telefono, password);
 
-					response = "Ok\n";
-
-					response += abilitato + "\n";
+					response = abilitato + "\n";
 
 					out.println(response);
 
@@ -90,8 +89,7 @@ public class ServerMain {
 				String data_appello = in.readLine().replace("data_appello:", "").replace("\n", "");
 
 				String isincommissione = DatabaseDidatticaMock.isInCommissione(telefono, id_esame);
-				response = "Ok\n";
-				response += isincommissione + "\n";
+				response = isincommissione + "\n";
 
 				if (isincommissione.equalsIgnoreCase("true")) {
 
@@ -112,16 +110,16 @@ public class ServerMain {
 				}
 				out.println(response);
 			} else if (command.equals(QUERY_VISUALIZZA_PRENOTAZIONI)) {
-				response = "OK\n";
 				List<String> esami_docente = DatabaseDidatticaMock.getPrenotazioniEsamiDocente(telefono);
-
+				List<EsamePrenotato>esami_prenotati = DatabaseDidatticaMock.getAllEsamiPrenotati();
+				response = "";
 				for (int i = 0; i < esami_docente.size(); i++) {
-					for (int k = 0; k < DatabaseDidatticaMock.esami_prenotati.size(); k++) {
-						if (esami_docente.get(i).equals(DatabaseDidatticaMock.esami_prenotati.get(k).getId_esame())) {
-							response += " " + DatabaseDidatticaMock.esami_prenotati.get(k).getId_esame() + " "
-									+ DatabaseDidatticaMock.esami_prenotati.get(k).getId_studente() + " "
-									+ DatabaseDidatticaMock.esami_prenotati.get(k).getData_appello() + " "
-									+ DatabaseDidatticaMock.esami_prenotati.get(k).getData_prenotazione() + "\n";
+					for (int k = 0; k <esami_prenotati.size(); k++) {
+						if (esami_docente.get(i).equals(esami_prenotati.get(k).getId_esame())) {
+							response +=esami_prenotati.get(k).getId_esame() + " "
+									+ esami_prenotati.get(k).getId_studente() + " "
+									+ esami_prenotati.get(k).getData_appello() + " "
+									+ esami_prenotati.get(k).getData_prenotazione() + "\n";
 						}
 					}
 				}
@@ -130,7 +128,7 @@ public class ServerMain {
 				out.println(response);
 
 			} else if (command.equals(QUERY_VISUALIZZA_DOCENTI_ABILITATI)) {
-				response = "OK\n";
+				response = "";
 				List<String> docenti_abilitati = DocenteAbilitatoDAOImpl.getInstance().getAllDocentiAbilitati();
 				List<Docente> info_docenti_abilitati = DatabaseDidatticaMock.getAllInfoDocente(docenti_abilitati);
 				if (info_docenti_abilitati.size() > 0) {
@@ -141,41 +139,42 @@ public class ServerMain {
 				}
 				response += "\n";
 				out.println(response);
+				
 			} else if (command.equals(QUERY_ABILITA_DOCENTE)) {
-				response = "OK\n";
 				String telefono_abilitazione = in.readLine().replace("telefono:", "").replace("\n", "");
 				String password = in.readLine().replace("password:", "").replace("\n", "");
 				boolean trovato = false;
+				List<Docente> docenti = DatabaseDidatticaMock.getAllDocenti();
 				trovato = DatabaseDidatticaMock.isTelefonoInDocentiAndNotInDocentiAbilitati(telefono_abilitazione);
 				if (trovato) {
 					DocenteAbilitatoDAOImpl.getInstance().addDocenteAbilitato(telefono_abilitazione, password);
 					Docente da = new Docente();
-					for (int i = 0; i < DatabaseDidatticaMock.docenti.size(); i++) {
-						if (DatabaseDidatticaMock.docenti.get(i).getTelefono()
+					for (int i = 0; i < docenti.size(); i++) {
+						if (docenti.get(i).getTelefono()
 								.equalsIgnoreCase(telefono_abilitazione)) {
-							da = DatabaseDidatticaMock.docenti.get(i);
+							da = docenti.get(i);
 						}
 					}
 
-					response += da.getId_docente() + " " + da.getTelefono() + "\n";
+					response = da.getId_docente() + " " + da.getTelefono() + "\n";
 
 				} else {
-					response += "gia_abilitato\n";
+					response = "gia_abilitato\n";
 				}
 
 				response += "\n";
 				out.println(response);
 
 			} else if (command.equals(QUERY_RECUPERA_PASSWORD)) {
-				response = "OK\n";
 				String password;
 				String telefono_abilitazione = in.readLine().replace("\n", "");
 				password = DocenteAbilitatoDAOImpl.getInstance().recoveryPassword(telefono_abilitazione);
-				response += password + "\n";
+				response = password + "\n";
 				response += "\n";
 				out.println(response);
+				
 			} else if (command.equals(QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE)) {
-				response = "OK\n";
+				response = "";
 				String empty ="";
 				List<EsameVerbalizzato> ev = new ArrayList<EsameVerbalizzato>();
 				ev = EsameVerbalizzatoDAOImpl.getInstance().getAllVerbalizzazioniGiornaliere(empty);
@@ -189,7 +188,7 @@ public class ServerMain {
 				out.println(response);
 			}
 			else if (command.equals(QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE_DOCENTE)) {
-				response = "OK\n";
+				response = "";
 				List<EsameVerbalizzato> ev = new ArrayList<EsameVerbalizzato>();
 				ev = EsameVerbalizzatoDAOImpl.getInstance().getAllVerbalizzazioniGiornaliere(id_docente);
 				for (int i = 0; i < ev.size(); i++) {

@@ -83,21 +83,22 @@ public class ExamReservationPanel extends JPanel {
 
 			// System.out.println("Inviato: " + req);
 			String line = in.readLine();
-			if (line.equalsIgnoreCase(ServerMain.OK)) {
-				line = in.readLine();
-				if (line.isEmpty()) {
-					JOptionPane.showMessageDialog(ExamReservationPanel.this, "Non ci sono prenotazioni!", "Error",
-							JOptionPane.ERROR_MESSAGE);
-					s.close();
-				} else {
-					while (!line.isEmpty()) {
+			if (line.isEmpty()) {
 
-						ta.append(line + "\n");
-						line = in.readLine();
-					}
-					s.close();
+				JOptionPane.showMessageDialog(ExamReservationPanel.this, "Non ci sono prenotazioni!", "Info",
+						JOptionPane.INFORMATION_MESSAGE);
+				
+
+				s.close();
+			} else {
+				while (!line.isEmpty()) {
+
+					ta.append(line + "\n");
+					line = in.readLine();
 				}
+				s.close();
 			}
+
 
 		} catch (IOException ioe) {
 			JOptionPane.showMessageDialog(ExamReservationPanel.this, "Error in communication with server!", "Error",

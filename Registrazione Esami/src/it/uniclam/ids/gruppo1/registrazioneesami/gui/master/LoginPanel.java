@@ -86,17 +86,16 @@ public class LoginPanel extends JPanel {
 					out.println(req);
 					// System.out.println("Inviato: " + req);
 					String line = in.readLine();
-					if (line.equalsIgnoreCase(ServerMain.OK)) {
-						line = in.readLine();
-						if (line.equalsIgnoreCase("true")) {
-							s.close();
-							clientGUI.changePanel(ClientMainGUI.EXAMINATOR_PANEL);
-						} else {
-							JOptionPane.showMessageDialog(LoginPanel.this, "Utente non abilitato!", "Error",
-									JOptionPane.ERROR_MESSAGE);
-							s.close();
-						}
+
+					if (line.equalsIgnoreCase("true")) {
+						s.close();
+						clientGUI.changePanel(ClientMainGUI.EXAMINATOR_PANEL);
+					} else {
+						JOptionPane.showMessageDialog(LoginPanel.this, "Utente non abilitato!", "Error",
+								JOptionPane.ERROR_MESSAGE);
+						s.close();
 					}
+
 
 				} catch (IOException ioe) {
 					JOptionPane.showMessageDialog(LoginPanel.this, "Error in communication with server!", "Error",

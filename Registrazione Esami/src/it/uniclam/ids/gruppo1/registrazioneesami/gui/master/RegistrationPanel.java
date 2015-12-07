@@ -178,37 +178,36 @@ public class RegistrationPanel extends JPanel {
 							out.println(req);
 
 							String line = in.readLine();
-							if (line.equalsIgnoreCase(ServerMain.OK)) {
+
+							if (line.equals("true")) {
+
 								line = in.readLine();
 								if (line.equals("true")) {
-
+									ta.append("L'esame è stato trovato nelle prenotazioni\n");
 									line = in.readLine();
 									if (line.equals("true")) {
-										ta.append("L'esame è stato trovato nelle prenotazioni\n");
-										line = in.readLine();
-										if (line.equals("true")) {
-											ta.append("L'esame è stato verbalizzato!");
-										} else {
-											JOptionPane.showMessageDialog(RegistrationPanel.this,
-													"L'esame è già presente nel database!", "Info",
-													JOptionPane.INFORMATION_MESSAGE);
-										}
+										ta.append("L'esame è stato verbalizzato!");
 									} else {
 										JOptionPane.showMessageDialog(RegistrationPanel.this,
-												"L'esame non è stato trovato!", "Error", JOptionPane.ERROR_MESSAGE);
+												"L'esame è già presente nel database!", "Info",
+												JOptionPane.INFORMATION_MESSAGE);
 									}
-
-									s.close();
-
-								}
-
-								else {
+								} else {
 									JOptionPane.showMessageDialog(RegistrationPanel.this,
-											"I dati della verbalizzazione non sono corretti!", "Error",
-											JOptionPane.ERROR_MESSAGE);
-									s.close();
+											"L'esame non è stato trovato!", "Error", JOptionPane.ERROR_MESSAGE);
 								}
+
+								s.close();
+
 							}
+
+							else {
+								JOptionPane.showMessageDialog(RegistrationPanel.this,
+										"I dati della verbalizzazione non sono corretti!", "Error",
+										JOptionPane.ERROR_MESSAGE);
+								s.close();
+							}
+
 						}
 					}
 

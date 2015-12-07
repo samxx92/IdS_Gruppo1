@@ -60,7 +60,7 @@ public class DailyExamPanel extends JPanel {
 		c.gridwidth = 8; // 2 columns wide
 		JScrollPane jp = new JScrollPane(ta);
 		this.add(jp, c);
-		
+
 		try {
 			Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
 
@@ -72,27 +72,26 @@ public class DailyExamPanel extends JPanel {
 			out.println(req);
 			// System.out.println("Inviato: " + req);
 			String line = in.readLine();
-			if (line.equalsIgnoreCase(ServerMain.OK)) {
-				line = in.readLine();
-				if (line.isEmpty()) {
-					JOptionPane.showMessageDialog(DailyExamPanel.this,
-							"Non sono stati verbalizzati esami in giornata!", "Info", JOptionPane.INFORMATION_MESSAGE);
-					s.close();
-				} else {
-					while (!line.isEmpty()) {
+			if (line.isEmpty()) {
+				JOptionPane.showMessageDialog(DailyExamPanel.this,
+						"Non sono stati verbalizzati esami in giornata!", "Info", JOptionPane.INFORMATION_MESSAGE);
+				
+				s.close();
+			} else {
+				while (!line.isEmpty()) {
 
-						ta.append(line + "\n");
-						line = in.readLine();
-					}
-					s.close();
+					ta.append(line + "\n");
+					line = in.readLine();
 				}
+				s.close();
 			}
+
 		} catch (IOException ioe) {
 			JOptionPane.showMessageDialog(DailyExamPanel.this, "Error in communication with server!", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
-		
-		
+
+
 
 		back.addActionListener(new ActionListener() {
 

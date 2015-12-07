@@ -35,7 +35,7 @@ public class ClientMainGUI extends JFrame {
 	public static String LOGIN_PANEL = "Login";
 	public static String EXAMINATOR_PANEL = "Esaminatore";
 	public static String REGISTRATION_PANEL = "Verbalizzazione";
-	public static String EXAM_RESERVATION_PANEL = "Prenotazioni Esami";
+	public static String EXAM_RESERVATION_PANEL = "Visualizza Prenotazioni Esami";
 	public static String DAILY_EXAM_PANEL = "Verbalizzazioni Giornaliere";
 	public static String ADMIN_PANEL = "Amministratore";
 	public static String ENABLE_PANEL = "Abilitazione Docenti";

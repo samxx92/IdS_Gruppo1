@@ -80,21 +80,19 @@ public class ConfirmationAdminPanel extends JPanel {
 			out.println(req);
 			// System.out.println("Inviato: " + req);
 			String line = in.readLine();
-			if (line.equalsIgnoreCase(ServerMain.OK)) {
-				line = in.readLine();
-				if (line.isEmpty()) {
-					JOptionPane.showMessageDialog(ConfirmationAdminPanel.this,
-							"Non sono stati verbalizzati esami in giornata!", "Info", JOptionPane.INFORMATION_MESSAGE);
-					s.close();
-				} else {
-					while (!line.isEmpty()) {
+			if (line.isEmpty()) {
+				JOptionPane.showMessageDialog(ConfirmationAdminPanel.this,
+						"Non sono stati verbalizzati esami in giornata!", "Info", JOptionPane.INFORMATION_MESSAGE);
+				s.close();
+			} else {
+				while (!line.isEmpty()) {
 
-						ta.append(line + "\n");
-						line = in.readLine();
-					}
-					s.close();
+					ta.append(line + "\n");
+					line = in.readLine();
 				}
+				s.close();
 			}
+
 		} catch (IOException ioe) {
 			JOptionPane.showMessageDialog(ConfirmationAdminPanel.this, "Error in communication with server!", "Error",
 					JOptionPane.ERROR_MESSAGE);
