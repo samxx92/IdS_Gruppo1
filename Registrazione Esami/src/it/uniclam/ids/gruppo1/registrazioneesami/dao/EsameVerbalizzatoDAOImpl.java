@@ -11,6 +11,10 @@ import java.util.TimeZone;
 
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.EsameVerbalizzato;
 
+/**
+ * @author Gianmarco
+ *
+ */
 public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 
 	private EsameVerbalizzatoDAOImpl() {
@@ -26,11 +30,11 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 	}
 
 	/**
-	 * Il metodo serve a ... 
+	 * Il metodo serve a registrare un esame all'interno del DB EsameVerbalizzato
 	 * 
 	 * @param e
 	 * @return 
-	 * @throws DAOException Questa eccezione è generata quando ... 
+	 * @throws DAOException Questa eccezione è generata quando si verificano problemi nella query 
 	 */
 	public boolean verbalizzaEsame(EsameVerbalizzato e) throws DAOException {
 		Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
@@ -72,6 +76,15 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 
 	}
 
+	
+	/**
+	 * Il metodo serve a visualizzare le verbalizzazioni giornaliere di ogni docente presenti 
+	 * all'interno del DB EsameVerbalizzato
+	 * 
+	 * @param id_docente
+	 * @return ev
+	 * @throws DAOException Questa eccezione è generata quando si verificano problemi nella query 
+	 */
 	@Override
 	public List<EsameVerbalizzato> getAllVerbalizzazioniGiornaliere(String id_docente) throws DAOException {
 		Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
