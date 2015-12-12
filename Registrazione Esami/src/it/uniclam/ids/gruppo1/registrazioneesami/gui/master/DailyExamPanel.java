@@ -31,11 +31,6 @@ public class DailyExamPanel extends JPanel {
 	private JTextArea ta = new JTextArea(20, 50);
 
 	public DailyExamPanel(ClientMainGUI clientGUI) {
-		// JPanel pane = new JPanel(new GridBagLayout());
-
-		// Container pane = getContentPane();
-		// Definisci un oggetto gridbagconstraints per la specifica
-		// dei vincoli dell'interfaccia
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
 
@@ -70,12 +65,11 @@ public class DailyExamPanel extends JPanel {
 			String req = ServerMain.QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE_DOCENTE + "\n" + "\n";
 
 			out.println(req);
-			// System.out.println("Inviato: " + req);
 			String line = in.readLine();
 			if (line.isEmpty()) {
 				JOptionPane.showMessageDialog(DailyExamPanel.this,
 						"Non sono stati verbalizzati esami in giornata!", "Info", JOptionPane.INFORMATION_MESSAGE);
-				
+
 				s.close();
 			} else {
 				ta.append("Esame\tMatricola\tVoto\tData Appello\n");

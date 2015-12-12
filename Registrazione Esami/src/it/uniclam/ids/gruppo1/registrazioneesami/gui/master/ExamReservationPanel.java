@@ -30,13 +30,8 @@ public class ExamReservationPanel extends JPanel {
 	private JButton back = new JButton("Indietro");
 
 	private JTextArea ta = new JTextArea(20, 50);
-	
-	public ExamReservationPanel(ClientMainGUI clientGUI) {
-		// JPanel pane = new JPanel(new GridBagLayout());
 
-		// Container pane = getContentPane();
-		// Definisci un oggetto gridbagconstraints per la specifica
-		// dei vincoli dell'interfaccia
+	public ExamReservationPanel(ClientMainGUI clientGUI) {
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
 
@@ -81,7 +76,6 @@ public class ExamReservationPanel extends JPanel {
 
 			out.println(req);
 
-			// System.out.println("Inviato: " + req);
 			String line = in.readLine();
 			if (line.isEmpty()) {
 

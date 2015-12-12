@@ -26,7 +26,6 @@ public class NavigationPanel extends JPanel {
 		add(administration);
 		add(confirm);
 		add(settings);
-		// this.clientGUI = clientGUI;
 
 		login.addActionListener(new ActionListener() {
 			@Override

@@ -6,7 +6,9 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import it.uniclam.ids.gruppo1.registrazioneesami.dao.DAOException;
 import it.uniclam.ids.gruppo1.registrazioneesami.dao.DocenteAbilitatoDAOImpl;
@@ -34,10 +36,13 @@ public class ServerMain {
 	public static String QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE = "req_query_visualizza_verbalizzazioni_giornaliere";
 
 	public static String QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE_DOCENTE = "req_query_visualizza_verbalizazioni_giornaliere_docente";
-	
-	public static String QUERY_SALVA_ESAMI_IN_S3 = "req_query_salva_esami_in_s3";
-	
+
+	public static String QUERY_VISUALIZZA_ESAMI_PRESIDENTE = "req_query_visualizza_esami_presidente";
+
+	public static String QUERY_CONFERMA_ESAMI = "req_query_conferma_esami";
+
 	public static String HOST = "localhost";
+
 	public static int PORT = 5555;
 
 	public static void main(String[] args) throws Exception {
@@ -46,12 +51,6 @@ public class ServerMain {
 		String response = null;
 		String telefono = null;
 		String id_docente = null;
-
-		// DatabaseDidatticaMock db_didattica = new DatabaseDidatticaMock();
-		// List<Commissione> commissioni = db_didattica.getAllCommissioni();
-		// List<Docente> docenti = db_didattica.getAllDocenti();
-		// List <Esame> esami = db_didattica.getAllEsami();
-		// List <EsamePrenotato> esami_prenotati = db_didattica.getAllExam();
 
 		while (true) {
 			response = "Error\n\n";
@@ -78,11 +77,9 @@ public class ServerMain {
 					System.out.println("Exception in connection");
 					out.println(response);
 				}
-				// String response = "OK\nc1, n1, t1\nc2, n2, t2\n\n";
 
 				s.close();
-			}
-
+			} 
 			else if (command.equals(QUERY_VERBALIZZA)) {
 
 				String id_esame = in.readLine().replace("id_esame:", "").replace("\n", "");
@@ -94,15 +91,21 @@ public class ServerMain {
 				response = isincommissione + "\n";
 
 				if (isincommissione.equalsIgnoreCase("true")) {
+					Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
+					int currentDay = localCalendar.get(Calendar.DATE);
+					int currentMonth = localCalendar.get(Calendar.MONTH) + 1;
+					int currentYear = localCalendar.get(Calendar.YEAR);
+					String data = currentYear + "-" + currentMonth + "-" + currentDay;
+
 
 					EsameVerbalizzato e = new EsameVerbalizzato(id_esame, id_docente, id_studente, data_appello,
-							valutazione,null);
+							valutazione,data,null,null);
 					boolean trovato = DatabaseDidatticaMock.isEsamePrenotato(e, telefono);
 					String response_temp = "false";
 					boolean verbalizzato = false;
 					if (trovato) {
 						response_temp = "true\n";
-						verbalizzato = EsameVerbalizzatoDAOImpl.getInstance().verbalizzaEsame(e);
+						verbalizzato = EsameVerbalizzatoDAOImpl.getInstance().verbalizzaEsame(e,data);
 						if (verbalizzato) {
 							response_temp += "true\n";
 						}
@@ -111,7 +114,8 @@ public class ServerMain {
 
 				}
 				out.println(response);
-			} else if (command.equals(QUERY_VISUALIZZA_PRENOTAZIONI)) {
+			} 
+			else if (command.equals(QUERY_VISUALIZZA_PRENOTAZIONI)) {
 				List<String> esami_docente = DatabaseDidatticaMock.getPrenotazioniEsamiDocente(telefono);
 				List<EsamePrenotato>esami_prenotati = DatabaseDidatticaMock.getEsami_prenotati();
 				response = "";
@@ -129,7 +133,8 @@ public class ServerMain {
 				response += "\n";
 				out.println(response);
 
-			} else if (command.equals(QUERY_VISUALIZZA_DOCENTI_ABILITATI)) {
+			} 
+			else if (command.equals(QUERY_VISUALIZZA_DOCENTI_ABILITATI)) {
 				response = "";
 				List<String> docenti_abilitati = DocenteAbilitatoDAOImpl.getInstance().getAllDocentiAbilitati();
 				List<Docente> info_docenti_abilitati = DatabaseDidatticaMock.getAllInfoDocente(docenti_abilitati);
@@ -141,8 +146,9 @@ public class ServerMain {
 				}
 				response += "\n";
 				out.println(response);
-				
-			} else if (command.equals(QUERY_ABILITA_DOCENTE)) {
+
+			} 
+			else if (command.equals(QUERY_ABILITA_DOCENTE)) {
 				String telefono_abilitazione = in.readLine().replace("telefono:", "").replace("\n", "");
 				String password = in.readLine().replace("password:", "").replace("\n", "");
 				boolean trovato = false;
@@ -167,50 +173,81 @@ public class ServerMain {
 				response += "\n";
 				out.println(response);
 
-			} else if (command.equals(QUERY_RECUPERA_PASSWORD)) {
+			} 
+			else if (command.equals(QUERY_RECUPERA_PASSWORD)) {
 				String password;
 				String telefono_abilitazione = in.readLine().replace("\n", "");
 				password = DocenteAbilitatoDAOImpl.getInstance().recoveryPassword(telefono_abilitazione);
 				response = password + "\n";
 				response += "\n";
 				out.println(response);
-				
-			} else if (command.equals(QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE)) {
+
+			} 
+			else if (command.equals(QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE_DOCENTE)) {
 				response = "";
 				String empty ="";
 				List<EsameVerbalizzato> ev = new ArrayList<EsameVerbalizzato>();
-				ev = EsameVerbalizzatoDAOImpl.getInstance().getAllVerbalizzazioniGiornaliere(empty);
+				ev = EsameVerbalizzatoDAOImpl.getInstance().getAllVerbalizzazioniGiornaliere(id_docente,empty);
+				for (int i = 0; i < ev.size(); i++) {
+					response += ev.get(i).getId_esame() + ";" + ev.get(i).getId_studente() + ";" 
+							+ ev.get(i).getValutazione() + ";"+ ev.get(i).getData_appello() + ";\n";
+				}
+
+				response += "\n";
+				out.println(response);
+			} 
+			else if (command.equals(QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE)) {
+				response = "";
+				List<EsameVerbalizzato> ev = EsameVerbalizzatoDAOImpl.getInstance().getAllVerbalizzazioniGiornaliere("", "");
 				for (int i = 0; i < ev.size(); i++) {
 					response += ev.get(i).getId_esame() + ";" + ev.get(i).getId_docente() + ";"
 							+ ev.get(i).getId_studente() + ";" + ev.get(i).getValutazione() + ";"
-							+ ev.get(i).getData_appello() + ";" + ev.get(i).getData_verbalizzazione() +"\n";
+							+ ev.get(i).getData_appello() + ";" + ev.get(i).getData_verbalizzazione() +";" 
+							+ ev.get(i).getConfermato() + ";" + ev.get(i).getScaduto()+"\n";
 				}
 
 				response += "\n";
 				out.println(response);
 			}
-			else if (command.equals(QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE_DOCENTE)) {
+			else if(command.equals(QUERY_VISUALIZZA_ESAMI_PRESIDENTE)){
+				String line = in.readLine();
+				String codiceEsame = null;
+				for (int i=0; i<DatabaseDidatticaMock.getCommissioni().size();i++){
+					if (DatabaseDidatticaMock.getCommissioni().get(i).getId_presidente().equalsIgnoreCase(line)){
+						codiceEsame = DatabaseDidatticaMock.getCommissioni().get(i).getId_esame();
+					}
+				}
 				response = "";
-				List<EsameVerbalizzato> ev = new ArrayList<EsameVerbalizzato>();
-				ev = EsameVerbalizzatoDAOImpl.getInstance().getAllVerbalizzazioniGiornaliere(id_docente);
-				for (int i = 0; i < ev.size(); i++) {
-					response += ev.get(i).getId_esame() + ";" + ev.get(i).getId_studente() + ";" 
-				+ ev.get(i).getValutazione() + ";"+ ev.get(i).getData_appello() + "\n";
+				List<EsameVerbalizzato> esami_verbalizzati_s3 = EsameVerbalizzatoDAOImpl.getInstance().getAllVerbalizzazioniGiornaliere("", "admin");
+				if (esami_verbalizzati_s3.size() > 0) {
+					for (int k = 0; k < esami_verbalizzati_s3.size(); k++) {
+						if (esami_verbalizzati_s3.get(k).getId_esame().equalsIgnoreCase(codiceEsame)){
+							response += esami_verbalizzati_s3.get(k).getId_esame()+ ";"
+									+ esami_verbalizzati_s3.get(k).getId_docente() + ";" +
+									esami_verbalizzati_s3.get(k).getId_studente() +";" +
+									esami_verbalizzati_s3.get(k).getValutazione() +";" +
+									esami_verbalizzati_s3.get(k).getData_appello() +";"+
+									esami_verbalizzati_s3.get(k).getData_verbalizzazione() +"\n";
+						}
+					}
 				}
-
 				response += "\n";
 				out.println(response);
+
 			}
-			
-			else if(command.equals(QUERY_SALVA_ESAMI_IN_S3)){
+			else if(command.equals(QUERY_CONFERMA_ESAMI)){
+				String conferma = in.readLine();
 				response = "OK\n";
 				List<String> esami_verbalizzati_s3 = new ArrayList<String>();
-				String lines = in.readLine();
-				while(!lines.isEmpty()){
-					esami_verbalizzati_s3.add(lines);
-					lines=in.readLine();
+				String line = in.readLine();
+				while(!line.isEmpty()){
+					esami_verbalizzati_s3.add(line);
+					System.out.println(line);
+					line=in.readLine();
 				}
-				DatabaseDidatticaMock.createListEsami_verbalizzati_s3(esami_verbalizzati_s3);
+				if (esami_verbalizzati_s3.size()>0){
+					EsameVerbalizzatoDAOImpl.getInstance().setConfermaEsame(esami_verbalizzati_s3, conferma);
+				}
 				out.println(response);
 			}
 

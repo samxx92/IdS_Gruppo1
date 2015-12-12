@@ -13,8 +13,12 @@ public class EsamePrenotato extends Esame {
 	public EsamePrenotato(String id_esame, String id_studente, String data_prenotazione, String data_appello) {
 		super(id_esame, null, null);
 		this.id_studente = id_studente;
-		this.data_prenotazione = java.sql.Date.valueOf(data_prenotazione);
-		this.data_appello = java.sql.Date.valueOf(data_appello);
+		if (data_prenotazione != null){
+			this.data_prenotazione = java.sql.Date.valueOf(data_prenotazione);
+		}
+		if (data_appello != null){
+			this.data_appello = java.sql.Date.valueOf(data_appello);
+		}
 
 	}
 

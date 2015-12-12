@@ -18,14 +18,8 @@ public class AdminPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JButton enable = new JButton(ClientMainGUI.ENABLE_PANEL);
 	private JButton registration = new JButton(ClientMainGUI.CONFIRMATION_ADMIN_PANEL);
-	private JButton store = new JButton(ClientMainGUI.STORE_EXAM_ADMIN_PANEL);
 
 	public AdminPanel(ClientMainGUI clientGUI) {
-		// JPanel pane = new JPanel(new GridBagLayout());
-
-		// Container pane = getContentPane();
-		// Definisci un oggetto gridbagconstraints per la specifica
-		// dei vincoli dell'interfaccia
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
 
@@ -43,13 +37,6 @@ public class AdminPanel extends JPanel {
 		c.gridwidth = 5; // 2 columns wide
 		this.add(registration, c);
 
-		// Campo store
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 6;
-		c.gridwidth = 5; // 2 columns wide
-		this.add(store, c);
-
 		enable.addActionListener(new ActionListener() {
 
 			@Override
@@ -64,15 +51,6 @@ public class AdminPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clientGUI.changePanel(ClientMainGUI.CONFIRMATION_ADMIN_PANEL);
-
-			}
-		});
-
-		store.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				clientGUI.changePanel(ClientMainGUI.STORE_EXAM_ADMIN_PANEL);
 
 			}
 		});

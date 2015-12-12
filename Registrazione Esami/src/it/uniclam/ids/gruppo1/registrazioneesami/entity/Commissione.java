@@ -19,10 +19,11 @@ public class Commissione {
 	public Commissione() {
 	}
 
-	public Commissione(String id_commissione, String id_esame, List<String> id_docenti) {
+	public Commissione(String id_commissione, String id_esame, List<String> id_docenti, String id_presidente) {
 		this.id_commissione = id_commissione;
 		this.id_esame = id_esame;
 		this.id_docenti = id_docenti;
+		this.id_presidente=id_presidente;
 	}
 
 	public String getId_commissione() {

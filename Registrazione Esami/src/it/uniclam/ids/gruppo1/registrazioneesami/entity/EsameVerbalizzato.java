@@ -2,25 +2,32 @@ package it.uniclam.ids.gruppo1.registrazioneesami.entity;
 
 import java.sql.Date;
 
-public class EsameVerbalizzato extends Esame {
+public class EsameVerbalizzato extends EsamePrenotato {
 	private String id_docente;
 	private Date data_verbalizzazione;
-	private Date data_appello;
-	private String id_studente;
 	private int valutazione;
-	private Boolean confermato;
+	private String confermato;
+	private String scaduto;
 
 	public EsameVerbalizzato() {
 	}
 
 	public EsameVerbalizzato(String id_esame, String id_docente, String id_studente, String data_appello,
-			String valutazione, String data_verbalizzazione) {
-		super(id_esame, null, null);
+			String valutazione, String data_verbalizzazione,String scaduto, String confermato) {
+		super(id_esame, id_studente, null,data_appello);
 		this.id_docente = id_docente;
-		this.id_studente = id_studente;
-		this.data_appello = java.sql.Date.valueOf(data_appello);
 		this.valutazione = Integer.parseInt(valutazione);
 		this.data_verbalizzazione = java.sql.Date.valueOf(data_verbalizzazione);
+		if (confermato!=null){
+			this.confermato = confermato;
+		}else{
+			this.confermato = "no";
+		}
+		if (scaduto!=null){
+			this.scaduto = scaduto;
+		}else{
+			this.scaduto = "no";
+		}
 	}
 
 	public Date getData_verbalizzazione() {
@@ -31,14 +38,6 @@ public class EsameVerbalizzato extends Esame {
 		this.data_verbalizzazione = data_verbalizzazione;
 	}
 
-	public String getId_studente() {
-		return id_studente;
-	}
-
-	public void setId_studente(String id_studente) {
-		this.id_studente = id_studente;
-	}
-
 	public int getValutazione() {
 		return valutazione;
 	}
@@ -47,20 +46,14 @@ public class EsameVerbalizzato extends Esame {
 		this.valutazione = valutazione;
 	}
 
-	public Boolean getConfermato() {
+
+
+	public String getConfermato() {
 		return confermato;
 	}
 
-	public void setConfermato(Boolean confermato) {
+	public void setConfermato(String confermato) {
 		this.confermato = confermato;
-	}
-
-	public Date getData_appello() {
-		return data_appello;
-	}
-
-	public void setData_appello(Date data_appello) {
-		this.data_appello = data_appello;
 	}
 
 	public String getId_docente() {
@@ -70,13 +63,21 @@ public class EsameVerbalizzato extends Esame {
 	public void setId_docente(String id_docente) {
 		this.id_docente = id_docente;
 	}
-	
+
 	public String getId_esame() {
 		return super.getId_esame();
 	}
 
 	public void setId_esame(String id_esame) {
 		super.setId_esame(id_esame);
+	}
+
+	public String getScaduto() {
+		return scaduto;
+	}
+
+	public void setScaduto(String scaduto) {
+		this.scaduto = scaduto;
 	}
 
 }

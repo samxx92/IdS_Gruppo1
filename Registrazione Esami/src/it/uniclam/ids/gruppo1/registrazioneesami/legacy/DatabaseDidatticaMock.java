@@ -6,6 +6,7 @@ import java.util.List;
 
 import it.uniclam.ids.gruppo1.registrazioneesami.dao.DAOException;
 import it.uniclam.ids.gruppo1.registrazioneesami.dao.DocenteAbilitatoDAOImpl;
+import it.uniclam.ids.gruppo1.registrazioneesami.dao.EsameVerbalizzatoDAOImpl;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.Commissione;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.Docente;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.Esame;
@@ -19,7 +20,23 @@ public class DatabaseDidatticaMock {
 	private static List<Esame> esami;
 	private static List<EsamePrenotato> esami_prenotati;
 	private static List<EsameVerbalizzato> esami_verbalizzati_s3;
+	private static List<EsameVerbalizzato> esami_verbalizzati_temp = new ArrayList<EsameVerbalizzato>();
 
+
+	public static List<EsameVerbalizzato> getEsami_verbalizzati_temp() {
+		List<EsameVerbalizzato> ev = null;
+		try {
+			ev = EsameVerbalizzatoDAOImpl.getInstance().getAllVerbalizzazioniGiornaliere("", "");
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ev;
+	}
+
+	public static void setEsami_verbalizzati_temp(List<EsameVerbalizzato> esami_verbalizzati_temp) {
+		DatabaseDidatticaMock.esami_verbalizzati_temp = esami_verbalizzati_temp;
+	}
 
 	static{
 		commissioni = new ArrayList<Commissione>();
@@ -27,18 +44,18 @@ public class DatabaseDidatticaMock {
 		id_docenti.add("id1");
 		id_docenti.add("id2");
 
-		Commissione test1 = new Commissione("c1", "e1", id_docenti);
+		Commissione test1 = new Commissione("c1", "e1", id_docenti, "p1");
 
 		List<String> id_docenti2 = new ArrayList<String>();
 		id_docenti2.add("id2");
 		id_docenti2.add("id3");
 
-		Commissione test2 = new Commissione("c2", "e2", id_docenti2);
+		Commissione test2 = new Commissione("c2", "e2", id_docenti2, "p2");
 
 		List<String> id_docenti3 = new ArrayList<String>();
 		id_docenti3.add("id3");
 
-		Commissione test3 = new Commissione("c3", "e3", id_docenti3);
+		Commissione test3 = new Commissione("c3", "e3", id_docenti3, "p3");
 
 		commissioni.add(test1);
 		commissioni.add(test2);
@@ -90,8 +107,8 @@ public class DatabaseDidatticaMock {
 		EsamePrenotato ep2 = new EsamePrenotato("e2", "m1", "2015-12-01", "2016-02-10");
 		esami_prenotati.add(ep1);
 		esami_prenotati.add(ep2);
-		
-		
+
+
 		esami_verbalizzati_s3 = new ArrayList<EsameVerbalizzato>();
 	}
 
@@ -115,28 +132,19 @@ public class DatabaseDidatticaMock {
 		return esami_verbalizzati_s3;
 	}
 
-	
-	/**
-	 * 
-	 * @param esami_verbalizzati_s3
-	 */
-	public static void createListEsami_verbalizzati_s3(List<String> esami_verbalizzati_s3){
-		EsameVerbalizzato ev = new EsameVerbalizzato();
-		String [] temp=null;
-		Date data_appello = null;
-		Date data_verbalizzazione = null;
-		for (int i = 0; i<esami_verbalizzati_s3.size(); i++){
-			temp = esami_verbalizzati_s3.get(i).split(";");
-			ev.setId_esame(temp[0]);
-			ev.setId_docente(temp[1]);
-			ev.setId_studente(temp[2]);
-			ev.setValutazione(Integer.parseInt(temp[3]));
-			data_appello = java.sql.Date.valueOf(temp[4]);
-			ev.setData_appello(data_appello);
-			data_verbalizzazione = java.sql.Date.valueOf(temp[5]);
-			ev.setData_verbalizzazione(data_verbalizzazione);
-			DatabaseDidatticaMock.esami_verbalizzati_s3.add(ev);
-			ev=null;
+
+
+	public static void createListEsami_verbalizzati_s3(List<EsameVerbalizzato> list, List<String> esami_verbalizzati_s3){
+		for (int i = 0; i<list.size(); i++){
+			DatabaseDidatticaMock.esami_verbalizzati_s3.add(list.get(i));
+		}
+		for (int i = 0; i<esami_verbalizzati_temp.size();i++){
+			for ( int j = 0;j<esami_verbalizzati_s3.size();j++){
+				if((esami_verbalizzati_temp.get(i).getId_esame() + 
+						esami_verbalizzati_temp.get(i).getId_studente()).equalsIgnoreCase(esami_verbalizzati_s3.get(j))){
+					esami_verbalizzati_temp.get(i).setConfermato("admin");
+				}
+			}
 		}
 	}
 
@@ -164,8 +172,6 @@ public class DatabaseDidatticaMock {
 		String commissione = "false";
 		for (int k = 0; k < commissioni.size(); k++) {
 			if (commissioni.get(k).getId_esame().equals(id_esame)) {
-				// id_commissione =
-				// DatabaseDidatticaMock.commissioni.get(k).getId_commissione();
 				docenti_commissione = commissioni.get(k).getId_docenti();
 			}
 		}

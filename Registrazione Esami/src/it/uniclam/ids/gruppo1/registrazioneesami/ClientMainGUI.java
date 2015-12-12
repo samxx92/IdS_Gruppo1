@@ -10,12 +10,9 @@ import javax.swing.WindowConstants;
 
 import it.uniclam.ids.gruppo1.registrazioneesami.gui.NavigationPanel;
 import it.uniclam.ids.gruppo1.registrazioneesami.gui.SettingsPanel;
-import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.AdminConfirmedExam;
-import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.AdminExpiredExam;
 import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.AdminPanel;
 import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.ConfirmationAdminPanel;
 import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.EnablePanel;
-import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.StoreExamAdminPanel;
 import it.uniclam.ids.gruppo1.registrazioneesami.gui.master.ConfirmPanel;
 import it.uniclam.ids.gruppo1.registrazioneesami.gui.master.DailyExamPanel;
 import it.uniclam.ids.gruppo1.registrazioneesami.gui.master.ExamReservationPanel;
@@ -40,9 +37,6 @@ public class ClientMainGUI extends JFrame {
 	public static String ADMIN_PANEL = "Amministratore";
 	public static String ENABLE_PANEL = "Abilitazione Docenti";
 	public static String CONFIRMATION_ADMIN_PANEL = "Conferma Esami";
-	public static String STORE_EXAM_ADMIN_PANEL = "Termina Procedura";
-	public static String ADMIN_EXPIRED_EXAM = "Esami Scaduti";
-	public static String ADMIN_CONFIRMED_EXAM = "Esami Confermati";
 	public static String CONFIRM_PANEL = "Presidente";
 	public static String SETTINGS_PANEL = "Settings";
 
@@ -52,9 +46,6 @@ public class ClientMainGUI extends JFrame {
 	private AdminPanel adminPanel;
 	private EnablePanel enablePanel;
 	private ConfirmationAdminPanel confirmationAdminPanel;
-	private StoreExamAdminPanel storeExamAdminPanel;
-	private AdminExpiredExam adminExpiredExam;
-	private AdminConfirmedExam adminConfirmedExam;
 	private ConfirmPanel confirmPanel;
 	private SettingsPanel settingsPanel;
 	private NavigationPanel navigationPanel;
@@ -71,7 +62,7 @@ public class ClientMainGUI extends JFrame {
 
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		pack();
-		this.setSize(900, 600);
+		this.setSize(1000,800);
 		setVisible(true);
 
 	}
@@ -96,18 +87,9 @@ public class ClientMainGUI extends JFrame {
 		} else if (panelName.equals(ClientMainGUI.CONFIRMATION_ADMIN_PANEL)) {
 			confirmationAdminPanel = new ConfirmationAdminPanel(this);
 			lastPanel = confirmationAdminPanel;
-		} else if (panelName.equals(ClientMainGUI.STORE_EXAM_ADMIN_PANEL)) {
-			storeExamAdminPanel = new StoreExamAdminPanel(this);
-			lastPanel = storeExamAdminPanel;
 		} else if (panelName.equals(ClientMainGUI.CONFIRM_PANEL)) {
 			confirmPanel = new ConfirmPanel(this);
 			lastPanel = confirmPanel;
-		} else if (panelName.equals(ClientMainGUI.ADMIN_EXPIRED_EXAM)) {
-			adminExpiredExam = new AdminExpiredExam(this);
-			lastPanel = adminExpiredExam;
-		} else if (panelName.equals(ClientMainGUI.ADMIN_CONFIRMED_EXAM)) {
-			adminConfirmedExam = new AdminConfirmedExam(this);
-			lastPanel = adminConfirmedExam;
 		} else if (panelName.equals(ClientMainGUI.EXAMINATOR_PANEL)) {
 			examinatorPanel = new ExaminatorPanel(this);
 			lastPanel = examinatorPanel;
@@ -119,8 +101,10 @@ public class ClientMainGUI extends JFrame {
 			lastPanel = dailyExamPanel;
 		}
 
+
+
 		getContentPane().add(lastPanel, BorderLayout.CENTER);
-		
+
 		if (!panelName.equals(ClientMainGUI.EXAMINATOR_PANEL) &&
 				!panelName.equals(ClientMainGUI.EXAM_RESERVATION_PANEL) &&
 				!panelName.equals(ClientMainGUI.REGISTRATION_PANEL) && 
@@ -128,6 +112,7 @@ public class ClientMainGUI extends JFrame {
 			navigationPanel = new NavigationPanel(this);
 			getContentPane().add(navigationPanel, BorderLayout.SOUTH);
 		}
+
 		getContentPane().revalidate();
 	}
 

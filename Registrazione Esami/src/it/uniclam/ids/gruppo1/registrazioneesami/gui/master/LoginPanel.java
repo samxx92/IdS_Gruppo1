@@ -31,11 +31,6 @@ public class LoginPanel extends JPanel {
 	private JButton login = new JButton("Accedi");
 
 	public LoginPanel(ClientMainGUI clientGUI) {
-		// JPanel pane = new JPanel(new GridBagLayout());
-
-		// Container pane = getContentPane();
-		// Definisci un oggetto gridbagconstraints per la specifica
-		// dei vincoli dell'interfaccia
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
 
@@ -84,7 +79,6 @@ public class LoginPanel extends JPanel {
 							+ password.getText() + "\n" + "\n";
 
 					out.println(req);
-					// System.out.println("Inviato: " + req);
 					String line = in.readLine();
 
 					if (line.equalsIgnoreCase("true")) {

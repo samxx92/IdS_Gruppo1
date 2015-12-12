@@ -9,14 +9,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.text.NumberFormat;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.text.NumberFormatter;
 
 import it.uniclam.ids.gruppo1.registrazioneesami.ClientMainGUI;
 import it.uniclam.ids.gruppo1.registrazioneesami.ServerMain;
@@ -29,7 +32,6 @@ public class RegistrationPanel extends JPanel {
 	private JTextField id_Esame = new JTextField("", 15);
 	private JTextField id_Studente = new JTextField("", 15);
 	private JTextField data_Appello = new JTextField("", 15);
-	private JTextField valutazione = new JTextField("", 2);
 
 	private JButton verbalizza = new JButton("Verbalizza");
 	private JButton clear = new JButton("Pulisci");
@@ -37,14 +39,20 @@ public class RegistrationPanel extends JPanel {
 
 	private JTextArea ta = new JTextArea(12, 12);
 
-	public RegistrationPanel(ClientMainGUI clientGUI) {
-		// JPanel pane = new JPanel(new GridBagLayout());
 
-		// Container pane = getContentPane();
-		// Definisci un oggetto gridbagconstraints per la specifica
-		// dei vincoli dell'interfaccia
+
+
+	public RegistrationPanel(ClientMainGUI clientGUI) {
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
+
+		NumberFormat longFormat = NumberFormat.getIntegerInstance();
+		NumberFormatter numberFormatter = new NumberFormatter(longFormat);
+		numberFormatter.setValueClass(Integer.class); //optional, ensures you will always get a long value
+		numberFormatter.setAllowsInvalid(false); //this is the key!!
+		//numberFormatter.setMinimum(18); //Optional
+		//numberFormatter.setMaximum(31);
+		JFormattedTextField valutazione = new JFormattedTextField(numberFormatter);
 
 		// Campo id_esame
 		c.fill = GridBagConstraints.HORIZONTAL;

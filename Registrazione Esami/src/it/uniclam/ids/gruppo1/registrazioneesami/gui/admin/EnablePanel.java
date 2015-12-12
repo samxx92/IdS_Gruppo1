@@ -36,11 +36,6 @@ public class EnablePanel extends JPanel {
 	private JTextArea ta = new JTextArea(12, 12);
 
 	public EnablePanel(ClientMainGUI clientGUI) {
-		// JPanel pane = new JPanel(new GridBagLayout());
-
-		// Container pane = getContentPane();
-		// Definisci un oggetto gridbagconstraints per la specifica
-		// dei vincoli dell'interfaccia
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
 
@@ -113,7 +108,6 @@ public class EnablePanel extends JPanel {
 			String req = ServerMain.QUERY_VISUALIZZA_DOCENTI_ABILITATI + "\n" + "\n";
 
 			out.println(req);
-			// System.out.println("Inviato: " + req);
 			String line = in.readLine();
 			if (line.isEmpty()) {
 				ta.append("Non ci sono Docenti Abilitati");
@@ -191,7 +185,6 @@ public class EnablePanel extends JPanel {
 
 					out.println(req);
 
-					// System.out.println("Inviato: " + req);
 					String line = in.readLine();
 					if (line.equalsIgnoreCase("null")) {
 						JOptionPane.showMessageDialog(EnablePanel.this, "Il Docente non è abilitato!", "Error",
@@ -199,7 +192,6 @@ public class EnablePanel extends JPanel {
 						;
 						s.close();
 					} else {
-						// password.setText(line);
 						JOptionPane.showMessageDialog(EnablePanel.this, "La password è: " + line, "Password",
 								JOptionPane.INFORMATION_MESSAGE);
 						;

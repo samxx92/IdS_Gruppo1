@@ -22,11 +22,6 @@ public class ExaminatorPanel extends JPanel {
 	private JButton back = new JButton("Logout");
 
 	public ExaminatorPanel(ClientMainGUI clientGUI) {
-		// JPanel pane = new JPanel(new GridBagLayout());
-
-		// Container pane = getContentPane();
-		// Definisci un oggetto gridbagconstraints per la specifica
-		// dei vincoli dell'interfaccia
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
 

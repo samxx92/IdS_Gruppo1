@@ -24,11 +24,6 @@ public class SettingsPanel extends JPanel {
 	private JButton salva = new JButton("Salva");
 
 	public SettingsPanel(ClientMainGUI clientGUI) {
-		// JPanel pane = new JPanel(new GridBagLayout());
-		// Container pane = getContentPane();
-
-		// Definisci un oggetto gridbagconstraints per la specifica
-		// dei vincoli dell'interfaccia
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
 
