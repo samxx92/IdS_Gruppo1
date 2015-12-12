@@ -114,11 +114,11 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 		return ev;
 	}
 	@Override
-	public void deleteEsame (List<EsameVerbalizzato> esami_verbalizzati_s3) throws DAOException{
+	public void deleteEsamiScaduti () throws DAOException{
 		try {
 			Statement st = DAOSettings.getStatement();
 
-			String sql = "delete * from EsamiVerbalizzati;";
+			String sql = "delete from EsamiVerbalizzati where scaduto='true'";
 			st.executeUpdate(sql);
 			DAOSettings.closeStatement(st);
 
@@ -144,20 +144,26 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 	}
 
 	@Override
-	public List<EsameVerbalizzato> getEsamiVerbalizzati (List<String> id_verbalizzazione, String conferma) throws DAOException{
+	public List<EsameVerbalizzato> getEsamiVerbalizzati (String scaduto, String confermato) throws DAOException{
 		List<EsameVerbalizzato> ev = new ArrayList<EsameVerbalizzato>();
 		try {
 			Statement st = DAOSettings.getStatement();
 
-			String sqlsearch = "select * from esamiverbalizzati where id_verbalizzazione =''";
-			for (int i = 0 ;i<id_verbalizzazione.size();i++){
-				sqlsearch += "or id_verbalizzazione ='" + id_verbalizzazione.get(i) + "'";
+			String sqlsearch = "select * from esamiverbalizzati";
+			if (!scaduto.equalsIgnoreCase("") &&confermato.equalsIgnoreCase("")){
+				sqlsearch+=" where scaduto='" + scaduto + "'";
+			}
+			if (!scaduto.equalsIgnoreCase("") && !confermato.equalsIgnoreCase("")){
+				sqlsearch+=" where scaduto='" + scaduto + "' and confermato='" + confermato + "'";
+			}
+			if (scaduto.equalsIgnoreCase("") && !confermato.equalsIgnoreCase("")){
+				sqlsearch+=" where confermato='" + confermato + "'";
 			}
 			ResultSet rs = st.executeQuery(sqlsearch);
 			while (rs.next()) {
 				EsameVerbalizzato temp = new EsameVerbalizzato(rs.getString("id_esame"), rs.getString("id_docente"),
 						rs.getString("id_studente"), rs.getString("data_appello"), rs.getString("voto"), rs.getString("data_verbalizzazione"),
-						rs.getString("scaduto"), conferma);
+						rs.getString("scaduto"), rs.getString("confermato"));
 				ev.add(temp);
 			}
 
@@ -167,6 +173,28 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 			throw new DAOException("In getAllVerbalizzazioniGiornaliere(): " + sq.getMessage());
 		}
 		return ev;		
+	}
+
+	@Override
+	public void setScaduto() throws DAOException {
+		Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
+		localCalendar.add(Calendar.DATE, -60);
+		int currentDay = localCalendar.get(Calendar.DATE);
+		int currentMonth = localCalendar.get(Calendar.MONTH) + 1;
+		int currentYear = localCalendar.get(Calendar.YEAR);
+		String data = currentYear + "-" + currentMonth + "-" + currentDay;
+		Date date = java.sql.Date.valueOf(data);
+		try {
+			Statement st = DAOSettings.getStatement();
+			String sqlsearch = "update esamiverbalizzati set scaduto='true' where data_verbalizzazione<'"+
+					date + "' and confermato not like 'presidente'";
+			st.executeUpdate(sqlsearch);
+			DAOSettings.closeStatement(st);
+
+		} catch (SQLException sq) {
+			throw new DAOException("In getAllVerbalizzazioniGiornaliere(): " + sq.getMessage());
+		}
+
 	}
 
 }

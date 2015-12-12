@@ -9,9 +9,12 @@ public interface EsameVerbalizzatoDAO {
 
 	public List<EsameVerbalizzato> getAllVerbalizzazioniGiornaliere(String id_docente, String confermato) throws DAOException;
 
-	public void deleteEsame (List<EsameVerbalizzato> esami_verbalizzati_s3) throws DAOException;
+	public void deleteEsamiScaduti () throws DAOException;
 
 	public void setConfermaEsame (List<String> esami_verbalizzati_s3, String conferma) throws DAOException;
 
-	public List<EsameVerbalizzato> getEsamiVerbalizzati (List<String> id_verbalizzazione, String conferma) throws DAOException;
+	public List<EsameVerbalizzato> getEsamiVerbalizzati (String scaduto, String confermato) throws DAOException;
+
+	public void setScaduto() throws DAOException;
 }
+

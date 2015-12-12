@@ -21,12 +21,12 @@ public class EsameVerbalizzato extends EsamePrenotato {
 		if (confermato!=null){
 			this.confermato = confermato;
 		}else{
-			this.confermato = "no";
+			this.confermato = "false";
 		}
 		if (scaduto!=null){
 			this.scaduto = scaduto;
 		}else{
-			this.scaduto = "no";
+			this.scaduto = "false";
 		}
 	}
 

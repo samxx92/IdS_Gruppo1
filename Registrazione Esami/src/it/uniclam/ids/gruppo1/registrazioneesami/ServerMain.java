@@ -33,13 +33,15 @@ public class ServerMain {
 
 	public static String QUERY_RECUPERA_PASSWORD = "req_query_recupera_password";
 
-	public static String QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE = "req_query_visualizza_verbalizzazioni_giornaliere";
+	public static String QUERY_VISUALIZZA_VERBALIZZAZIONI = "req_query_visualizza_verbalizzazioni_giornaliere";
 
 	public static String QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE_DOCENTE = "req_query_visualizza_verbalizazioni_giornaliere_docente";
 
 	public static String QUERY_VISUALIZZA_ESAMI_PRESIDENTE = "req_query_visualizza_esami_presidente";
 
 	public static String QUERY_CONFERMA_ESAMI = "req_query_conferma_esami";
+
+	public static String QUERY_CANCELLA_ESAMI_SCADUTI = "req_query_cancella_esami_scaduti";
 
 	public static String HOST = "localhost";
 
@@ -196,9 +198,10 @@ public class ServerMain {
 				response += "\n";
 				out.println(response);
 			} 
-			else if (command.equals(QUERY_VISUALIZZA_VERBALIZZAZIONI_GIORNALIERE)) {
+			else if (command.equals(QUERY_VISUALIZZA_VERBALIZZAZIONI)) {
 				response = "";
-				List<EsameVerbalizzato> ev = EsameVerbalizzatoDAOImpl.getInstance().getAllVerbalizzazioniGiornaliere("", "");
+				EsameVerbalizzatoDAOImpl.getInstance().setScaduto();
+				List<EsameVerbalizzato> ev = EsameVerbalizzatoDAOImpl.getInstance().getEsamiVerbalizzati("","");
 				for (int i = 0; i < ev.size(); i++) {
 					response += ev.get(i).getId_esame() + ";" + ev.get(i).getId_docente() + ";"
 							+ ev.get(i).getId_studente() + ";" + ev.get(i).getValutazione() + ";"
@@ -210,6 +213,7 @@ public class ServerMain {
 				out.println(response);
 			}
 			else if(command.equals(QUERY_VISUALIZZA_ESAMI_PRESIDENTE)){
+				EsameVerbalizzatoDAOImpl.getInstance().setScaduto();
 				String line = in.readLine();
 				String codiceEsame = null;
 				for (int i=0; i<DatabaseDidatticaMock.getCommissioni().size();i++){
@@ -218,7 +222,7 @@ public class ServerMain {
 					}
 				}
 				response = "";
-				List<EsameVerbalizzato> esami_verbalizzati_s3 = EsameVerbalizzatoDAOImpl.getInstance().getAllVerbalizzazioniGiornaliere("", "admin");
+				List<EsameVerbalizzato> esami_verbalizzati_s3 = EsameVerbalizzatoDAOImpl.getInstance().getEsamiVerbalizzati("false", "admin");
 				if (esami_verbalizzati_s3.size() > 0) {
 					for (int k = 0; k < esami_verbalizzati_s3.size(); k++) {
 						if (esami_verbalizzati_s3.get(k).getId_esame().equalsIgnoreCase(codiceEsame)){
@@ -237,17 +241,36 @@ public class ServerMain {
 			}
 			else if(command.equals(QUERY_CONFERMA_ESAMI)){
 				String conferma = in.readLine();
-				response = "OK\n";
+				response = "";
 				List<String> esami_verbalizzati_s3 = new ArrayList<String>();
 				String line = in.readLine();
 				while(!line.isEmpty()){
-					esami_verbalizzati_s3.add(line);
-					System.out.println(line);
-					line=in.readLine();
+					if(conferma.equalsIgnoreCase("admin")){
+						if (line.equalsIgnoreCase("true")){
+							line=in.readLine();
+							response+="l'esame " + line + " è scaduto e non può essere confermato!\n";
+						}else if(line.equalsIgnoreCase("false")){
+							line=in.readLine();
+							esami_verbalizzati_s3.add(line);
+							System.out.println(line);
+							response+="l'esame " + line + " è stato confermato!\n";
+						}
+						line=in.readLine();
+					}
+					else{
+						esami_verbalizzati_s3.add(line);
+						line=in.readLine();
+						response+="OK\n";
+					}
 				}
 				if (esami_verbalizzati_s3.size()>0){
 					EsameVerbalizzatoDAOImpl.getInstance().setConfermaEsame(esami_verbalizzati_s3, conferma);
 				}
+				out.println(response);
+			}
+			else if(command.equals(QUERY_CANCELLA_ESAMI_SCADUTI)){
+				response = "OK\n";
+				EsameVerbalizzatoDAOImpl.getInstance().deleteEsamiScaduti();
 				out.println(response);
 			}
 

@@ -65,7 +65,7 @@ public class ConfirmPanel extends JPanel {
 		table.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(table);
 		Dimension d = new Dimension();
-		d.setSize(800, 500);
+		d.setSize(800, 400);
 		scrollPane.setPreferredSize(d);
 		this.add(scrollPane, c);		
 
@@ -158,6 +158,7 @@ public class ConfirmPanel extends JPanel {
 								JOptionPane.INFORMATION_MESSAGE);
 					}
 
+
 					s.close();
 
 
@@ -165,6 +166,15 @@ public class ConfirmPanel extends JPanel {
 					JOptionPane.showMessageDialog(ConfirmPanel.this, "Error in communication with server!", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
+
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				int [] index = table.getSelectedRows();
+				int i = 0;
+				while(i<index.length){
+					model.removeRow(index[i]);
+					i++;
+				}
+
 			}
 		});
 
