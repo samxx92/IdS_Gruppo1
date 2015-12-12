@@ -13,6 +13,7 @@ import it.uniclam.ids.gruppo1.registrazioneesami.entity.Esame;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.EsamePrenotato;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.EsameVerbalizzato;
 
+
 public class DatabaseDidatticaMock {
 
 	private static List<Commissione> commissioni;
@@ -133,7 +134,11 @@ public class DatabaseDidatticaMock {
 	}
 
 
-
+	/**
+	 * TODO
+	 * @param list: lista degli esami verbalizzati, esami_verbalizzati_s3:
+	 * @return	/
+	 */
 	public static void createListEsami_verbalizzati_s3(List<EsameVerbalizzato> list, List<String> esami_verbalizzati_s3){
 		for (int i = 0; i<list.size(); i++){
 			DatabaseDidatticaMock.esami_verbalizzati_s3.add(list.get(i));
@@ -150,9 +155,10 @@ public class DatabaseDidatticaMock {
 
 
 	/**
-	 * Questo metodo ricever... 
-	 * @param telefono Parametro per la ricerca
-	 * @return	
+	 * Questo metodo riceve il parametro telefono e lo converte
+	 * in id_docente, grazie alla lista dei docenti
+	 * @param telefono: Parametro per la ricerca
+	 * @return	id_docente: ID del docente
 	 */
 	public static String getId_docentefromtelefono(String telefono) {
 		String id_docente = null;
@@ -165,7 +171,13 @@ public class DatabaseDidatticaMock {
 	}
 
 
-
+	/**
+	 * Questo metodo verifica che il docente si parte
+	 * effettiva della commisione di cui vuole verbalizzare l'esame
+	 * @param telefono: Parametro per la ricerca
+	 * @param id_esame: codice dell'esame
+	 * @return	commissione: codice della commissione
+	 */
 	public static String isInCommissione(String telefono, String id_esame) {
 		String id_docente = getId_docentefromtelefono(telefono);
 		List<String> docenti_commissione = new ArrayList<String>();
@@ -184,6 +196,13 @@ public class DatabaseDidatticaMock {
 
 	}
 
+	/**
+	 * Questo metodo, tramite il parametro telefono, risale
+	 * al docente e prende tutte le prenotazioni degli esami
+	 * relative ad egli
+	 * @param telefono: parametro per la ricerca
+	 * @return
+	 */
 	public static List<String> getPrenotazioniEsamiDocente(String telefono) {
 		List<String> esami_docente = new ArrayList<String>();
 		List<String> commissioni_docente = new ArrayList<String>();
@@ -206,6 +225,13 @@ public class DatabaseDidatticaMock {
 		return esami_docente;
 	}
 
+	/**
+	 * Questo metodo tramite i parametri di ricerca verifica
+	 * se un esame del sistema sia stato prenotato o meno
+	 * @param e: parametro per la ricerca
+	 * @param telefono: parametro per la ricerca
+	 * @return trovato: parmetro booleano, true se la ricerca è andata a buon fine, false viceversa
+	 */
 	public static boolean isEsamePrenotato(EsameVerbalizzato e, String telefono) {
 		String verifica1 = e.getId_esame() + " " + e.getId_studente() + " " + e.getData_appello();
 		List<String> esami_docente = getPrenotazioniEsamiDocente(telefono);
@@ -225,6 +251,12 @@ public class DatabaseDidatticaMock {
 		return trovato;
 	}
 
+	/** Questo metodo riceve in ingresso la lista dei docenti abilitati 
+	 * e restituisce le informazioni che sono riferite a loro
+	 * tramite il parametro TODO
+	 * @param docenti_abilitati: lista dei docenti presenti nel database
+	 * @return info_docenti_abilitati
+	 */
 	public static List<Docente> getAllInfoDocente(List<String> docenti_abilitati) {
 		List<Docente> info_docenti_abilitati = new ArrayList<Docente>();
 		for (int i = 0; i < docenti_abilitati.size(); i++) {
@@ -238,6 +270,13 @@ public class DatabaseDidatticaMock {
 		return info_docenti_abilitati;
 	}
 
+	/**
+	 * Questo metodo verifica se un docente sia 
+	 * o meno già abilitato, sfrutando il parametro del telefono
+	 * @param telefono_abilitazione: parametro di ricerca
+	 * @return trovato: parmetro booleano, true se la ricerca è andata a buon fine, false viceversa
+	 * @throws DAOException
+	 */
 	public static boolean isTelefonoInDocentiAndNotInDocentiAbilitati(String telefono_abilitazione)
 			throws DAOException {
 		boolean in_docenti_abilitati = false;
