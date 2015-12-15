@@ -137,7 +137,7 @@ public class DatabaseDidatticaMock {
 	/**
 	 * TODO
 	 * @param list: lista degli esami verbalizzati, esami_verbalizzati_s3:
-	 * @return	/
+	 * @return	NONE
 	 */
 	public static void createListEsami_verbalizzati_s3(List<EsameVerbalizzato> list, List<String> esami_verbalizzati_s3){
 		for (int i = 0; i<list.size(); i++){

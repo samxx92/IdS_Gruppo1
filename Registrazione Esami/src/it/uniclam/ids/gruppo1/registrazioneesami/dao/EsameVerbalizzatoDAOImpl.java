@@ -11,9 +11,10 @@ import java.util.TimeZone;
 
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.EsameVerbalizzato;
 
-
 public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 
+	private static int GIORNI_DI_SCADENZA=-60;
+	
 	private EsameVerbalizzatoDAOImpl() {
 	}
 
@@ -30,7 +31,7 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 	 * Il metodo serve a registrare un esame all'interno del DB EsameVerbalizzato
 	 * 
 	 * @param e
-	 * @return 
+	 * @return verbalizzato
 	 * @throws DAOException Questa eccezione è generata quando si verificano problemi nella query 
 	 */
 	@Override
@@ -75,6 +76,7 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 	 * all'interno del DB EsameVerbalizzato
 	 * 
 	 * @param id_docente
+	 * @param confermato
 	 * @return ev
 	 * @throws DAOException Questa eccezione è generata quando si verificano problemi nella query 
 	 */
@@ -113,6 +115,15 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 		}
 		return ev;
 	}
+	
+	/**
+	 * Il metodo serve a cancellare quegli esami che sono scaduti 
+	 * all'interno del DB EsameVerbalizzato
+	 * 
+	 * @param NONE
+	 * @return NONE
+	 * @throws DAOException Questa eccezione è generata quando si verificano problemi nella query 
+	 */
 	@Override
 	public void deleteEsamiScaduti () throws DAOException{
 		try {
@@ -127,13 +138,27 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 		}
 	}
 
+	/**
+	 * Il metodo serve a visualizzare nella tabella dell'Admin
+	 * la conferma di una esame da parte del presidente
+	 * 
+	 * @param esami_verbalizzati_s3: parametro di ricerca
+	 * @param conferma: parametro di notifica
+	 * @return NONE
+	 * @throws DAOException Questa eccezione è generata quando si verificano problemi nella query 
+	 */
 	@Override
 	public void setConfermaEsame(List<String> esami_verbalizzati_s3, String conferma) throws DAOException {
+		String temp;
 		try {
 			Statement st = DAOSettings.getStatement();
 			for (int i = 0; i<esami_verbalizzati_s3.size();i++){
 				String sql = "update esamiverbalizzati set confermato='"+conferma+"' where id_verbalizzazione"
-						+ "='"+ esami_verbalizzati_s3.get(i)+"';";
+						+ "='"+ esami_verbalizzati_s3.get(i)+"'";
+				if (conferma.equalsIgnoreCase("admin")){
+					temp =" and confermato='false'";
+					sql+=temp;
+				}
 				st.executeUpdate(sql);
 			}
 			DAOSettings.closeStatement(st);
@@ -143,6 +168,15 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 		}
 	}
 
+	/**
+	 * Il metodo serve a far visualizzare quegli esami che sono 
+	 * stati verbalizzati all'interno del DB EsameVerbalizzato
+	 * 
+	 * @param scaduto
+	 * @param confermato
+	 * @return ev
+	 * @throws DAOException Questa eccezione è generata quando si verificano problemi nella query 
+	 */
 	@Override
 	public List<EsameVerbalizzato> getEsamiVerbalizzati (String scaduto, String confermato) throws DAOException{
 		List<EsameVerbalizzato> ev = new ArrayList<EsameVerbalizzato>();
@@ -175,10 +209,18 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 		return ev;		
 	}
 
+	/**
+	 * Il metodo serve a controllare che l'esame sia stato confermato
+	 * entro i giorni di scadenza prestabiliti
+	 * 
+	 * @param NONE
+	 * @return NONE
+	 * @throws DAOException Questa eccezione è generata quando si verificano problemi nella query 
+	 */
 	@Override
 	public void setScaduto() throws DAOException {
 		Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
-		localCalendar.add(Calendar.DATE, -60);
+		localCalendar.add(Calendar.DATE, GIORNI_DI_SCADENZA);
 		int currentDay = localCalendar.get(Calendar.DATE);
 		int currentMonth = localCalendar.get(Calendar.MONTH) + 1;
 		int currentYear = localCalendar.get(Calendar.YEAR);
