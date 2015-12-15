@@ -274,7 +274,7 @@ public class ServerMain {
 					DatabaseDidatticaMock.createListEsami_verbalizzati_s3(esami_verbalizzati_s3);
 				}
 				out.println(response);
-			
+
 			}
 			else if(command.equals(QUERY_CANCELLA_ESAMI_SCADUTI)){
 				response = "OK\n";

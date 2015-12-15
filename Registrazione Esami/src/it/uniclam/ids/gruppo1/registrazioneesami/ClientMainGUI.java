@@ -9,10 +9,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 
 import it.uniclam.ids.gruppo1.registrazioneesami.gui.NavigationPanel;
-import it.uniclam.ids.gruppo1.registrazioneesami.gui.SettingsPanel;
-import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.AdminPanel;
-import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.ConfirmationAdminPanel;
-import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.EnablePanel;
+//import it.uniclam.ids.gruppo1.registrazioneesami.gui.SettingsPanel;
+//import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.AdminPanel;
+//import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.ConfirmationAdminPanel;
+//import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.EnablePanel;
 import it.uniclam.ids.gruppo1.registrazioneesami.gui.master.ConfirmPanel;
 import it.uniclam.ids.gruppo1.registrazioneesami.gui.master.DailyExamPanel;
 import it.uniclam.ids.gruppo1.registrazioneesami.gui.master.ExamReservationPanel;
@@ -43,11 +43,11 @@ public class ClientMainGUI extends JFrame {
 	// private AdminNavigationPanel adminNavigationPanel;
 	private LoginPanel loginPanel;
 	private RegistrationPanel registrationPanel;
-	private AdminPanel adminPanel;
-	private EnablePanel enablePanel;
-	private ConfirmationAdminPanel confirmationAdminPanel;
+	//private AdminPanel adminPanel;
+	//private EnablePanel enablePanel;
+	//private ConfirmationAdminPanel confirmationAdminPanel;
 	private ConfirmPanel confirmPanel;
-	private SettingsPanel settingsPanel;
+	//private SettingsPanel settingsPanel;
 	private NavigationPanel navigationPanel;
 	private ExaminatorPanel examinatorPanel;
 	private ExamReservationPanel examReservationPanel;
@@ -75,7 +75,7 @@ public class ClientMainGUI extends JFrame {
 		} else if (panelName.equals(ClientMainGUI.REGISTRATION_PANEL)) {
 			registrationPanel = new RegistrationPanel(this);
 			lastPanel = registrationPanel;
-		} else if (panelName.equals(ClientMainGUI.SETTINGS_PANEL)) {
+			/*} else if (panelName.equals(ClientMainGUI.SETTINGS_PANEL)) {
 			settingsPanel = new SettingsPanel(this);
 			lastPanel = settingsPanel;
 		} else if (panelName.equals(ClientMainGUI.ADMIN_PANEL)) {
@@ -86,7 +86,7 @@ public class ClientMainGUI extends JFrame {
 			lastPanel = enablePanel;
 		} else if (panelName.equals(ClientMainGUI.CONFIRMATION_ADMIN_PANEL)) {
 			confirmationAdminPanel = new ConfirmationAdminPanel(this);
-			lastPanel = confirmationAdminPanel;
+			lastPanel = confirmationAdminPanel;*/
 		} else if (panelName.equals(ClientMainGUI.CONFIRM_PANEL)) {
 			confirmPanel = new ConfirmPanel(this);
 			lastPanel = confirmPanel;
@@ -140,6 +140,7 @@ public class ClientMainGUI extends JFrame {
 			public void run() {
 				@SuppressWarnings("unused")
 				ClientMainGUI frame = new ClientMainGUI();
+
 			}
 		});
 	}

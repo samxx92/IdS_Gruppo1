@@ -1,5 +1,6 @@
 package it.uniclam.ids.gruppo1.registrazioneesami.gui.master;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -42,6 +43,7 @@ public class ConfirmPanel extends JPanel {
 
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
+		this.setBackground(Color.cyan);
 
 		// Campo conferma
 		c.fill = GridBagConstraints.HORIZONTAL;

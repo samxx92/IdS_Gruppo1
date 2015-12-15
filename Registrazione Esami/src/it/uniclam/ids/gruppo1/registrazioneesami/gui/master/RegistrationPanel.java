@@ -1,5 +1,6 @@
 package it.uniclam.ids.gruppo1.registrazioneesami.gui.master;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -45,6 +46,7 @@ public class RegistrationPanel extends JPanel {
 	public RegistrationPanel(ClientMainGUI clientGUI) {
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
+		this.setBackground(Color.cyan);
 
 		NumberFormat longFormat = NumberFormat.getIntegerInstance();
 		NumberFormatter numberFormatter = new NumberFormatter(longFormat);

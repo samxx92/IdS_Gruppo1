@@ -1,5 +1,6 @@
 package it.uniclam.ids.gruppo1.registrazioneesami.gui.admin;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -8,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import it.uniclam.ids.gruppo1.registrazioneesami.AdminMainGUI;
 import it.uniclam.ids.gruppo1.registrazioneesami.ClientMainGUI;
 
 public class AdminPanel extends JPanel {
@@ -19,9 +21,10 @@ public class AdminPanel extends JPanel {
 	private JButton enable = new JButton(ClientMainGUI.ENABLE_PANEL);
 	private JButton registration = new JButton(ClientMainGUI.CONFIRMATION_ADMIN_PANEL);
 
-	public AdminPanel(ClientMainGUI clientGUI) {
+	public AdminPanel(AdminMainGUI adminMainGUI) {
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
+		this.setBackground(Color.orange);
 
 		// Campo enable
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -41,7 +44,7 @@ public class AdminPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clientGUI.changePanel(ClientMainGUI.ENABLE_PANEL);
+				adminMainGUI.changePanel(AdminMainGUI.ENABLE_PANEL);
 
 			}
 		});
@@ -50,7 +53,7 @@ public class AdminPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clientGUI.changePanel(ClientMainGUI.CONFIRMATION_ADMIN_PANEL);
+				adminMainGUI.changePanel(AdminMainGUI.CONFIRMATION_ADMIN_PANEL);
 
 			}
 		});

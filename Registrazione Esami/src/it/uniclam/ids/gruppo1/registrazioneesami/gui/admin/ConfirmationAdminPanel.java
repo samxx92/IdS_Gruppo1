@@ -1,6 +1,7 @@
 package it.uniclam.ids.gruppo1.registrazioneesami.gui.admin;
 
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -20,8 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-
-import it.uniclam.ids.gruppo1.registrazioneesami.ClientMainGUI;
+import it.uniclam.ids.gruppo1.registrazioneesami.AdminMainGUI;
 import it.uniclam.ids.gruppo1.registrazioneesami.ServerMain;
 
 
@@ -45,9 +45,10 @@ public class ConfirmationAdminPanel extends JPanel {
 
 	private static String PRESIDENTE="presidente";
 
-	public ConfirmationAdminPanel(ClientMainGUI clientGUI) {
+	public ConfirmationAdminPanel(AdminMainGUI adminMainGUI) {
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
+		this.setBackground(Color.orange);
 
 
 		// Campo salva
@@ -173,7 +174,7 @@ public class ConfirmationAdminPanel extends JPanel {
 					JOptionPane.showMessageDialog(ConfirmationAdminPanel.this, "Error in communication with server!", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
-				clientGUI.changePanel(ClientMainGUI.CONFIRMATION_ADMIN_PANEL);
+				adminMainGUI.changePanel(AdminMainGUI.CONFIRMATION_ADMIN_PANEL);
 
 
 
@@ -226,7 +227,7 @@ public class ConfirmationAdminPanel extends JPanel {
 							JOptionPane.ERROR_MESSAGE);
 				}
 
-				clientGUI.changePanel(ClientMainGUI.CONFIRMATION_ADMIN_PANEL);
+				adminMainGUI.changePanel(AdminMainGUI.CONFIRMATION_ADMIN_PANEL);
 
 			}
 		});
@@ -256,7 +257,7 @@ public class ConfirmationAdminPanel extends JPanel {
 					JOptionPane.showMessageDialog(ConfirmationAdminPanel.this, "Error in communication with server!", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}		
-				clientGUI.changePanel(ClientMainGUI.CONFIRMATION_ADMIN_PANEL);
+				adminMainGUI.changePanel(AdminMainGUI.CONFIRMATION_ADMIN_PANEL);
 
 			}
 		});		
@@ -267,7 +268,7 @@ public class ConfirmationAdminPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clientGUI.changePanel(ClientMainGUI.ADMIN_PANEL);
+				adminMainGUI.changePanel(AdminMainGUI.ADMIN_PANEL);
 
 			}
 		});

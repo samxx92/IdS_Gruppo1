@@ -1,5 +1,6 @@
 package it.uniclam.ids.gruppo1.registrazioneesami.gui.master;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -34,6 +35,7 @@ public class ExamReservationPanel extends JPanel {
 	public ExamReservationPanel(ClientMainGUI clientGUI) {
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
+		this.setBackground(Color.cyan);
 
 		// Campo back
 		c.fill = GridBagConstraints.HORIZONTAL;

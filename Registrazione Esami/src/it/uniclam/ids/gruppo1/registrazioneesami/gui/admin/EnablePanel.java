@@ -1,5 +1,6 @@
 package it.uniclam.ids.gruppo1.registrazioneesami.gui.admin;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -18,7 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import it.uniclam.ids.gruppo1.registrazioneesami.ClientMainGUI;
+import it.uniclam.ids.gruppo1.registrazioneesami.AdminMainGUI;
 import it.uniclam.ids.gruppo1.registrazioneesami.ServerMain;
 
 public class EnablePanel extends JPanel {
@@ -35,9 +36,10 @@ public class EnablePanel extends JPanel {
 
 	private JTextArea ta = new JTextArea(12, 12);
 
-	public EnablePanel(ClientMainGUI clientGUI) {
+	public EnablePanel(AdminMainGUI adminMainGUI) {
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
+		this.setBackground(Color.orange);
 
 		// Campo telefono
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -209,7 +211,7 @@ public class EnablePanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clientGUI.changePanel(ClientMainGUI.ADMIN_PANEL);
+				adminMainGUI.changePanel(AdminMainGUI.ADMIN_PANEL);
 
 			}
 		});

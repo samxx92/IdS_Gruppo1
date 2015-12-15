@@ -1,5 +1,6 @@
 package it.uniclam.ids.gruppo1.registrazioneesami.gui;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -10,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import it.uniclam.ids.gruppo1.registrazioneesami.ClientMainGUI;
+import it.uniclam.ids.gruppo1.registrazioneesami.AdminMainGUI;
 import it.uniclam.ids.gruppo1.registrazioneesami.ServerMain;
 
 public class SettingsPanel extends JPanel {
@@ -23,9 +24,10 @@ public class SettingsPanel extends JPanel {
 
 	private JButton salva = new JButton("Salva");
 
-	public SettingsPanel(ClientMainGUI clientGUI) {
+	public SettingsPanel(AdminMainGUI adminMainGUI) {
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
+		this.setBackground(Color.orange);
 
 		// Campo host
 		c.fill = GridBagConstraints.HORIZONTAL;
