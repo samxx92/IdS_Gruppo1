@@ -139,18 +139,18 @@ public class DatabaseDidatticaMock {
 	 * @param list: lista degli esami verbalizzati, esami_verbalizzati_s3:
 	 * @return	NONE
 	 */
-	public static void createListEsami_verbalizzati_s3(List<EsameVerbalizzato> list, List<String> esami_verbalizzati_s3){
-		for (int i = 0; i<list.size(); i++){
-			DatabaseDidatticaMock.esami_verbalizzati_s3.add(list.get(i));
+	public static void createListEsami_verbalizzati_s3(){
+		List<EsameVerbalizzato> temp = new ArrayList<EsameVerbalizzato>();
+		try {
+			temp = EsameVerbalizzatoDAOImpl.getInstance().getEsamiVerbalizzati("", "true");
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		for (int i = 0; i<esami_verbalizzati_temp.size();i++){
-			for ( int j = 0;j<esami_verbalizzati_s3.size();j++){
-				if((esami_verbalizzati_temp.get(i).getId_esame() + 
-						esami_verbalizzati_temp.get(i).getId_studente()).equalsIgnoreCase(esami_verbalizzati_s3.get(j))){
-					esami_verbalizzati_temp.get(i).setConfermato("admin");
-				}
-			}
+		for (int i = 0;i<temp.size();i++){
+			DatabaseDidatticaMock.esami_verbalizzati_s3.add(temp.get(i));
 		}
+		System.out.println(DatabaseDidatticaMock.esami_verbalizzati_s3.size());
 	}
 
 

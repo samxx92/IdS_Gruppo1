@@ -252,7 +252,7 @@ public class ServerMain {
 						}else if(line.equalsIgnoreCase("false")){
 							line=in.readLine();
 							esami_verbalizzati_s3.add(line);
-							System.out.println(line);
+							//System.out.println(line);
 							response+="l'esame " + line + " è stato confermato!\n";
 						}
 						line=in.readLine();
@@ -265,6 +265,10 @@ public class ServerMain {
 				}
 				if (esami_verbalizzati_s3.size()>0){
 					EsameVerbalizzatoDAOImpl.getInstance().setConfermaEsame(esami_verbalizzati_s3, conferma);
+				}
+				if (conferma.equalsIgnoreCase("true")){
+					DatabaseDidatticaMock.createListEsami_verbalizzati_s3();
+					EsameVerbalizzatoDAOImpl.getInstance().
 				}
 				out.println(response);
 			}

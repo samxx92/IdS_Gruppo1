@@ -159,6 +159,10 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 					temp =" and confermato='false'";
 					sql+=temp;
 				}
+				else if (conferma.equalsIgnoreCase("true")){
+					temp =" and confermato='presidente'";
+					sql+=temp;
+				}
 				st.executeUpdate(sql);
 			}
 			DAOSettings.closeStatement(st);
