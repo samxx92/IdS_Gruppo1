@@ -16,5 +16,7 @@ public interface EsameVerbalizzatoDAO {
 	public List<EsameVerbalizzato> getEsamiVerbalizzati (String scaduto, String confermato) throws DAOException;
 
 	public void setScaduto() throws DAOException;
+
+	public List<EsameVerbalizzato> getEsameFromIdVerbalizzazione(List<String> esami_verbalizzati_s3) throws DAOException;
 }
 

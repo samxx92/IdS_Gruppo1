@@ -42,7 +42,7 @@ public class ConfirmationAdminPanel extends JPanel {
 	private JButton save = new JButton("Salva Definitivamente");
 
 	private JButton delete = new JButton("Cancella Esami Scaduti");
-	
+
 	private static String PRESIDENTE="presidente";
 
 	public ConfirmationAdminPanel(ClientMainGUI clientGUI) {
@@ -142,18 +142,20 @@ public class ConfirmationAdminPanel extends JPanel {
 					req+="admin\n";
 					int [] index = new int[20];
 					int k = 0;
-					for (int i = 0; i<table.getRowCount();i++){
-						if (table.getValueAt(i, 6).equals("false")){
-							index[k]=i;
-							k++;
+					if (table.getRowCount()!=0){
+						for (int i = 0; i<table.getRowCount();i++){
+							if (table.getValueAt(i, 6).equals("false")){
+								index[k]=i;
+								k++;
+							}
 						}
-					}
-					String confermato1 = "admin";
-					for (int i = 0;i<k;i++){
-						if (!table.getValueAt(index[i], 6).equals(confermato1)){
-							req+=table.getValueAt(index[i], 7)+"\n";
-							req+= table.getValueAt(index[i], 0) + "" +
-									table.getValueAt(index[i], 2 )+ "\n";
+						//String confermato1 = "admin";
+						for (int i = 0;i<k;i++){
+							if (table.getValueAt(index[i], 6).equals("false")){
+								req+=table.getValueAt(index[i], 7)+"\n";
+								req+= table.getValueAt(index[i], 0) + "" +
+										table.getValueAt(index[i], 2 )+ "\n";
+							}
 						}
 					}
 					out.println(req);
@@ -193,17 +195,20 @@ public class ConfirmationAdminPanel extends JPanel {
 					//int [] index = table.getSelectedRows();
 					int [] index = new int[20];
 					int k = 0;
-					for (int i = 0; i<table.getRowCount();i++){
-						if (table.getValueAt(i, 6).equals(PRESIDENTE)){
-							index[k]=i;
-							k++;
+					if (table.getRowCount()!=0){
+						for (int i = 0; i<table.getRowCount();i++){
+							if (table.getValueAt(i, 6).equals(PRESIDENTE)){
+								index[k]=i;
+								k++;
+							}
 						}
-					}
-					String confermato1 = "presidente";
-					for (int i = 0;i<index.length;i++){
-						if (table.getValueAt(index[i], 6).equals(confermato1)){
-							req+= table.getValueAt(index[i], 0) + "" +
-									table.getValueAt(index[i], 2 )+ "\n";
+						
+						String confermato1 = "presidente";
+						for (int i = 0;i<index.length;i++){
+							if (table.getValueAt(index[i], 6).equals(confermato1)){
+								req+= table.getValueAt(index[i], 0) + "" +
+										table.getValueAt(index[i], 2 )+ "\n";
+							}
 						}
 					}
 					out.println(req);

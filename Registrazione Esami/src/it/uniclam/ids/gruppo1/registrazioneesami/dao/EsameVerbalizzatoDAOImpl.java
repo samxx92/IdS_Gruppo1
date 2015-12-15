@@ -14,7 +14,7 @@ import it.uniclam.ids.gruppo1.registrazioneesami.entity.EsameVerbalizzato;
 public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 
 	private static int GIORNI_DI_SCADENZA=-60;
-	
+
 	private EsameVerbalizzatoDAOImpl() {
 	}
 
@@ -115,7 +115,7 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 		}
 		return ev;
 	}
-	
+
 	/**
 	 * Il metodo serve a cancellare quegli esami che sono scaduti 
 	 * all'interno del DB EsameVerbalizzato
@@ -241,6 +241,34 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 			throw new DAOException("In getAllVerbalizzazioniGiornaliere(): " + sq.getMessage());
 		}
 
+	}
+	@Override
+	public List<EsameVerbalizzato> getEsameFromIdVerbalizzazione(List<String> esami_verbalizzati_s3) throws DAOException {
+		List<EsameVerbalizzato> ev = new ArrayList<EsameVerbalizzato>();
+		try {
+			Statement st = DAOSettings.getStatement();
+			if(esami_verbalizzati_s3.size()>0){
+				String sqlsearch = "select * from esamiverbalizzati where id_verbalizzazione ='" + esami_verbalizzati_s3.get(0) + "'"; 
+				if (esami_verbalizzati_s3.size()>1){
+					for (int i = 1;i<esami_verbalizzati_s3.size();i++){
+						sqlsearch += " or id_verbalizzazione ='" + esami_verbalizzati_s3.get(i)+"'";
+					}
+				}
+				ResultSet rs = st.executeQuery(sqlsearch);
+				while (rs.next()) {
+					EsameVerbalizzato temp = new EsameVerbalizzato(rs.getString("id_esame"), rs.getString("id_docente"),
+							rs.getString("id_studente"), rs.getString("data_appello"), rs.getString("voto"), rs.getString("data_verbalizzazione"),
+							rs.getString("scaduto"), rs.getString("confermato"));
+					ev.add(temp);
+				}
+			}
+
+			DAOSettings.closeStatement(st);
+
+		} catch (SQLException sq) {
+			throw new DAOException("In getAllVerbalizzazioniGiornaliere(): " + sq.getMessage());
+		}
+		return ev;
 	}
 
 }

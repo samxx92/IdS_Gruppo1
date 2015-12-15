@@ -21,7 +21,7 @@ public class DatabaseDidatticaMock {
 	private static List<Esame> esami;
 	private static List<EsamePrenotato> esami_prenotati;
 	private static List<EsameVerbalizzato> esami_verbalizzati_s3;
-	private static List<EsameVerbalizzato> esami_verbalizzati_temp = new ArrayList<EsameVerbalizzato>();
+
 
 
 	public static List<EsameVerbalizzato> getEsami_verbalizzati_temp() {
@@ -33,10 +33,6 @@ public class DatabaseDidatticaMock {
 			e.printStackTrace();
 		}
 		return ev;
-	}
-
-	public static void setEsami_verbalizzati_temp(List<EsameVerbalizzato> esami_verbalizzati_temp) {
-		DatabaseDidatticaMock.esami_verbalizzati_temp = esami_verbalizzati_temp;
 	}
 
 	static{
@@ -139,10 +135,10 @@ public class DatabaseDidatticaMock {
 	 * @param list: lista degli esami verbalizzati, esami_verbalizzati_s3:
 	 * @return	NONE
 	 */
-	public static void createListEsami_verbalizzati_s3(){
+	public static void createListEsami_verbalizzati_s3(List<String> esami_verbalizzati_s3){
 		List<EsameVerbalizzato> temp = new ArrayList<EsameVerbalizzato>();
 		try {
-			temp = EsameVerbalizzatoDAOImpl.getInstance().getEsamiVerbalizzati("", "true");
+			temp = EsameVerbalizzatoDAOImpl.getInstance().getEsameFromIdVerbalizzazione(esami_verbalizzati_s3);
 		} catch (DAOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
