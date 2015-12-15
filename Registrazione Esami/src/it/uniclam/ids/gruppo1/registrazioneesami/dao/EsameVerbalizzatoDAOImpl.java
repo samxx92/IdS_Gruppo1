@@ -242,6 +242,15 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 		}
 
 	}
+	
+	/**
+	 * Il metodo serve ad ottenere una lista di esami
+	 * partendo dall'id di verbalizzazione, accessibile tramite il parametro
+	 * 
+	 * @param esami_verbalizzati_s3
+	 * @return ev
+	 * @throws DAOException Questa eccezione è generata quando si verificano problemi nella query 
+	 */
 	@Override
 	public List<EsameVerbalizzato> getEsameFromIdVerbalizzazione(List<String> esami_verbalizzati_s3) throws DAOException {
 		List<EsameVerbalizzato> ev = new ArrayList<EsameVerbalizzato>();
