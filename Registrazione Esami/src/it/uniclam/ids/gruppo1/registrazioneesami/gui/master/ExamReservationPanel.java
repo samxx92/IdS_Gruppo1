@@ -34,8 +34,8 @@ public class ExamReservationPanel extends JPanel {
 
 	public ExamReservationPanel(ClientMainGUI clientGUI) {
 		GridBagConstraints c = new GridBagConstraints();
-		this.setLayout(new GridBagLayout());
-		this.setBackground(Color.cyan);
+		setLayout(new GridBagLayout());
+		setBackground(Color.yellow);
 
 		// Campo back
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -84,14 +84,13 @@ public class ExamReservationPanel extends JPanel {
 				JOptionPane.showMessageDialog(ExamReservationPanel.this, "Non ci sono prenotazioni!", "Info",
 						JOptionPane.INFORMATION_MESSAGE);
 
-
 				s.close();
 			} else {
 				ta.append("Esame\tMatricola\tData Appello\tData Prenotazione\n");
 				while (!line.isEmpty()) {
-					String[] temp = line.split(";"); 
+					String[] temp = line.split(";");
 					int i = 0;
-					while(i<temp.length){
+					while (i < temp.length) {
 						ta.append(temp[i] + "\t");
 						i++;
 					}
@@ -100,7 +99,6 @@ public class ExamReservationPanel extends JPanel {
 				}
 				s.close();
 			}
-
 
 		} catch (IOException ioe) {
 			JOptionPane.showMessageDialog(ExamReservationPanel.this, "Error in communication with server!", "Error",

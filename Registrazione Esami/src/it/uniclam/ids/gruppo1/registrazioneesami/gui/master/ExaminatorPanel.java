@@ -24,8 +24,8 @@ public class ExaminatorPanel extends JPanel {
 
 	public ExaminatorPanel(ClientMainGUI clientGUI) {
 		GridBagConstraints c = new GridBagConstraints();
-		this.setLayout(new GridBagLayout());
-		this.setBackground(Color.cyan);
+		setLayout(new GridBagLayout());
+		setBackground(Color.yellow);
 
 		// Campo esami scaduti
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -85,11 +85,10 @@ public class ExaminatorPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int l = 1;
-				l=JOptionPane.showConfirmDialog(ExaminatorPanel.this, "Sei sicuro di voler uscire?", "Info", 
+				l = JOptionPane.showConfirmDialog(ExaminatorPanel.this, "Sei sicuro di voler uscire?", "Info",
 						JOptionPane.YES_NO_OPTION);
-				if (l==0){
+				if (l == 0)
 					clientGUI.changePanel(ClientMainGUI.LOGIN_PANEL);
-				}
 
 			}
 		});

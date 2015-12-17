@@ -26,8 +26,8 @@ public class SettingsPanel extends JPanel {
 
 	public SettingsPanel(AdminMainGUI adminMainGUI) {
 		GridBagConstraints c = new GridBagConstraints();
-		this.setLayout(new GridBagLayout());
-		this.setBackground(Color.orange);
+		setLayout(new GridBagLayout());
+		setBackground(Color.orange);
 
 		// Campo host
 		c.fill = GridBagConstraints.HORIZONTAL;

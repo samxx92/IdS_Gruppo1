@@ -16,17 +16,17 @@ public class NavigationPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JButton login = new JButton(ClientMainGUI.EXAMINATOR_PANEL);
-	//private JButton administration = new JButton(ClientMainGUI.ADMIN_PANEL);
+	// private JButton administration = new JButton(ClientMainGUI.ADMIN_PANEL);
 	private JButton confirm = new JButton(ClientMainGUI.CONFIRM_PANEL);
-	//private JButton settings = new JButton(ClientMainGUI.SETTINGS_PANEL);
+	// private JButton settings = new JButton(ClientMainGUI.SETTINGS_PANEL);
 
 	public NavigationPanel(ClientMainGUI clientGUI) {
 		setLayout(new FlowLayout());
-		//this.setBackground(Color.black);
+		// this.setBackground(Color.black);
 		add(login);
-		//add(administration);
+		// add(administration);
 		add(confirm);
-		//add(settings);
+		// add(settings);
 
 		login.addActionListener(new ActionListener() {
 			@Override
@@ -34,13 +34,14 @@ public class NavigationPanel extends JPanel {
 				clientGUI.changePanel(ClientMainGUI.LOGIN_PANEL);
 			}
 		});
-		/*administration.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				clientGUI.changePanel(ClientMainGUI.ADMIN_PANEL);
-
-			}
-		});*/
+		/*
+		 * administration.addActionListener(new ActionListener() {
+		 * 
+		 * @Override public void actionPerformed(ActionEvent e) {
+		 * clientGUI.changePanel(ClientMainGUI.ADMIN_PANEL);
+		 * 
+		 * } });
+		 */
 
 		confirm.addActionListener(new ActionListener() {
 			@Override
@@ -50,12 +51,12 @@ public class NavigationPanel extends JPanel {
 			}
 		});
 
-		/*settings.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				clientGUI.changePanel(ClientMainGUI.SETTINGS_PANEL);
-			}
-		});*/
+		/*
+		 * settings.addActionListener(new ActionListener() {
+		 * 
+		 * @Override public void actionPerformed(ActionEvent e) {
+		 * clientGUI.changePanel(ClientMainGUI.SETTINGS_PANEL); } });
+		 */
 
 	}
 }

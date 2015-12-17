@@ -23,7 +23,7 @@ public class Commissione {
 		this.id_commissione = id_commissione;
 		this.id_esame = id_esame;
 		this.id_docenti = id_docenti;
-		this.id_presidente=id_presidente;
+		this.id_presidente = id_presidente;
 	}
 
 	public String getId_commissione() {

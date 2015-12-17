@@ -13,21 +13,19 @@ public class EsameVerbalizzato extends EsamePrenotato {
 	}
 
 	public EsameVerbalizzato(String id_esame, String id_docente, String id_studente, String data_appello,
-			String valutazione, String data_verbalizzazione,String scaduto, String confermato) {
-		super(id_esame, id_studente, null,data_appello);
+			String valutazione, String data_verbalizzazione, String scaduto, String confermato) {
+		super(id_esame, id_studente, null, data_appello);
 		this.id_docente = id_docente;
 		this.valutazione = Integer.parseInt(valutazione);
 		this.data_verbalizzazione = java.sql.Date.valueOf(data_verbalizzazione);
-		if (confermato!=null){
+		if (confermato != null)
 			this.confermato = confermato;
-		}else{
+		else
 			this.confermato = "false";
-		}
-		if (scaduto!=null){
+		if (scaduto != null)
 			this.scaduto = scaduto;
-		}else{
+		else
 			this.scaduto = "false";
-		}
 	}
 
 	public Date getData_verbalizzazione() {
@@ -46,8 +44,6 @@ public class EsameVerbalizzato extends EsamePrenotato {
 		this.valutazione = valutazione;
 	}
 
-
-
 	public String getConfermato() {
 		return confermato;
 	}
@@ -64,10 +60,12 @@ public class EsameVerbalizzato extends EsamePrenotato {
 		this.id_docente = id_docente;
 	}
 
+	@Override
 	public String getId_esame() {
 		return super.getId_esame();
 	}
 
+	@Override
 	public void setId_esame(String id_esame) {
 		super.setId_esame(id_esame);
 	}

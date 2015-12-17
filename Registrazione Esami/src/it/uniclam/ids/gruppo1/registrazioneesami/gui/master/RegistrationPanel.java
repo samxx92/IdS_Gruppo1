@@ -40,20 +40,19 @@ public class RegistrationPanel extends JPanel {
 
 	private JTextArea ta = new JTextArea(12, 12);
 
-
-
-
 	public RegistrationPanel(ClientMainGUI clientGUI) {
 		GridBagConstraints c = new GridBagConstraints();
-		this.setLayout(new GridBagLayout());
-		this.setBackground(Color.cyan);
+		setLayout(new GridBagLayout());
+		setBackground(Color.yellow);
 
 		NumberFormat longFormat = NumberFormat.getIntegerInstance();
 		NumberFormatter numberFormatter = new NumberFormatter(longFormat);
-		numberFormatter.setValueClass(Integer.class); //optional, ensures you will always get a long value
-		numberFormatter.setAllowsInvalid(false); //this is the key!!
-		//numberFormatter.setMinimum(18); //Optional
-		//numberFormatter.setMaximum(31);
+		numberFormatter.setValueClass(Integer.class); // optional, ensures you
+														// will always get a
+														// long value
+		numberFormatter.setAllowsInvalid(false); // this is the key!!
+		// numberFormatter.setMinimum(18); //Optional
+		// numberFormatter.setMaximum(31);
 		JFormattedTextField valutazione = new JFormattedTextField(numberFormatter);
 
 		// Campo id_esame
@@ -159,22 +158,23 @@ public class RegistrationPanel extends JPanel {
 				try {
 
 					String voto = valutazione.getText();
-					if (voto.equalsIgnoreCase("") || id_Esame.getText().equalsIgnoreCase("") ||
-							id_Studente.getText().equalsIgnoreCase("") || data_Appello.getText().equalsIgnoreCase("")) {
-						JOptionPane.showMessageDialog(RegistrationPanel.this, "I campi non possono essere nulli!", "Error",
-								JOptionPane.ERROR_MESSAGE);
-					} else {
+					if (voto.equalsIgnoreCase("") || id_Esame.getText().equalsIgnoreCase("")
+							|| id_Studente.getText().equalsIgnoreCase("")
+							|| data_Appello.getText().equalsIgnoreCase(""))
+						JOptionPane.showMessageDialog(RegistrationPanel.this, "I campi non possono essere nulli!",
+								"Error", JOptionPane.ERROR_MESSAGE);
+					else {
 						int voto_int = Integer.parseInt(voto);
 
-						if (voto_int < 18) {
+						if (voto_int < 18)
 							JOptionPane.showMessageDialog(RegistrationPanel.this,
 									"Non si può inserire un voto inferiore a 18/30", "Error",
 									JOptionPane.ERROR_MESSAGE);
-						} else if (voto_int > 31) {
+						else if (voto_int > 31)
 							JOptionPane.showMessageDialog(RegistrationPanel.this,
 									"Non si può inserire un voto superiore a 30/30 e lode", "Error",
 									JOptionPane.ERROR_MESSAGE);
-						} else {
+						else {
 							Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
 
 							BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -195,17 +195,15 @@ public class RegistrationPanel extends JPanel {
 								if (line.equals("true")) {
 									ta.append("L'esame è stato trovato nelle prenotazioni\n");
 									line = in.readLine();
-									if (line.equals("true")) {
+									if (line.equals("true"))
 										ta.append("L'esame è stato verbalizzato!");
-									} else {
+									else
 										JOptionPane.showMessageDialog(RegistrationPanel.this,
 												"L'esame è già presente nel database!", "Info",
 												JOptionPane.INFORMATION_MESSAGE);
-									}
-								} else {
+								} else
 									JOptionPane.showMessageDialog(RegistrationPanel.this,
 											"L'esame non è stato trovato!", "Error", JOptionPane.ERROR_MESSAGE);
-								}
 
 								s.close();
 

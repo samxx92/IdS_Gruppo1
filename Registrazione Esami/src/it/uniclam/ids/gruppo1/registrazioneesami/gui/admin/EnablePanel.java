@@ -38,8 +38,8 @@ public class EnablePanel extends JPanel {
 
 	public EnablePanel(AdminMainGUI adminMainGUI) {
 		GridBagConstraints c = new GridBagConstraints();
-		this.setLayout(new GridBagLayout());
-		this.setBackground(Color.orange);
+		setLayout(new GridBagLayout());
+		setBackground(Color.orange);
 
 		// Campo telefono
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -123,7 +123,6 @@ public class EnablePanel extends JPanel {
 				s.close();
 			}
 
-
 		} catch (IOException ioe) {
 			JOptionPane.showMessageDialog(EnablePanel.this, "Error in communication with server!", "Error",
 					JOptionPane.ERROR_MESSAGE);
@@ -133,15 +132,14 @@ public class EnablePanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(ta.getText().equalsIgnoreCase("Non ci sono Docenti Abilitati")){
+				if (ta.getText().equalsIgnoreCase("Non ci sono Docenti Abilitati"))
 					ta.setText("");
-				}
 				try {
 
-					if (telefono.getText().equalsIgnoreCase("") || password.getText().equalsIgnoreCase("")) {
+					if (telefono.getText().equalsIgnoreCase("") || password.getText().equalsIgnoreCase(""))
 						JOptionPane.showMessageDialog(EnablePanel.this, "Nessun campo può essere nullo!", "Error",
 								JOptionPane.ERROR_MESSAGE);
-					} else {
+					else {
 						Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
 
 						BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -153,14 +151,12 @@ public class EnablePanel extends JPanel {
 						out.println(req);
 
 						String line = in.readLine();
-						if (line.equalsIgnoreCase("gia_abilitato")) {
+						if (line.equalsIgnoreCase("gia_abilitato"))
 							JOptionPane.showMessageDialog(EnablePanel.this,
 									"Il Docente è già abilitato o non fa parte dell'Ateneo!", "Error",
 									JOptionPane.ERROR_MESSAGE);
-						} else {
+						else
 							ta.append(line + "\n");
-						}
-
 
 						s.close();
 					}

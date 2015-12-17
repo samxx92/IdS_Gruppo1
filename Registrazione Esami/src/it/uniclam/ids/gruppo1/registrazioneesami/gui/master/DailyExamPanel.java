@@ -33,8 +33,8 @@ public class DailyExamPanel extends JPanel {
 
 	public DailyExamPanel(ClientMainGUI clientGUI) {
 		GridBagConstraints c = new GridBagConstraints();
-		this.setLayout(new GridBagLayout());
-		this.setBackground(Color.cyan);
+		setLayout(new GridBagLayout());
+		setBackground(Color.yellow);
 
 		// Campo back
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -69,16 +69,16 @@ public class DailyExamPanel extends JPanel {
 			out.println(req);
 			String line = in.readLine();
 			if (line.isEmpty()) {
-				JOptionPane.showMessageDialog(DailyExamPanel.this,
-						"Non sono stati verbalizzati esami in giornata!", "Info", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(DailyExamPanel.this, "Non sono stati verbalizzati esami in giornata!",
+						"Info", JOptionPane.INFORMATION_MESSAGE);
 
 				s.close();
 			} else {
 				ta.append("Esame\tMatricola\tVoto\tData Appello\n");
 				while (!line.isEmpty()) {
-					String[] temp = line.split(";"); 
+					String[] temp = line.split(";");
 					int i = 0;
-					while(i<temp.length){
+					while (i < temp.length) {
 						ta.append(temp[i] + "\t");
 						i++;
 					}
@@ -92,8 +92,6 @@ public class DailyExamPanel extends JPanel {
 			JOptionPane.showMessageDialog(DailyExamPanel.this, "Error in communication with server!", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
-
-
 
 		back.addActionListener(new ActionListener() {
 

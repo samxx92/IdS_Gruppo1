@@ -16,19 +16,16 @@ import it.uniclam.ids.gruppo1.registrazioneesami.gui.admin.EnablePanel;
 
 public class AdminMainGUI extends JFrame {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
-
 	JPanel lastPanel = null;
-
 
 	public static String ADMIN_PANEL = "Amministratore";
 	public static String ENABLE_PANEL = "Abilitazione Docenti";
 	public static String CONFIRMATION_ADMIN_PANEL = "Conferma Esami";
 	public static String SETTINGS_PANEL = "Settings";
-
 
 	// private AdminNavigationPanel adminNavigationPanel;
 
@@ -37,7 +34,6 @@ public class AdminMainGUI extends JFrame {
 	private ConfirmationAdminPanel confirmationAdminPanel;
 	private SettingsPanel settingsPanel;
 	private NavigationPanelAdmin navigationPanelAdmin;
-
 
 	public AdminMainGUI() {
 		super("Client GUI for CellEx");
@@ -48,9 +44,8 @@ public class AdminMainGUI extends JFrame {
 
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		pack();
-		this.setSize(1000,600);
+		this.setSize(1000, 600);
 		setVisible(true);
-
 
 	}
 
@@ -69,8 +64,6 @@ public class AdminMainGUI extends JFrame {
 			confirmationAdminPanel = new ConfirmationAdminPanel(this);
 			lastPanel = confirmationAdminPanel;
 		}
-
-
 
 		getContentPane().add(lastPanel, BorderLayout.CENTER);
 		navigationPanelAdmin = new NavigationPanelAdmin(this);
@@ -107,6 +100,5 @@ public class AdminMainGUI extends JFrame {
 			}
 		});
 	}
-
 
 }

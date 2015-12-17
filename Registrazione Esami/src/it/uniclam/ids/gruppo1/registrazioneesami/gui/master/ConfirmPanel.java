@@ -32,8 +32,8 @@ public class ConfirmPanel extends JPanel {
 
 	private JButton confirm = new JButton("Conferma");
 
-	private JTable table = new JTable(new DefaultTableModel(null, new Object[]{"Id Esame",
-			"Id Docente", "Id Studente", "Voto", "Data Appello", "Data Verbalizzazione"}));
+	private JTable table = new JTable(new DefaultTableModel(null,
+			new Object[] { "Id Esame", "Id Docente", "Id Studente", "Voto", "Data Appello", "Data Verbalizzazione" }));
 
 	private JTextField presidente = new JTextField();
 
@@ -42,14 +42,14 @@ public class ConfirmPanel extends JPanel {
 	public ConfirmPanel(ClientMainGUI clientGUI) {
 
 		GridBagConstraints c = new GridBagConstraints();
-		this.setLayout(new GridBagLayout());
-		this.setBackground(Color.cyan);
+		setLayout(new GridBagLayout());
+		setBackground(Color.yellow);
 
 		// Campo conferma
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 4;
-		c.gridwidth = 5; // 2 columns wide
+		c.gridwidth = 5; // 2 columns wide*/
 		this.add(confirm, c);
 
 		// Campo esami verbalizzati(label)
@@ -64,12 +64,12 @@ public class ConfirmPanel extends JPanel {
 		c.gridx = 0;
 		c.gridy = 3;
 		c.gridwidth = 8; // 2 columns wide
-		table.setFillsViewportHeight(true);
+		// table.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(table);
 		Dimension d = new Dimension();
 		d.setSize(800, 400);
 		scrollPane.setPreferredSize(d);
-		this.add(scrollPane, c);		
+		this.add(scrollPane, c);
 
 		// Campo id presidente (label)
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -98,29 +98,27 @@ public class ConfirmPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					DefaultTableModel model = (DefaultTableModel) table.getModel();
-					if(model.getRowCount()>0){
-						for (int k = 0; k<model.getRowCount();k++){
+					if (model.getRowCount() > 0)
+						for (int k = 0; k < model.getRowCount(); k++)
 							model.removeRow(k);
-						}
-					}
 					Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
 
 					BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
 					PrintWriter out = new PrintWriter(s.getOutputStream(), true);
 
 					String req = ServerMain.QUERY_VISUALIZZA_ESAMI_PRESIDENTE + "\n";
-					req+=presidente.getText()+"\n";
+					req += presidente.getText() + "\n";
 					out.println(req);
 					String line = in.readLine();
 					if (line.isEmpty()) {
-						JOptionPane.showMessageDialog(ConfirmPanel.this,
-								"Non sono presenti esami da confermare", "Info", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(ConfirmPanel.this, "Non sono presenti esami da confermare",
+								"Info", JOptionPane.INFORMATION_MESSAGE);
 
 						s.close();
 					} else {
 						while (!line.isEmpty()) {
-							String[] temp = line.split(";"); 
-							model.addRow(new Object[]{temp[0],temp[1],temp[2],temp[3],temp[4],temp[5]});
+							String[] temp = line.split(";");
+							model.addRow(new Object[] { temp[0], temp[1], temp[2], temp[3], temp[4], temp[5] });
 							line = in.readLine();
 						}
 						s.close();
@@ -133,9 +131,6 @@ public class ConfirmPanel extends JPanel {
 			}
 		});
 
-
-
-
 		confirm.addActionListener(new ActionListener() {
 
 			@Override
@@ -147,22 +142,18 @@ public class ConfirmPanel extends JPanel {
 					PrintWriter out = new PrintWriter(s.getOutputStream(), true);
 
 					String req = ServerMain.QUERY_CONFERMA_ESAMI + "\n";
-					req+="presidente\n";
-					int [] index = table.getSelectedRows();
-					for (int i = 0;i<index.length;i++){
-						req+= table.getValueAt(index[i], 0) + "" +
-								table.getValueAt(index[i], 2 )+ "\n";
-					}
+					req += "presidente\n";
+					int[] index = table.getSelectedRows();
+					for (int i = 0; i < index.length; i++)
+						req += table.getValueAt(index[i], 0) + "" + table.getValueAt(index[i], 2) + "\n";
 					out.println(req);
 					String line = in.readLine();
-					if (line.equalsIgnoreCase(ServerMain.OK)){
-						JOptionPane.showMessageDialog(ConfirmPanel.this, "Gli esami sono stati salvati correttamente in S3", "Success",
+					if (line.equalsIgnoreCase(ServerMain.OK))
+						JOptionPane.showMessageDialog(ConfirmPanel.this,
+								"Gli esami sono stati salvati correttamente in S3", "Success",
 								JOptionPane.INFORMATION_MESSAGE);
-					}
-
 
 					s.close();
-
 
 				} catch (IOException ioe) {
 					JOptionPane.showMessageDialog(ConfirmPanel.this, "Error in communication with server!", "Error",
@@ -170,14 +161,15 @@ public class ConfirmPanel extends JPanel {
 				}
 
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				int [] index = table.getSelectedRows();
+				int[] index = table.getSelectedRows();
 				int i = 0;
-				while(i<index.length){
+				while (i < index.length) {
 					model.removeRow(index[i]);
 					i++;
 				}
 
 			}
+			
 		});
 
 	}

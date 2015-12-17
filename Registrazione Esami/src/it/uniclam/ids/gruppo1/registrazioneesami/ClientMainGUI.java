@@ -43,11 +43,11 @@ public class ClientMainGUI extends JFrame {
 	// private AdminNavigationPanel adminNavigationPanel;
 	private LoginPanel loginPanel;
 	private RegistrationPanel registrationPanel;
-	//private AdminPanel adminPanel;
-	//private EnablePanel enablePanel;
-	//private ConfirmationAdminPanel confirmationAdminPanel;
+	// private AdminPanel adminPanel;
+	// private EnablePanel enablePanel;
+	// private ConfirmationAdminPanel confirmationAdminPanel;
 	private ConfirmPanel confirmPanel;
-	//private SettingsPanel settingsPanel;
+	// private SettingsPanel settingsPanel;
 	private NavigationPanel navigationPanel;
 	private ExaminatorPanel examinatorPanel;
 	private ExamReservationPanel examReservationPanel;
@@ -62,7 +62,7 @@ public class ClientMainGUI extends JFrame {
 
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		pack();
-		this.setSize(1000,600);
+		this.setSize(1000, 600);
 		setVisible(true);
 
 	}
@@ -75,18 +75,18 @@ public class ClientMainGUI extends JFrame {
 		} else if (panelName.equals(ClientMainGUI.REGISTRATION_PANEL)) {
 			registrationPanel = new RegistrationPanel(this);
 			lastPanel = registrationPanel;
-			/*} else if (panelName.equals(ClientMainGUI.SETTINGS_PANEL)) {
-			settingsPanel = new SettingsPanel(this);
-			lastPanel = settingsPanel;
-		} else if (panelName.equals(ClientMainGUI.ADMIN_PANEL)) {
-			adminPanel = new AdminPanel(this);
-			lastPanel = adminPanel;
-		} else if (panelName.equals(ClientMainGUI.ENABLE_PANEL)) {
-			enablePanel = new EnablePanel(this);
-			lastPanel = enablePanel;
-		} else if (panelName.equals(ClientMainGUI.CONFIRMATION_ADMIN_PANEL)) {
-			confirmationAdminPanel = new ConfirmationAdminPanel(this);
-			lastPanel = confirmationAdminPanel;*/
+			/*
+			 * } else if (panelName.equals(ClientMainGUI.SETTINGS_PANEL)) {
+			 * settingsPanel = new SettingsPanel(this); lastPanel =
+			 * settingsPanel; } else if
+			 * (panelName.equals(ClientMainGUI.ADMIN_PANEL)) { adminPanel = new
+			 * AdminPanel(this); lastPanel = adminPanel; } else if
+			 * (panelName.equals(ClientMainGUI.ENABLE_PANEL)) { enablePanel =
+			 * new EnablePanel(this); lastPanel = enablePanel; } else if
+			 * (panelName.equals(ClientMainGUI.CONFIRMATION_ADMIN_PANEL)) {
+			 * confirmationAdminPanel = new ConfirmationAdminPanel(this);
+			 * lastPanel = confirmationAdminPanel;
+			 */
 		} else if (panelName.equals(ClientMainGUI.CONFIRM_PANEL)) {
 			confirmPanel = new ConfirmPanel(this);
 			lastPanel = confirmPanel;
@@ -101,16 +101,14 @@ public class ClientMainGUI extends JFrame {
 			lastPanel = dailyExamPanel;
 		}
 
-
-
 		getContentPane().add(lastPanel, BorderLayout.CENTER);
 
-		if (!panelName.equals(ClientMainGUI.EXAMINATOR_PANEL) &&
-				!panelName.equals(ClientMainGUI.EXAM_RESERVATION_PANEL) &&
-				!panelName.equals(ClientMainGUI.REGISTRATION_PANEL) && 
-				!panelName.equals(ClientMainGUI.DAILY_EXAM_PANEL)){
+		if (!panelName.equals(ClientMainGUI.EXAMINATOR_PANEL) && !panelName.equals(ClientMainGUI.EXAM_RESERVATION_PANEL)
+				&& !panelName.equals(ClientMainGUI.REGISTRATION_PANEL)
+				&& !panelName.equals(ClientMainGUI.DAILY_EXAM_PANEL)) {
 			navigationPanel = new NavigationPanel(this);
 			getContentPane().add(navigationPanel, BorderLayout.SOUTH);
+
 		}
 
 		getContentPane().revalidate();

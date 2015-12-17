@@ -1,5 +1,8 @@
 package it.uniclam.ids.gruppo1.registrazioneesami.legacy;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +16,6 @@ import it.uniclam.ids.gruppo1.registrazioneesami.entity.Esame;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.EsamePrenotato;
 import it.uniclam.ids.gruppo1.registrazioneesami.entity.EsameVerbalizzato;
 
-
 public class DatabaseDidatticaMock {
 
 	private static List<Commissione> commissioni;
@@ -21,8 +23,6 @@ public class DatabaseDidatticaMock {
 	private static List<Esame> esami;
 	private static List<EsamePrenotato> esami_prenotati;
 	private static List<EsameVerbalizzato> esami_verbalizzati_s3;
-
-
 
 	public static List<EsameVerbalizzato> getEsami_verbalizzati_temp() {
 		List<EsameVerbalizzato> ev = null;
@@ -35,7 +35,7 @@ public class DatabaseDidatticaMock {
 		return ev;
 	}
 
-	static{
+	static {
 		commissioni = new ArrayList<Commissione>();
 		List<String> id_docenti = new ArrayList<String>();
 		id_docenti.add("id1");
@@ -105,7 +105,6 @@ public class DatabaseDidatticaMock {
 		esami_prenotati.add(ep1);
 		esami_prenotati.add(ep2);
 
-
 		esami_verbalizzati_s3 = new ArrayList<EsameVerbalizzato>();
 	}
 
@@ -129,13 +128,15 @@ public class DatabaseDidatticaMock {
 		return esami_verbalizzati_s3;
 	}
 
-
 	/**
-	 * TODO
-	 * @param list: lista degli esami verbalizzati, esami_verbalizzati_s3:
-	 * @return	NONE
+	 * Questo metodo riceve in ingresso una lista di tutti gli esami che sono stati definitivamente
+	 * salvati dall'amministratore, li inserisce in una lista e li salva in un file txt.
+	 * @param list esami_verbalizzati_s3:
+	 * 			Parametro per la ricerca
+	 * @return NONE
+	 * @throws IOException 
 	 */
-	public static void createListEsami_verbalizzati_s3(List<String> esami_verbalizzati_s3){
+	public static void createListEsami_verbalizzati_s3(List<String> esami_verbalizzati_s3) throws IOException {
 		List<EsameVerbalizzato> temp = new ArrayList<EsameVerbalizzato>();
 		try {
 			temp = EsameVerbalizzatoDAOImpl.getInstance().getEsameFromIdVerbalizzazione(esami_verbalizzati_s3);
@@ -143,60 +144,68 @@ public class DatabaseDidatticaMock {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (int i = 0;i<temp.size();i++){
+		FileWriter w;
+	    w=new FileWriter("esami_confermati.txt");
+	    BufferedWriter bw = new BufferedWriter(w);
+	    bw.write("Id Esame\tId Docente\tId Studente\tVoto\tData Appello \n");
+	   	for (int i = 0; i < temp.size(); i++){
 			DatabaseDidatticaMock.esami_verbalizzati_s3.add(temp.get(i));
+			bw.write(temp.get(i).getId_esame()+"\t"+"\t"+"\t"+temp.get(i).getId_docente()+"\t"+"\t"+"\t"+
+					temp.get(i).getId_studente()+"\t"+"\t"+"\t"+temp.get(i).getValutazione()+"\t"+"\t"+
+					temp.get(i).getData_appello()+"\n");	
 		}
+	   	bw.flush();
+		bw.close();
+		w.close();
 		System.out.println(DatabaseDidatticaMock.esami_verbalizzati_s3.size());
 	}
 
-
 	/**
-	 * Questo metodo riceve il parametro telefono e lo converte
-	 * in id_docente, grazie alla lista dei docenti
-	 * @param telefono: Parametro per la ricerca
-	 * @return	id_docente: ID del docente
+	 * Questo metodo riceve il parametro telefono e lo converte in id_docente,
+	 * grazie alla lista dei docenti
+	 * 
+	 * @param telefono:
+	 *            Parametro per la ricerca
+	 * @return id_docente: ID del docente
 	 */
 	public static String getId_docentefromtelefono(String telefono) {
 		String id_docente = null;
-		for (int i = 0; i < docenti.size(); i++) {
-			if (docenti.get(i).getTelefono().equals(telefono)) {
+		for (int i = 0; i < docenti.size(); i++)
+			if (docenti.get(i).getTelefono().equals(telefono))
 				id_docente = docenti.get(i).getId_docente();
-			}
-		}
 		return id_docente;
 	}
 
-
 	/**
-	 * Questo metodo verifica che il docente si parte
-	 * effettiva della commisione di cui vuole verbalizzare l'esame
-	 * @param telefono: Parametro per la ricerca
-	 * @param id_esame: codice dell'esame
-	 * @return	commissione: codice della commissione
+	 * Questo metodo verifica che il docente si parte effettiva della commisione
+	 * di cui vuole verbalizzare l'esame
+	 * 
+	 * @param telefono:
+	 *            Parametro per la ricerca
+	 * @param id_esame:
+	 *            codice dell'esame
+	 * @return commissione: codice della commissione
 	 */
 	public static String isInCommissione(String telefono, String id_esame) {
 		String id_docente = getId_docentefromtelefono(telefono);
 		List<String> docenti_commissione = new ArrayList<String>();
 		String commissione = "false";
-		for (int k = 0; k < commissioni.size(); k++) {
-			if (commissioni.get(k).getId_esame().equals(id_esame)) {
+		for (int k = 0; k < commissioni.size(); k++)
+			if (commissioni.get(k).getId_esame().equals(id_esame))
 				docenti_commissione = commissioni.get(k).getId_docenti();
-			}
-		}
-		for (int j = 0; j < docenti_commissione.size(); j++) {
-			if (docenti_commissione.get(j).equals(id_docente)) {
+		for (int j = 0; j < docenti_commissione.size(); j++)
+			if (docenti_commissione.get(j).equals(id_docente))
 				commissione = "true";
-			}
-		}
 		return commissione;
 
 	}
 
 	/**
-	 * Questo metodo, tramite il parametro telefono, risale
-	 * al docente e prende tutte le prenotazioni degli esami
-	 * relative ad egli
-	 * @param telefono: parametro per la ricerca
+	 * Questo metodo, tramite il parametro telefono, risale al docente e prende
+	 * tutte le prenotazioni degli esami relative ad egli
+	 * 
+	 * @param telefono:
+	 *            parametro per la ricerca
 	 * @return
 	 */
 	public static List<String> getPrenotazioniEsamiDocente(String telefono) {
@@ -207,70 +216,73 @@ public class DatabaseDidatticaMock {
 		for (int k = 0; k < commissioni.size(); k++) {
 			int j = 0;
 			trovato = false;
-			while (!trovato && j < commissioni.get(k).getId_docenti().size()) {
+			while (!trovato && j < commissioni.get(k).getId_docenti().size())
 				if (commissioni.get(k).getId_docenti().get(j).equals(id_docente)) {
 					commissioni_docente.add(commissioni.get(k).getId_commissione());
 					esami_docente.add(commissioni.get(k).getId_esame());
 					trovato = true;
-				} else {
+				} else
 					j++;
-				}
-			}
 
 		}
 		return esami_docente;
 	}
 
 	/**
-	 * Questo metodo tramite i parametri di ricerca verifica
-	 * se un esame del sistema sia stato prenotato o meno
-	 * @param e: parametro per la ricerca
-	 * @param telefono: parametro per la ricerca
-	 * @return trovato: parmetro booleano, true se la ricerca è andata a buon fine, false viceversa
+	 * Questo metodo tramite i parametri di ricerca verifica se un esame del
+	 * sistema sia stato prenotato o meno
+	 * 
+	 * @param e:
+	 *            parametro per la ricerca
+	 * @param telefono:
+	 *            parametro per la ricerca
+	 * @return trovato: parmetro booleano, true se la ricerca è andata a buon
+	 *         fine, false viceversa
 	 */
 	public static boolean isEsamePrenotato(EsameVerbalizzato e, String telefono) {
 		String verifica1 = e.getId_esame() + " " + e.getId_studente() + " " + e.getData_appello();
 		List<String> esami_docente = getPrenotazioniEsamiDocente(telefono);
 		String verifica2 = null;
 		boolean trovato = false;
-		for (int i = 0; i < esami_docente.size(); i++) {
-			for (int k = 0; k < esami_prenotati.size(); k++) {
+		for (int i = 0; i < esami_docente.size(); i++)
+			for (int k = 0; k < esami_prenotati.size(); k++)
 				if (esami_docente.get(i).equals(esami_prenotati.get(k).getId_esame())) {
 					verifica2 = esami_prenotati.get(k).getId_esame() + " " + esami_prenotati.get(k).getId_studente()
 							+ " " + esami_prenotati.get(k).getData_appello();
-					if (verifica1.equalsIgnoreCase(verifica2)) {
+					if (verifica1.equalsIgnoreCase(verifica2))
 						trovato = true;
-					}
 				}
-			}
-		}
 		return trovato;
 	}
 
-	/** Questo metodo riceve in ingresso la lista dei docenti abilitati 
-	 * e restituisce le informazioni che sono riferite a loro
-	 * tramite il parametro TODO
-	 * @param docenti_abilitati: lista dei docenti presenti nel database
+	/**
+	 * Questo metodo riceve in ingresso la lista dei docenti abilitati e
+	 * restituisce le informazioni che sono riferite a loro tramite il parametro
+	 * TODO
+	 * 
+	 * @param docenti_abilitati:
+	 *            lista dei docenti presenti nel database
 	 * @return info_docenti_abilitati
 	 */
 	public static List<Docente> getAllInfoDocente(List<String> docenti_abilitati) {
 		List<Docente> info_docenti_abilitati = new ArrayList<Docente>();
-		for (int i = 0; i < docenti_abilitati.size(); i++) {
-			for (int k = 0; k < docenti.size(); k++) {
+		for (int i = 0; i < docenti_abilitati.size(); i++)
+			for (int k = 0; k < docenti.size(); k++)
 				if (docenti_abilitati.get(i).equalsIgnoreCase(docenti.get(k).getTelefono())) {
 					Docente e = docenti.get(k);
 					info_docenti_abilitati.add(e);
 				}
-			}
-		}
 		return info_docenti_abilitati;
 	}
 
 	/**
-	 * Questo metodo verifica se un docente sia 
-	 * o meno già abilitato, sfrutando il parametro del telefono
-	 * @param telefono_abilitazione: parametro di ricerca
-	 * @return trovato: parmetro booleano, true se la ricerca è andata a buon fine, false viceversa
+	 * Questo metodo verifica se un docente sia o meno già abilitato, sfrutando
+	 * il parametro del telefono
+	 * 
+	 * @param telefono_abilitazione:
+	 *            parametro di ricerca
+	 * @return trovato: parmetro booleano, true se la ricerca è andata a buon
+	 *         fine, false viceversa
 	 * @throws DAOException
 	 */
 	public static boolean isTelefonoInDocentiAndNotInDocentiAbilitati(String telefono_abilitazione)
@@ -278,19 +290,14 @@ public class DatabaseDidatticaMock {
 		boolean in_docenti_abilitati = false;
 		boolean trovato = false;
 		List<String> docenti_abilitati = DocenteAbilitatoDAOImpl.getInstance().getAllDocentiAbilitati();
-		for (int i = 0; i < docenti_abilitati.size(); i++) {
-			if (docenti_abilitati.get(i).equalsIgnoreCase(telefono_abilitazione)) {
+		for (int i = 0; i < docenti_abilitati.size(); i++)
+			if (docenti_abilitati.get(i).equalsIgnoreCase(telefono_abilitazione))
 				in_docenti_abilitati = true;
-			}
-		}
 
-		if (!in_docenti_abilitati) {
-			for (int i = 0; i < docenti.size(); i++) {
-				if (docenti.get(i).getTelefono().equalsIgnoreCase(telefono_abilitazione)) {
+		if (!in_docenti_abilitati)
+			for (int i = 0; i < docenti.size(); i++)
+				if (docenti.get(i).getTelefono().equalsIgnoreCase(telefono_abilitazione))
 					trovato = true;
-				}
-			}
-		}
 		return trovato;
 	}
 
