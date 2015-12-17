@@ -36,6 +36,35 @@ public class EnablePanel extends JPanel {
 
 	private JTextArea ta = new JTextArea(12, 12);
 
+	private void getDocentiAbilitati() {
+		try {
+			Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
+
+			BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+			PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+
+			String req = ServerMain.QUERY_VISUALIZZA_DOCENTI_ABILITATI + "\n" + "\n";
+
+			out.println(req);
+			String line = in.readLine();
+			if (line.isEmpty()) {
+				ta.append("Non ci sono Docenti Abilitati");
+				s.close();
+			} else {
+				while (!line.isEmpty()) {
+
+					ta.append(line + "\n");
+					line = in.readLine();
+				}
+				s.close();
+			}
+
+		} catch (IOException ioe) {
+			JOptionPane.showMessageDialog(EnablePanel.this, "Error in communication with server!", "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
 	public EnablePanel(AdminMainGUI adminMainGUI) {
 		GridBagConstraints c = new GridBagConstraints();
 		setLayout(new GridBagLayout());
@@ -101,45 +130,21 @@ public class EnablePanel extends JPanel {
 		c.gridwidth = 2; // 2 columns wide
 		this.add(back, c);
 
-		try {
-			Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
-
-			BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-			PrintWriter out = new PrintWriter(s.getOutputStream(), true);
-
-			String req = ServerMain.QUERY_VISUALIZZA_DOCENTI_ABILITATI + "\n" + "\n";
-
-			out.println(req);
-			String line = in.readLine();
-			if (line.isEmpty()) {
-				ta.append("Non ci sono Docenti Abilitati");
-				s.close();
-			} else {
-				while (!line.isEmpty()) {
-
-					ta.append(line + "\n");
-					line = in.readLine();
-				}
-				s.close();
-			}
-
-		} catch (IOException ioe) {
-			JOptionPane.showMessageDialog(EnablePanel.this, "Error in communication with server!", "Error",
-					JOptionPane.ERROR_MESSAGE);
-		}
+		getDocentiAbilitati();
 
 		enable.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (ta.getText().equalsIgnoreCase("Non ci sono Docenti Abilitati"))
+				if (ta.getText().equalsIgnoreCase("Non ci sono Docenti Abilitati")) {
 					ta.setText("");
+				}
 				try {
 
-					if (telefono.getText().equalsIgnoreCase("") || password.getText().equalsIgnoreCase(""))
+					if (telefono.getText().equalsIgnoreCase("") || password.getText().equalsIgnoreCase("")) {
 						JOptionPane.showMessageDialog(EnablePanel.this, "Nessun campo può essere nullo!", "Error",
 								JOptionPane.ERROR_MESSAGE);
-					else {
+					} else {
 						Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
 
 						BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -151,12 +156,15 @@ public class EnablePanel extends JPanel {
 						out.println(req);
 
 						String line = in.readLine();
-						if (line.equalsIgnoreCase("gia_abilitato"))
+						if (line.equalsIgnoreCase("gia_abilitato")) {
 							JOptionPane.showMessageDialog(EnablePanel.this,
 									"Il Docente è già abilitato o non fa parte dell'Ateneo!", "Error",
 									JOptionPane.ERROR_MESSAGE);
-						else
+						} else {
 							ta.append(line + "\n");
+							JOptionPane.showMessageDialog(EnablePanel.this, "Il Docente è stato abilitato!",
+									"Registrazione", JOptionPane.INFORMATION_MESSAGE);
+						}
 
 						s.close();
 					}

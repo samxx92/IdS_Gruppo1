@@ -2,6 +2,8 @@ package it.uniclam.ids.gruppo1.registrazioneesami.entity;
 
 import java.sql.Date;
 
+import it.uniclam.ids.gruppo1.registrazioneesami.legacy.EsamePrenotato;
+
 public class EsameVerbalizzato extends EsamePrenotato {
 	private String id_docente;
 	private Date data_verbalizzazione;
@@ -18,14 +20,16 @@ public class EsameVerbalizzato extends EsamePrenotato {
 		this.id_docente = id_docente;
 		this.valutazione = Integer.parseInt(valutazione);
 		this.data_verbalizzazione = java.sql.Date.valueOf(data_verbalizzazione);
-		if (confermato != null)
+		if (confermato != null) {
 			this.confermato = confermato;
-		else
+		} else {
 			this.confermato = "false";
-		if (scaduto != null)
+		}
+		if (scaduto != null) {
 			this.scaduto = scaduto;
-		else
+		} else {
 			this.scaduto = "false";
+		}
 	}
 
 	public Date getData_verbalizzazione() {

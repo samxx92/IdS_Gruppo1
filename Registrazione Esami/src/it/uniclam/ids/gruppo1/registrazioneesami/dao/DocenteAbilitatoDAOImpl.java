@@ -14,8 +14,9 @@ public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO {
 	private static DocenteAbilitatoDAO dao = null;
 
 	public static DocenteAbilitatoDAO getInstance() {
-		if (dao == null)
+		if (dao == null) {
 			dao = new DocenteAbilitatoDAOImpl();
+		}
 		return dao;
 	}
 
@@ -25,7 +26,8 @@ public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO {
 	 *
 	 * @param telefono:
 	 *            parametro di ricerca
-	 * @param password
+	 * @param password:
+	 *            parametro di ricerca
 	 * @return abilitato
 	 * @throws DAOException
 	 *             Questa eccezione è generata quando si verificano problemi
@@ -42,16 +44,18 @@ public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO {
 			sql += telefono + "' and password ='" + password + "'";
 
 			ResultSet rs = st.executeQuery(sql);
-			while (rs.next())
+			while (rs.next()) {
 				a++;
+			}
 
 			DAOSettings.closeStatement(st);
 
 		} catch (SQLException sq) {
 			throw new DAOException("In searchDocenteAbilitato(): " + sq.getMessage());
 		}
-		if (a == 1)
+		if (a == 1) {
 			abilitato = "true";
+		}
 		return abilitato;
 
 	}
@@ -75,13 +79,14 @@ public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO {
 			String sql = "select * from DocentiAbilitati";
 
 			ResultSet rs = st.executeQuery(sql);
-			while (rs.next())
+			while (rs.next()) {
 				docenti_abilitati.add(rs.getString("telefono"));
+			}
 
 			DAOSettings.closeStatement(st);
 
 		} catch (SQLException sq) {
-			throw new DAOException("In searchDocenteAbilitato(): " + sq.getMessage());
+			throw new DAOException("In getAllDocentiAbilitati(): " + sq.getMessage());
 		}
 		return docenti_abilitati;
 	}
@@ -91,8 +96,9 @@ public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO {
 	 * docente(che ha richiesto l'abilitazione al sistema)
 	 *
 	 * @param telefono:
-	 *            parametro di ricerca
-	 * @param password
+	 *            parametro di inserimento
+	 * @param password:
+	 *            parametro di inserimento
 	 * @return NONE
 	 * @throws DAOException
 	 *             Questa eccezione è generata quando si verificano problemi
@@ -135,8 +141,9 @@ public class DocenteAbilitatoDAOImpl implements DocenteAbilitatoDAO {
 
 			ResultSet rs = st.executeQuery(sql);
 
-			while (rs.next())
+			while (rs.next()) {
 				password = rs.getString("password");
+			}
 
 			DAOSettings.closeStatement(st);
 

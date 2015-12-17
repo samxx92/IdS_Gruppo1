@@ -1,4 +1,4 @@
-package it.uniclam.ids.gruppo1.registrazioneesami.entity;
+package it.uniclam.ids.gruppo1.registrazioneesami.legacy;
 
 import java.util.List;
 

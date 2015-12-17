@@ -87,8 +87,9 @@ public class ExaminatorPanel extends JPanel {
 				int l = 1;
 				l = JOptionPane.showConfirmDialog(ExaminatorPanel.this, "Sei sicuro di voler uscire?", "Info",
 						JOptionPane.YES_NO_OPTION);
-				if (l == 0)
+				if (l == 0) {
 					clientGUI.changePanel(ClientMainGUI.LOGIN_PANEL);
+				}
 
 			}
 		});

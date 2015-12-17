@@ -1,4 +1,4 @@
-package it.uniclam.ids.gruppo1.registrazioneesami.entity;
+package it.uniclam.ids.gruppo1.registrazioneesami.legacy;
 
 public class Docente {
 	private String id_docente;

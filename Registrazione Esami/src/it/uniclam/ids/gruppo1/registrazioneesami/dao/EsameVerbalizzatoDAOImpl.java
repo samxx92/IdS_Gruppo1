@@ -21,8 +21,9 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 	private static EsameVerbalizzatoDAO dao = null;
 
 	public static EsameVerbalizzatoDAO getInstance() {
-		if (dao == null)
+		if (dao == null) {
 			dao = new EsameVerbalizzatoDAOImpl();
+		}
 		return dao;
 	}
 
@@ -30,7 +31,10 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 	 * Il metodo serve a registrare un esame all'interno del DB
 	 * EsameVerbalizzato
 	 *
-	 * @param e
+	 * @param e:
+	 *            parametro di inserimento
+	 * @param data:
+	 *            parametro di inserimento
 	 * @return verbalizzato
 	 * @throws DAOException
 	 *             Questa eccezione è generata quando si verificano problemi
@@ -49,8 +53,9 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 
 			ResultSet rs = st.executeQuery(sqlsearch);
 			int row = 0;
-			while (rs.next())
+			while (rs.next()) {
 				row++;
+			}
 			if (row == 0) {
 				String sql = "insert into EsamiVerbalizzati (id_esame,id_docente,id_studente,voto,data_appello,data_verbalizzazione, id_verbalizzazione, scaduto, confermato) values ('";
 				sql += e.getId_esame() + "','" + e.getId_docente() + "','" + e.getId_studente() + "','"
@@ -59,8 +64,9 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 
 				st.executeUpdate(sql);
 				verbalizzato = true;
-			} else
+			} else {
 				verbalizzato = false;
+			}
 			DAOSettings.closeStatement(st);
 
 		} catch (SQLException sq) {
@@ -74,8 +80,10 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 	 * Il metodo serve a visualizzare le verbalizzazioni giornaliere di ogni
 	 * docente presenti all'interno del DB EsameVerbalizzato
 	 *
-	 * @param id_docente
-	 * @param confermato
+	 * @param id_docente:
+	 *            parametro di ricerca
+	 * @param confermato:
+	 *            parametro di ricerca
 	 * @return ev
 	 * @throws DAOException
 	 *             Questa eccezione è generata quando si verificano problemi
@@ -95,10 +103,12 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 			Statement st = DAOSettings.getStatement();
 
 			String sqlsearch = "select * from esamiverbalizzati where data_verbalizzazione ='" + date + "'";
-			if (!id_docente.equalsIgnoreCase(""))
+			if (!id_docente.equalsIgnoreCase("")) {
 				sqlsearch += " and id_docente ='" + id_docente + "'";
-			if (!confermato.equalsIgnoreCase(""))
+			}
+			if (!confermato.equalsIgnoreCase("")) {
 				sqlsearch += " and confermato ='" + confermato + "'";
+			}
 
 			ResultSet rs = st.executeQuery(sqlsearch);
 			while (rs.next()) {
@@ -136,7 +146,7 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 			DAOSettings.closeStatement(st);
 
 		} catch (SQLException sq) {
-			throw new DAOException("In getAllVerbalizzazioniGiornaliere(): " + sq.getMessage());
+			throw new DAOException("In deleteEsamiScaduti(): " + sq.getMessage());
 		}
 	}
 
@@ -147,7 +157,7 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 	 * @param esami_verbalizzati_s3:
 	 *            parametro di ricerca
 	 * @param conferma:
-	 *            parametro di notifica
+	 *            parametro di inserimento
 	 * @return NONE
 	 * @throws DAOException
 	 *             Questa eccezione è generata quando si verificano problemi
@@ -173,7 +183,7 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 			DAOSettings.closeStatement(st);
 
 		} catch (SQLException sq) {
-			throw new DAOException("In getAllVerbalizzazioniGiornaliere(): " + sq.getMessage());
+			throw new DAOException("In setConfermaEsame(): " + sq.getMessage());
 		}
 	}
 
@@ -181,8 +191,10 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 	 * Il metodo serve a far visualizzare quegli esami che sono stati
 	 * verbalizzati all'interno del DB EsameVerbalizzato
 	 *
-	 * @param scaduto
-	 * @param confermato
+	 * @param scaduto:
+	 *            parametro di ricerca
+	 * @param confermato:
+	 *            parametro di ricerca
 	 * @return ev
 	 * @throws DAOException
 	 *             Questa eccezione è generata quando si verificano problemi
@@ -195,12 +207,15 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 			Statement st = DAOSettings.getStatement();
 
 			String sqlsearch = "select * from esamiverbalizzati";
-			if (!scaduto.equalsIgnoreCase("") && confermato.equalsIgnoreCase(""))
+			if (!scaduto.equalsIgnoreCase("") && confermato.equalsIgnoreCase("")) {
 				sqlsearch += " where scaduto='" + scaduto + "'";
-			if (!scaduto.equalsIgnoreCase("") && !confermato.equalsIgnoreCase(""))
+			}
+			if (!scaduto.equalsIgnoreCase("") && !confermato.equalsIgnoreCase("")) {
 				sqlsearch += " where scaduto='" + scaduto + "' and confermato='" + confermato + "'";
-			if (scaduto.equalsIgnoreCase("") && !confermato.equalsIgnoreCase(""))
+			}
+			if (scaduto.equalsIgnoreCase("") && !confermato.equalsIgnoreCase("")) {
 				sqlsearch += " where confermato='" + confermato + "'";
+			}
 			ResultSet rs = st.executeQuery(sqlsearch);
 			while (rs.next()) {
 				EsameVerbalizzato temp = new EsameVerbalizzato(rs.getString("id_esame"), rs.getString("id_docente"),
@@ -212,7 +227,7 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 			DAOSettings.closeStatement(st);
 
 		} catch (SQLException sq) {
-			throw new DAOException("In getAllVerbalizzazioniGiornaliere(): " + sq.getMessage());
+			throw new DAOException("In getEsamiVerbalizzatie(): " + sq.getMessage());
 		}
 		return ev;
 	}
@@ -244,7 +259,7 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 			DAOSettings.closeStatement(st);
 
 		} catch (SQLException sq) {
-			throw new DAOException("In getAllVerbalizzazioniGiornaliere(): " + sq.getMessage());
+			throw new DAOException("In setScaduto(): " + sq.getMessage());
 		}
 
 	}
@@ -253,7 +268,8 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 	 * Il metodo serve ad ottenere una lista di esami partendo dall'id di
 	 * verbalizzazione, accessibile tramite il parametro
 	 *
-	 * @param esami_verbalizzati_s3
+	 * @param esami_verbalizzati_s3:
+	 *            parametro di ricerca
 	 * @return ev
 	 * @throws DAOException
 	 *             Questa eccezione è generata quando si verificano problemi
@@ -268,9 +284,11 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 			if (esami_verbalizzati_s3.size() > 0) {
 				String sqlsearch = "select * from esamiverbalizzati where id_verbalizzazione ='"
 						+ esami_verbalizzati_s3.get(0) + "'";
-				if (esami_verbalizzati_s3.size() > 1)
-					for (int i = 1; i < esami_verbalizzati_s3.size(); i++)
+				if (esami_verbalizzati_s3.size() > 1) {
+					for (int i = 1; i < esami_verbalizzati_s3.size(); i++) {
 						sqlsearch += " or id_verbalizzazione ='" + esami_verbalizzati_s3.get(i) + "'";
+					}
+				}
 				ResultSet rs = st.executeQuery(sqlsearch);
 				while (rs.next()) {
 					EsameVerbalizzato temp = new EsameVerbalizzato(rs.getString("id_esame"), rs.getString("id_docente"),
@@ -283,7 +301,7 @@ public class EsameVerbalizzatoDAOImpl implements EsameVerbalizzatoDAO {
 			DAOSettings.closeStatement(st);
 
 		} catch (SQLException sq) {
-			throw new DAOException("In getAllVerbalizzazioniGiornaliere(): " + sq.getMessage());
+			throw new DAOException("In getEsameFromIdVerbalizzazione(): " + sq.getMessage());
 		}
 		return ev;
 	}

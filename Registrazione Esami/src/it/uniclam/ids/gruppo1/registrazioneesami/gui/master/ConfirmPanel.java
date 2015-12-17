@@ -98,9 +98,10 @@ public class ConfirmPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					DefaultTableModel model = (DefaultTableModel) table.getModel();
-					if (model.getRowCount() > 0)
-						for (int k = 0; k < model.getRowCount(); k++)
-							model.removeRow(k);
+					while (model.getRowCount() > 0) {
+						// System.out.println(model.getRowCount());
+						model.removeRow(0);
+					}
 					Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
 
 					BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -144,14 +145,15 @@ public class ConfirmPanel extends JPanel {
 					String req = ServerMain.QUERY_CONFERMA_ESAMI + "\n";
 					req += "presidente\n";
 					int[] index = table.getSelectedRows();
-					for (int i = 0; i < index.length; i++)
+					for (int i = 0; i < index.length; i++) {
 						req += table.getValueAt(index[i], 0) + "" + table.getValueAt(index[i], 2) + "\n";
+					}
 					out.println(req);
 					String line = in.readLine();
-					if (line.equalsIgnoreCase(ServerMain.OK))
-						JOptionPane.showMessageDialog(ConfirmPanel.this,
-								"Gli esami sono stati salvati correttamente in S3", "Success",
+					if (line.equalsIgnoreCase(ServerMain.OK)) {
+						JOptionPane.showMessageDialog(ConfirmPanel.this, "Conferma eseguita con successo!", "Success",
 								JOptionPane.INFORMATION_MESSAGE);
+					}
 
 					s.close();
 
@@ -164,12 +166,16 @@ public class ConfirmPanel extends JPanel {
 				int[] index = table.getSelectedRows();
 				int i = 0;
 				while (i < index.length) {
+					if (i != 0) {
+						index[i] = index[i] - 1;
+					}
 					model.removeRow(index[i]);
 					i++;
+
 				}
 
 			}
-			
+
 		});
 
 	}

@@ -27,8 +27,6 @@ public class AdminMainGUI extends JFrame {
 	public static String CONFIRMATION_ADMIN_PANEL = "Conferma Esami";
 	public static String SETTINGS_PANEL = "Settings";
 
-	// private AdminNavigationPanel adminNavigationPanel;
-
 	private AdminPanel adminPanel;
 	private EnablePanel enablePanel;
 	private ConfirmationAdminPanel confirmationAdminPanel;
@@ -36,7 +34,7 @@ public class AdminMainGUI extends JFrame {
 	private NavigationPanelAdmin navigationPanelAdmin;
 
 	public AdminMainGUI() {
-		super("Client GUI for CellEx");
+		super("Amministratore");
 
 		adminPanel = new AdminPanel(this);
 

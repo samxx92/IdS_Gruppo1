@@ -1,4 +1,4 @@
-package it.uniclam.ids.gruppo1.registrazioneesami.entity;
+package it.uniclam.ids.gruppo1.registrazioneesami.legacy;
 
 import java.sql.Date;
 
@@ -13,10 +13,12 @@ public class EsamePrenotato extends Esame {
 	public EsamePrenotato(String id_esame, String id_studente, String data_prenotazione, String data_appello) {
 		super(id_esame, null, null);
 		this.id_studente = id_studente;
-		if (data_prenotazione != null)
+		if (data_prenotazione != null) {
 			this.data_prenotazione = java.sql.Date.valueOf(data_prenotazione);
-		if (data_appello != null)
+		}
+		if (data_appello != null) {
 			this.data_appello = java.sql.Date.valueOf(data_appello);
+		}
 
 	}
 

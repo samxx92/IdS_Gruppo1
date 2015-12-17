@@ -40,7 +40,47 @@ public class ConfirmationAdminPanel extends JPanel {
 
 	private JButton delete = new JButton("Cancella Esami Scaduti");
 
+	private JButton update = new JButton("Aggiorna");
+
 	private static String PRESIDENTE = "presidente";
+
+	private void getVerbalizzazioni() {
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		while (model.getRowCount() > 0) {
+			model.removeRow(0);
+		}
+
+		try {
+			Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
+
+			BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+			PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+
+			String req = ServerMain.QUERY_VISUALIZZA_VERBALIZZAZIONI + "\n" + "\n";
+			out.println(req);
+			String line = in.readLine();
+			if (line.isEmpty()) {
+				JOptionPane.showMessageDialog(ConfirmationAdminPanel.this,
+						"Non sono stati verbalizzati esami in giornata!", "Info", JOptionPane.INFORMATION_MESSAGE);
+				s.close();
+
+			} else {
+				model = (DefaultTableModel) table.getModel();
+				while (!line.isEmpty()) {
+					String[] temp = line.split(";");
+					model.addRow(
+							new Object[] { temp[0], temp[1], temp[2], temp[3], temp[4], temp[5], temp[6], temp[7] });
+					line = in.readLine();
+				}
+				s.close();
+
+			}
+
+		} catch (IOException ioe) {
+			JOptionPane.showMessageDialog(ConfirmationAdminPanel.this, "Error in communication with server!", "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
 
 	public ConfirmationAdminPanel(AdminMainGUI adminMainGUI) {
 		GridBagConstraints c = new GridBagConstraints();
@@ -51,22 +91,29 @@ public class ConfirmationAdminPanel extends JPanel {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 3;
-		c.gridwidth = 2; // 2 columns wide
+		c.gridwidth = 1; // 2 columns wide
 		this.add(salva, c);
 
 		// Campo elimina
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 4;
+		c.gridx = 3;
 		c.gridy = 3;
 		c.gridwidth = 1; // 2 columns wide
 		this.add(delete, c);
 
-		// Campo salva
+		// Campo salva definitivamente
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 5;
+		c.gridx = 4;
+		c.gridy = 3;
+		c.gridwidth = 2; // 2 columns wide
+		this.add(save, c);
+
+		// Campo aggiorna
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
 		c.gridy = 3;
 		c.gridwidth = 1; // 2 columns wide
-		this.add(save, c);
+		this.add(update, c);
 
 		// Campo esami (label)
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -91,39 +138,10 @@ public class ConfirmationAdminPanel extends JPanel {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 3;
-		c.gridwidth = 2; // 2 columns wide
+		c.gridwidth = 1; // 2 columns wide
 		this.add(back, c);
 
-		try {
-			Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
-
-			BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-			PrintWriter out = new PrintWriter(s.getOutputStream(), true);
-
-			String req = ServerMain.QUERY_VISUALIZZA_VERBALIZZAZIONI + "\n" + "\n";
-
-			out.println(req);
-			String line = in.readLine();
-			if (line.isEmpty()) {
-				JOptionPane.showMessageDialog(ConfirmationAdminPanel.this,
-						"Non sono stati verbalizzati esami in giornata!", "Info", JOptionPane.INFORMATION_MESSAGE);
-				s.close();
-			} else {
-				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				while (!line.isEmpty()) {
-					String[] temp = line.split(";");
-					model.addRow(
-							new Object[] { temp[0], temp[1], temp[2], temp[3], temp[4], temp[5], temp[6], temp[7] });
-					line = in.readLine();
-				}
-				s.close();
-
-			}
-
-		} catch (IOException ioe) {
-			JOptionPane.showMessageDialog(ConfirmationAdminPanel.this, "Error in communication with server!", "Error",
-					JOptionPane.ERROR_MESSAGE);
-		}
+		getVerbalizzazioni();
 
 		salva.addActionListener(new ActionListener() {
 
@@ -140,17 +158,19 @@ public class ConfirmationAdminPanel extends JPanel {
 					int[] index = new int[20];
 					int k = 0;
 					if (table.getRowCount() != 0) {
-						for (int i = 0; i < table.getRowCount(); i++)
+						for (int i = 0; i < table.getRowCount(); i++) {
 							if (table.getValueAt(i, 6).equals("false")) {
 								index[k] = i;
 								k++;
 							}
+						}
 						// String confermato1 = "admin";
-						for (int i = 0; i < k; i++)
+						for (int i = 0; i < k; i++) {
 							if (table.getValueAt(index[i], 6).equals("false")) {
 								req += table.getValueAt(index[i], 7) + "\n";
 								req += table.getValueAt(index[i], 0) + "" + table.getValueAt(index[i], 2) + "\n";
 							}
+						}
 					}
 					out.println(req);
 					String line = in.readLine();
@@ -166,8 +186,7 @@ public class ConfirmationAdminPanel extends JPanel {
 					JOptionPane.showMessageDialog(ConfirmationAdminPanel.this, "Error in communication with server!",
 							"Error", JOptionPane.ERROR_MESSAGE);
 				}
-				adminMainGUI.changePanel(AdminMainGUI.CONFIRMATION_ADMIN_PANEL);
-
+				getVerbalizzazioni();
 			}
 		});
 
@@ -187,23 +206,27 @@ public class ConfirmationAdminPanel extends JPanel {
 					int[] index = new int[20];
 					int k = 0;
 					if (table.getRowCount() != 0) {
-						for (int i = 0; i < table.getRowCount(); i++)
+						for (int i = 0; i < table.getRowCount(); i++) {
 							if (table.getValueAt(i, 6).equals(PRESIDENTE)) {
 								index[k] = i;
 								k++;
 							}
+						}
 
 						String confermato1 = "presidente";
-						for (int i = 0; i < index.length; i++)
-							if (table.getValueAt(index[i], 6).equals(confermato1))
+						for (int i = 0; i < index.length; i++) {
+							if (table.getValueAt(index[i], 6).equals(confermato1)) {
 								req += table.getValueAt(index[i], 0) + "" + table.getValueAt(index[i], 2) + "\n";
+							}
+						}
 					}
 					out.println(req);
 					String line = in.readLine();
-					if (line.equalsIgnoreCase(ServerMain.OK))
+					if (line.equalsIgnoreCase(ServerMain.OK)) {
 						JOptionPane.showMessageDialog(ConfirmationAdminPanel.this,
 								"Gli esami sono stati salvati correttamente in S3", "Success",
 								JOptionPane.INFORMATION_MESSAGE);
+					}
 
 					s.close();
 
@@ -212,7 +235,7 @@ public class ConfirmationAdminPanel extends JPanel {
 							"Error", JOptionPane.ERROR_MESSAGE);
 				}
 
-				adminMainGUI.changePanel(AdminMainGUI.CONFIRMATION_ADMIN_PANEL);
+				getVerbalizzazioni();
 
 			}
 		});
@@ -230,9 +253,10 @@ public class ConfirmationAdminPanel extends JPanel {
 					String req = ServerMain.QUERY_CANCELLA_ESAMI_SCADUTI + "\n";
 					out.println(req);
 					String line = in.readLine();
-					if (line.equalsIgnoreCase(ServerMain.OK))
+					if (line.equalsIgnoreCase(ServerMain.OK)) {
 						JOptionPane.showMessageDialog(ConfirmationAdminPanel.this,
 								"Gli esami scaduti sono stati cancellati", "Success", JOptionPane.INFORMATION_MESSAGE);
+					}
 
 					s.close();
 
@@ -240,7 +264,7 @@ public class ConfirmationAdminPanel extends JPanel {
 					JOptionPane.showMessageDialog(ConfirmationAdminPanel.this, "Error in communication with server!",
 							"Error", JOptionPane.ERROR_MESSAGE);
 				}
-				adminMainGUI.changePanel(AdminMainGUI.CONFIRMATION_ADMIN_PANEL);
+				getVerbalizzazioni();
 
 			}
 		});
@@ -250,6 +274,15 @@ public class ConfirmationAdminPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				adminMainGUI.changePanel(AdminMainGUI.ADMIN_PANEL);
+
+			}
+		});
+
+		update.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				getVerbalizzazioni();
 
 			}
 		});

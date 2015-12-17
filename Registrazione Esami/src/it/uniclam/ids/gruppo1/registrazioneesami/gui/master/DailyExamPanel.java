@@ -31,33 +31,7 @@ public class DailyExamPanel extends JPanel {
 
 	private JTextArea ta = new JTextArea(20, 50);
 
-	public DailyExamPanel(ClientMainGUI clientGUI) {
-		GridBagConstraints c = new GridBagConstraints();
-		setLayout(new GridBagLayout());
-		setBackground(Color.yellow);
-
-		// Campo back
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 7;
-		c.gridwidth = 5; // 2 columns wide
-		this.add(back, c);
-
-		// Campo esami verbalizzati in data odierna(label)
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 5;
-		c.gridwidth = 4; // 2 columns wide
-		this.add(new JLabel("Esami Verbalizzati in data odierna:"), c);
-
-		// Campo esami verbalizzati in data odierna
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 6;
-		c.gridwidth = 8; // 2 columns wide
-		JScrollPane jp = new JScrollPane(ta);
-		this.add(jp, c);
-
+	private void getDailyExam() {
 		try {
 			Socket s = new Socket(ServerMain.HOST, ServerMain.PORT);
 
@@ -92,6 +66,36 @@ public class DailyExamPanel extends JPanel {
 			JOptionPane.showMessageDialog(DailyExamPanel.this, "Error in communication with server!", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+	public DailyExamPanel(ClientMainGUI clientGUI) {
+		GridBagConstraints c = new GridBagConstraints();
+		setLayout(new GridBagLayout());
+		setBackground(Color.yellow);
+
+		// Campo back
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 7;
+		c.gridwidth = 5; // 2 columns wide
+		this.add(back, c);
+
+		// Campo esami verbalizzati in data odierna(label)
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 5;
+		c.gridwidth = 4; // 2 columns wide
+		this.add(new JLabel("Esami Verbalizzati in data odierna:"), c);
+
+		// Campo esami verbalizzati in data odierna
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 6;
+		c.gridwidth = 8; // 2 columns wide
+		JScrollPane jp = new JScrollPane(ta);
+		this.add(jp, c);
+
+		getDailyExam();
 
 		back.addActionListener(new ActionListener() {
 

@@ -9,7 +9,8 @@ public interface DocenteAbilitatoDAO {
 	 *
 	 * @param telefono:
 	 *            parametro di ricerca
-	 * @param password
+	 * @param password:
+	 *            parametro di ricerca
 	 * @return abilitato
 	 * @throws DAOException
 	 *             Questa eccezione è generata quando si verificano problemi
@@ -34,8 +35,9 @@ public interface DocenteAbilitatoDAO {
 	 * docente(che ha richiesto l'abilitazione al sistema)
 	 *
 	 * @param telefono:
-	 *            parametro di ricerca
-	 * @param password
+	 *            parametro di inserimento
+	 * @param password:
+	 *            parametro di inserimento
 	 * @return NONE
 	 * @throws DAOException
 	 *             Questa eccezione è generata quando si verificano problemi

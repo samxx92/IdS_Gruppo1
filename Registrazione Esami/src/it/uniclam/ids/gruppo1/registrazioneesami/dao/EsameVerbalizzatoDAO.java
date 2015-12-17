@@ -9,7 +9,10 @@ public interface EsameVerbalizzatoDAO {
 	 * Il metodo serve a registrare un esame all'interno del DB
 	 * EsameVerbalizzato
 	 *
-	 * @param e
+	 * @param e:
+	 *            parametro di inserimento
+	 * @param data:
+	 *            parametro di inserimento
 	 * @return verbalizzato
 	 * @throws DAOException
 	 *             Questa eccezione è generata quando si verificano problemi
@@ -21,8 +24,10 @@ public interface EsameVerbalizzatoDAO {
 	 * Il metodo serve a visualizzare le verbalizzazioni giornaliere di ogni
 	 * docente presenti all'interno del DB EsameVerbalizzato
 	 *
-	 * @param id_docente
-	 * @param confermato
+	 * @param id_docente:
+	 *            parametro di ricerca
+	 * @param confermato:
+	 *            parametro di ricerca
 	 * @return ev
 	 * @throws DAOException
 	 *             Questa eccezione è generata quando si verificano problemi
@@ -50,7 +55,7 @@ public interface EsameVerbalizzatoDAO {
 	 * @param esami_verbalizzati_s3:
 	 *            parametro di ricerca
 	 * @param conferma:
-	 *            parametro di notifica
+	 *            parametro di inserimento
 	 * @return NONE
 	 * @throws DAOException
 	 *             Questa eccezione è generata quando si verificano problemi
@@ -62,8 +67,10 @@ public interface EsameVerbalizzatoDAO {
 	 * Il metodo serve a far visualizzare quegli esami che sono stati
 	 * verbalizzati all'interno del DB EsameVerbalizzato
 	 *
-	 * @param scaduto
-	 * @param confermato
+	 * @param scaduto:
+	 *            parametro di ricerca
+	 * @param confermato:
+	 *            parametro di ricerca
 	 * @return ev
 	 * @throws DAOException
 	 *             Questa eccezione è generata quando si verificano problemi
@@ -87,7 +94,8 @@ public interface EsameVerbalizzatoDAO {
 	 * Il metodo serve ad ottenere una lista di esami partendo dall'id di
 	 * verbalizzazione, accessibile tramite il parametro
 	 *
-	 * @param esami_verbalizzati_s3
+	 * @param esami_verbalizzati_s3:
+	 *            parametro di ricerca
 	 * @return ev
 	 * @throws DAOException
 	 *             Questa eccezione è generata quando si verificano problemi
