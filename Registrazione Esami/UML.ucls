@@ -1,140 +1,203 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.1.9" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
-  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="it.uniclam.ids.gruppo1.registrazioneesami.legacy.DatabaseDidatticaMock" 
+<class-diagram version="1.1.9" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <interface id="1" language="java" name="it.uniclam.ids.gruppo1.registrazioneesami.dao.DocenteAbilitatoDAO" 
     project="Registrazione Esami" 
-    file="/Registrazione Esami/src/it/uniclam/ids/gruppo1/registrazioneesami/legacy/DatabaseDidatticaMock.java" 
+    file="/Registrazione Esami/src/it/uniclam/ids/gruppo1/registrazioneesami/dao/DocenteAbilitatoDAO.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="297" width="310" x="544" y="37"/>    
+    <position height="-1" width="-1" x="308" y="1015"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
-  </class>  
-  <class id="2" language="java" name="it.uniclam.ids.gruppo1.registrazioneesami.entity.Commissione" 
+  </interface>  
+  <class id="2" language="java" name="it.uniclam.ids.gruppo1.registrazioneesami.dao.DocenteAbilitatoDAOImpl" 
     project="Registrazione Esami" 
-    file="/Registrazione Esami/src/it/uniclam/ids/gruppo1/registrazioneesami/entity/Commissione.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="315" width="216" x="307" y="374"/>    
+    file="/Registrazione Esami/src/it/uniclam/ids/gruppo1/registrazioneesami/dao/DocenteAbilitatoDAOImpl.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="635" y="1020"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="it.uniclam.ids.gruppo1.registrazioneesami.entity.Docente" 
+  <interface id="3" language="java" name="it.uniclam.ids.gruppo1.registrazioneesami.dao.EsameVerbalizzatoDAO" 
     project="Registrazione Esami" 
-    file="/Registrazione Esami/src/it/uniclam/ids/gruppo1/registrazioneesami/entity/Docente.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="369" width="226" x="41" y="374"/>    
+    file="/Registrazione Esami/src/it/uniclam/ids/gruppo1/registrazioneesami/dao/EsameVerbalizzatoDAO.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="304" y="1258"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
-  </class>  
-  <class id="4" language="java" name="it.uniclam.ids.gruppo1.registrazioneesami.entity.Esame" 
+  </interface>  
+  <class id="4" language="java" name="it.uniclam.ids.gruppo1.registrazioneesami.dao.EsameVerbalizzatoDAOImpl" 
     project="Registrazione Esami" 
-    file="/Registrazione Esami/src/it/uniclam/ids/gruppo1/registrazioneesami/entity/Esame.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="261" width="208" x="584" y="374"/>    
+    file="/Registrazione Esami/src/it/uniclam/ids/gruppo1/registrazioneesami/dao/EsameVerbalizzatoDAOImpl.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="823" y="1277"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="it.uniclam.ids.gruppo1.registrazioneesami.entity.EsamePrenotato" 
-    project="Registrazione Esami" 
-    file="/Registrazione Esami/src/it/uniclam/ids/gruppo1/registrazioneesami/entity/EsamePrenotato.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="261" width="233" x="540" y="783"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="6" language="java" name="it.uniclam.ids.gruppo1.registrazioneesami.entity.DocenteAbilitato" 
+  <class id="5" language="java" name="it.uniclam.ids.gruppo1.registrazioneesami.entity.DocenteAbilitato" 
     project="Registrazione Esami" 
     file="/Registrazione Esami/src/it/uniclam/ids/gruppo1/registrazioneesami/entity/DocenteAbilitato.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="135" width="208" x="41" y="783"/>    
+    <position height="-1" width="-1" x="1032" y="482"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="it.uniclam.ids.gruppo1.registrazioneesami.entity.EsameVerbalizzato" 
+  <class id="6" language="java" name="it.uniclam.ids.gruppo1.registrazioneesami.entity.EsameVerbalizzato" 
     project="Registrazione Esami" 
     file="/Registrazione Esami/src/it/uniclam/ids/gruppo1/registrazioneesami/entity/EsameVerbalizzato.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="459" width="309" x="813" y="783"/>    
+    <position height="-1" width="-1" x="990" y="826"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="8">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="9" name="esami"/>      
-      <multiplicity id="10" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="11">    
-    <bendpoint x="411" y="348"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="12" name="commissioni"/>      
-      <multiplicity id="13" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
+  <class id="7" language="java" name="it.uniclam.ids.gruppo1.registrazioneesami.legacy.Commissione" 
+    project="Registrazione Esami" 
+    file="/Registrazione Esami/src/it/uniclam/ids/gruppo1/registrazioneesami/legacy/Commissione.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="166" y="178"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="it.uniclam.ids.gruppo1.registrazioneesami.legacy.DatabaseDidatticaMock" 
+    project="Registrazione Esami" 
+    file="/Registrazione Esami/src/it/uniclam/ids/gruppo1/registrazioneesami/legacy/DatabaseDidatticaMock.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="592" y="186"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="it.uniclam.ids.gruppo1.registrazioneesami.legacy.Docente" 
+    project="Registrazione Esami" 
+    file="/Registrazione Esami/src/it/uniclam/ids/gruppo1/registrazioneesami/legacy/Docente.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="988" y="184"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="it.uniclam.ids.gruppo1.registrazioneesami.legacy.Esame" 
+    project="Registrazione Esami" 
+    file="/Registrazione Esami/src/it/uniclam/ids/gruppo1/registrazioneesami/legacy/Esame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="616" y="602"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="it.uniclam.ids.gruppo1.registrazioneesami.legacy.EsamePrenotato" 
+    project="Registrazione Esami" 
+    file="/Registrazione Esami/src/it/uniclam/ids/gruppo1/registrazioneesami/legacy/EsamePrenotato.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="166" y="766"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <generalization id="12">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <generalization id="13">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
   <association id="14">    
-    <bendpoint x="553" y="374"/>    
-    <bendpoint x="554" y="584"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="15" name="esami_prenotati"/>      
-      <multiplicity id="16" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="17">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <generalization id="18">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <association id="19">    
-    <bendpoint x="148" y="314"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="20" name="docenti"/>      
-      <multiplicity id="21" minimum="0" maximum="2147483647"/>    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="15" name="dao"/>      
+      <multiplicity id="16" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="22">    
-    <bendpoint x="967" y="504"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="23" name="esami_verbalizzati_s3"/>      
-      <multiplicity id="24" minimum="0" maximum="2147483647"/>    
+  <association id="17">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="18" name="commissioni"/>      
+      <multiplicity id="19" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="25">    
-    <end type="SOURCE" refId="6"/>    
+  <association id="20">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="21" name="dao"/>      
+      <multiplicity id="22" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="23">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <realization id="24">    
+    <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="3"/>  
+  </realization>  
+  <association id="25">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="26" name="esami_prenotati"/>      
+      <multiplicity id="27" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="28">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="29" name="esami_verbalizzati_s3"/>      
+      <multiplicity id="30" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="31">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="9"/>  
   </generalization>  
+  <association id="32">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="33" name="docenti"/>      
+      <multiplicity id="34" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="35">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="36" name="esami"/>      
+      <multiplicity id="37" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    
